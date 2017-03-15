@@ -1,0 +1,96 @@
+---
+title: "Algorithms and Data Structures"
+subtitle: "Course information"
+author: "Georgios Gousios"
+
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
+nocite: |
+  @Cormen09,@Louridas17
+---
+
+## General description
+
+Algorithms and data structures are fundamental notions in computer science.
+This course will teach you how to use data structures to represent data and
+algorithms to process them in efficient ways. The course uses the Python
+programming language.
+
+```{python}
+def hello():
+  print "Hello World"
+
+hello()
+```
+
+## Learning Objectives
+
+This course enables the student to:
+
+* Understand, explain, and implement standard data structures.
+* Understand, explain, and implement standard algorithms.
+* Apply standard data structures and algorithms to solve programming tasks.
+* Analyse and compare implementations with respect to their time and space complexity.
+* Understand and explain advanced topics in algorithm design
+
+## Course Organization
+
+* **5 ECTS**: This means that you need to devote at least 140 hours of study
+  for this course.
+
+* **Lectures**: The course consists of 14 2-hour lectures. You are not required,
+  but you are **strongly encouraged**, to attend.
+
+* **Homework**: In the homework assignments, you will have to write code or reply to open questions. Grading for coding questions is automatic on WebLab. All homework assignments are individual.
+
+* **Labs**: 4 hours per week, designed to help you work together with other
+  students and get support from teaching assistants.
+
+* **Teaching Assistants**: Teaching assistants will be available during
+  lab hours to help you with solving your assignments.
+
+* **Late submission**: All submissions must be handed in time, with no
+  exceptions. In case of *provable* sickness, please contact the course
+  teacher to arrange a case-specific deadline.
+
+## Contents
+
+|Week |Lecture | Topic | Homework|
+|:---:|:------:|-------|---------|
+| 1 | 1 | Course introduction, Recursion  | |
+| 1 | 1 | Algorithm Analysis   | |
+| 2 | 1 | Basic Data Structures (Lists, Stacks, Sets) | |
+| 2 | 2 | Algorithms for basic data structures | |
+| 3 | 1 | Trees (Binary trees)  | |
+| 3 | 2 | More Trees (B+ Trees) | |
+| 5 | 1 | Graphs (Traversal) | |
+| 5 | 1 | Graph algorithms (Topological sorting, Routing) | |
+| 4 | 1 | Sorting | |
+| 4 | 2 | Searching | |
+| 6 | 1 | Hashing | |
+| 6 | 2 | Strings and string search  | |
+| 7 | 1 | Dynamic programming (Memoization, Shortest paths) | |
+| 7 | 2 | Genetic algorithms  | |
+
+## Assessment
+
+In order to pass the course, you must get a passing grade (6+) to all the
+assessment criteria specified below:
+
+* Assignments (50%): Grade calculated as mean grade for all assignments.
+* Written Exam (25%): Closed-book exam.
+* Computer Exam (25%): Solving algorithmic problems within WebLab.
+
+## Bibliography
+
+If you would like to get an in-depth treatment of the subject, I recommend
+investing in the following books:
+
+<div id="refs"></div>
+
+## Copyright
+![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
+This work is (c) 2017 - onwards by Georgios Gousios and licensed under the
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.

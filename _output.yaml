@@ -1,0 +1,7 @@
+revealjs::revealjs_presentation:
+  highlight: pygments
+  center: false
+  theme: black
+  reveal_options:
+    slideNumber: true
+    previewLinks: true
