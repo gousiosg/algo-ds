@@ -1,6 +1,6 @@
 ---
 title: "Algorithms and data structures"
-subtitle: "Programming assignment 1"
+subtitle: "Programming assignment 1 -  Doubly Linked List "
 output: pdf_document
 ---
 
@@ -13,9 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 The purpose of this assignment is to make you familiar with implementing a data structure in Python in an object oriented way.
 During the lectures, you were presented pseudo code of different basic data structures. Now we expect you to implement one of these structures yourself.
 
-To make it clear what is needed, we will provide you with a class, which has all a skeleton of all the methods already predefined. Your task is to come up with an implementation of these methods. 
+To make it clear what is needed, we will provide you with two classes: **Node** and **DoublyLinkedList**. The first one is already implemented (you don't need to modify it), the second one consist only a structure of empty methods defined. Your task is to come up with an implementation of these methods.
 
 An automated testing environment is used to confirm your solution. This environment will test your solution against different datasets. To complete the assignment, every tests needs to be passed. If you are stuck or unsure why your solution fails, you can use the comment section on Weblab to ask for help.
 
-## Doubly linked List Implementation
+## Implementation
 
