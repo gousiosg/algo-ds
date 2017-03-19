@@ -52,13 +52,63 @@ class DoublyLinkedList(object):
     def get_first(self):
         """Get the first element of the list"""
         if self.is_empty():
-            raise Exception('List is empty')
+            raise Exception("List is empty")
         else:
             return self.__header.get_next()
 
     def get_last(self):
         """Get the last element of the list"""
         if self.is_empty():
-            raise Exception('List is empty')
+            raise Exception("List is empty")
         else:
             return self.__trailer.get_previous()
+
+    def get_previous(self, node):
+        """Returns the node before the given node"""
+        if node == self.__header:
+            raise Exception("Cannot get the element before the header of this list")
+        else:
+            return node.get_previous()
+
+    def get_next(self, node):
+        """Returns the node after the given node"""
+        if node == self.__header:
+            raise Exception("Cannot get the element after the trailer of this list")
+        else:
+            return node.get_next()
+
+    def add_before(self, new, existing):
+        """Insert the new before existing"""
+        previous_existing = self.get_previous(existing)
+        new.set_previous(previous_existing)
+        new.set_next(existing)
+        existing.set_previous(new)
+        previous_existing.set_next(new)
+        self.__size += 1
+
+    def add_after(self, new, existing):
+        """Insert the new after existing"""
+        next_existing = self.get_next(existing)
+        new.set_previous(existing)
+        new.set_next(next_existing)
+        existing.set_next(new)
+        next_existing.set_previous(new)
+        self.__size += 1
+
+    def add_first(self, new):
+        """Insert the node at the head of the list"""
+        self.add_after(new, self.__header)
+
+    def add_last(self, new):
+        """Insert the node at the tail of the list"""
+        self.add_before(new, self.__trailer)
+
+    def remove(self, node):
+        """Removes the given node from the list"""
+        before = self.get_previous(node)
+        after = self.get_next(node)
+        before.set_next(after)
+        after.set_previous(before)
+        node.set_next(None)
+        node.set_previous(None)
+        self.__size -= 1
