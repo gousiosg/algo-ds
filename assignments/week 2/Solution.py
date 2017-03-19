@@ -2,32 +2,43 @@
 class Node(object):
 
     """Doubly linked node which stores an object"""
+
     def __init__(self, element, next_node, previous_node):
-        self.element = element
-        self.next_node = next_node
-        self.previous_node = previous_node
+        self.__element = element
+        self.__next_node = next_node
+        self.__previous_node = previous_node
 
     def get_element(self):
         """Returns the element stored in this node"""
-        return self.element
+        return self.__element
 
     def get_previous(self):
         """Returns the previous linked node"""
-        return self.previous_node
+        return self.__previous_node
 
     def get_next(self):
         """Returns the next linked node"""
-        return self.next_node
+        return self.__next_node
 
     def set_element(self, element):
         """Sets the element stored in this node"""
-        self.element = element
+        self.__element = element
 
     def set_previous(self, previous_node):
         """Sets the previous linked node"""
-        self.previous_node = previous_node
+        self.__previous_node = previous_node
 
     def set_next(self, next_node):
         """Sets the next linked node"""
-        self.next_node = next_node
-    
+        self.__next_node = next_node
+
+class DoublyLinkedList(object):
+
+    """Doubly linked node data structure"""
+
+    def __init__(self):
+        self.__size = 0
+
+    def size(self):
+        """Returns the number of elements in the list"""
+        return self.__size
