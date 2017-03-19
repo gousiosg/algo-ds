@@ -40,6 +40,20 @@ class DoublyLinkedList(object):
         self.__size = 0
         self.__header = None
         self.__trailer = None
+        self.__current = None
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        """Standard python iterator method"""
+        if self.is_empty():
+            raise Exception("List is empty")
+        elif self.__current is None:
+            self.__current = self.__header.get_next()
+            return self.__header.get_next()
+        else:
+            return self.__current.get_next()
 
     def size(self):
         """Returns the number of elements in the list"""
