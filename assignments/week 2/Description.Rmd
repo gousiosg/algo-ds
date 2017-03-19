@@ -15,7 +15,7 @@ During the lectures, you were presented pseudo code of different basic data stru
 
 To make it clear what is needed, we will provide you with two classes: **Node** and **DoublyLinkedList**. The first one is already implemented (you don't need to modify it), the second one consist only a structure of empty methods defined. Your task is to come up with an implementation of these methods.
 
-An automated testing environment is used to confirm your solution. This environment will test your solution against different datasets. To complete the assignment, every tests needs to be passed. If you are stuck or unsure why your solution fails, you can use the comment section on Weblab to ask for help.
+An automated testing environment is used to confirm your solution. This environment will test your solution against different datasets. To complete the assignment, every tests needs to be passed. If you are stuck or unsure why your solution fails, you can use the comment section on *Weblab* to ask for help.
 
 ## Implementation
 
