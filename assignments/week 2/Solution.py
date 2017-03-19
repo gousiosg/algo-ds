@@ -38,7 +38,27 @@ class DoublyLinkedList(object):
 
     def __init__(self):
         self.__size = 0
+        self.__header = None
+        self.__trailer = None
 
     def size(self):
         """Returns the number of elements in the list"""
         return self.__size
+
+    def is_empty(self):
+        """Returns the number of elements in the list"""
+        return self.__size == 0
+
+    def get_first(self):
+        """Get the first element of the list"""
+        if self.is_empty():
+            raise Exception('List is empty')
+        else:
+            return self.__header.get_next()
+
+    def get_last(self):
+        """Get the last element of the list"""
+        if self.is_empty():
+            raise Exception('List is empty')
+        else:
+            return self.__trailer.get_previous()
