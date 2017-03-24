@@ -59,7 +59,8 @@ class DoublyLinkedList(object):
     def map(self, function):
         """Run function on every element in the list"""
         for node in self:
-            yield function(node)
+            if node != self.__trailer and node != self.__header:
+                node.set_element(function(node.get_element()))
 
     def size(self):
         """Returns the number of elements in the list"""
