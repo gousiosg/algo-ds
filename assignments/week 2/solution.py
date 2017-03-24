@@ -1,6 +1,5 @@
 """Python implementation of doubly linked list"""
 class Node(object):
-
     """Doubly linked node which stores an object"""
 
     def __init__(self, element, next_node=None, previous_node=None):
@@ -33,7 +32,6 @@ class Node(object):
         self.__next_node = next_node
 
 class DoublyLinkedList(object):
-
     """Doubly linked node data structure"""
 
     def __init__(self):
