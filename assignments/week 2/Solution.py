@@ -3,7 +3,7 @@ class Node(object):
 
     """Doubly linked node which stores an object"""
 
-    def __init__(self, element, next_node, previous_node):
+    def __init__(self, element, next_node=None, previous_node=None):
         self.__element = element
         self.__next_node = next_node
         self.__previous_node = previous_node
@@ -38,8 +38,10 @@ class DoublyLinkedList(object):
 
     def __init__(self):
         self.__size = 0
-        self.__header = None
-        self.__trailer = None
+        self.__header = Node('Header')
+        self.__trailer = Node('Trailer')
+        self.__header.set_next(self.__trailer)
+        self.__trailer.set_previous(self.__header)
         self.__current = None
 
     def __iter__(self):
@@ -90,7 +92,7 @@ class DoublyLinkedList(object):
 
     def get_next(self, node):
         """Returns the node after the given node"""
-        if node == self.__header:
+        if node == self.__trailer:
             raise Exception("Cannot get the element after the trailer of this list")
         else:
             return node.get_next()
