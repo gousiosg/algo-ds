@@ -24,6 +24,14 @@ def hello():
 hello()
 ```
 
+The course examines the implementation of basic data structures, such as arrays, 
+lists, stacks, sets, trees and graphs along with algorithms for efficiently
+creating, storing, searching and traversing them. It also touches upon
+more advanced topics such as genetic algorithms and dynamic programming.
+
+Each week, the students will have to do an assessment, consisting mostly
+of coding exercises. For the assessment, we will use WebLab, an online assessment IDE.
+
 ## Learning Objectives
 
 This course enables the student to:
@@ -64,7 +72,7 @@ This course enables the student to:
 | 2 | 2 | Algorithms for basic data structures | |
 | 3 | 1 | Trees (Binary trees)  | |
 | 3 | 2 | More Trees (B+ Trees) | |
-| 5 | 1 | Graphs (Traversal) | |
+| 5 | 1 | Graphs (Representation and Traversal) | |
 | 5 | 1 | Graph algorithms (Topological sorting, Routing) | |
 | 4 | 1 | Sorting | |
 | 4 | 2 | Searching | |
@@ -75,12 +83,12 @@ This course enables the student to:
 
 ## Assessment
 
-In order to pass the course, you must get a passing grade (6+) to all the
+In order to pass the course, you must obtain a passing grade (6+) to all the
 assessment criteria specified below:
 
-* Assignments (50%): Grade calculated as mean grade for all assignments.
-* Written Exam (25%): Closed-book exam.
-* Computer Exam (25%): Solving algorithmic problems within WebLab.
+* Assignments (40%): Grade calculated as mean grade for all assignments. 
+All individual assignments must have a passing grade.
+* Computer Exam (60%)
 
 ## Bibliography
 

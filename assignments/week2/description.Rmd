@@ -1,6 +1,6 @@
 ---
 title: "Algorithms and data structures"
-subtitle: "Programming assignment 1 -  Doubly Linked List "
+subtitle: "Programming assignment 2 -  Doubly Linked List "
 output: pdf_document
 ---
 

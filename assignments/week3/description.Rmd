@@ -1,0 +1,212 @@
+---
+title: "Algorithms and data structures"
+subtitle: Programming assignment 3 -- Red-Black Trees
+output:
+  pdf_document: default
+  html_document: default
+---
+
+A Red–Black tree is a kind of self-balancing binary search tree. The main
+difference to normal binary trees, is that they store an extra bit (the _color_)
+in each node. This bit can be either be 0 (_black_) or 1 (_red_). This is
+how a red-black tree looks like, conceptually:
+
+```{r, out.width = "300px", echo=FALSE, fig.align = "center", fig.cap="A red-black tree"}
+knitr::include_graphics("rb-tree.png")
+```
+
+The following invariant must be satisfied every time an operation is
+being done on a node of a Red-Black tree:
+
+1. Every node is either red or black
+2. The root is always black
+3. Every leaf is black
+4. If a node is red, then both its children are black
+5. All paths from a node to descendant nodes contain the same number of 
+black nodes
+
+The node of a Red-Black tree can be described by the following data type
+
+```python
+class RBNode:
+
+    def __init__(self, color, key, left, right, parent):
+        if color not in Enum.__dict__:
+            raise AttributeError("Color %s not supported" % color)
+
+        self.left = left
+        self.right = right
+        self.parent = parent
+        self.key = key
+        self.color = color
+
+    def __str__(self):
+        return str("(%s)%s" % (self._color, self._key))
+```
+
+The tree itself is nothing more that a collection of nodes starting from
+a root node. The constructor initializes a root node to a provided value
+
+```python
+class RBTree:
+    root = RBNode(NodeColors.BLACK, None)
+    nil = RBNode(NodeColors.BLACK, None)
+    leaf = nil
+
+    def __init__(self, key):
+        self.root.key = key
+```
+
+Your task for this assignment is to constuct algorithms to manipulate Red-Black
+trees.
+
+## Constructing a Red-Black Tree
+We start constructing an Red-Black tree by calling the constructor
+```
+tree = RBTree(5)
+```
+Inserting a node consists of three steps:
+
+1. Finding the appropriate point to insert the node to
+2. Inserting the node and creating links to the tree
+3. Rebalancing the tree
+
+For Step 1, the procedure is not much different from a normal binary search
+tree. Specifically, the algorithm first finds the appropriate position
+for the new node by searching through the tree. In the following snippet,
+`z` is the value we would like to insert. However, the snippet has a
+mistake. 
+
+```python
+def search(self, z):
+    y = self.nil
+    x = self.root
+    while x != self.nil:
+        y = x
+        if z.key < x.key:
+            x = x.left
+        else:
+            x = y.right
+    return y
+```
+
+**T1 (10 points)**: Spot and fix the mistake in the `search` method
+
+Using the (hopefully correct by now!) `search` method, we can locate the node 
+to insert our new node as a child. This happens by creating the node and
+linking it to the appropriate super/sub nodes. Note that for new nodes,
+the starting color is always `RED`.
+
+**T2 (20 points)**: Write code to construct and link a new node.
+
+```python
+
+```
+
+After inserting the node, the tree potentially needs to be rebalanced.
+An example of why this is so can be seen in the following plot. What
+we see here is that the insertion of node 4 violates invariant number 4.
+
+```{r, out.width = "200px", echo=FALSE, fig.align = "center", fig.cap="Violating Red-Black tree invariants on insert. Node 5 has a red node as child."}
+knitr::include_graphics("rb-invariant-violation.jpg")
+```
+
+The rebalancing operation can be quite complicated; the pseudocode below
+takes care of all the cases.
+
+```
+proceduce rb_balance(T, z)
+'' T is an RBTree
+'' z is the newly inserted node
+
+while z.parent.color == RED
+    if z.parent == z.parent.parent.left
+        y <- z.parent.parent.right
+  
+        if y.color == RED
+            z.parent.color <- BLACK
+            y.color <- BLACK
+            z.parent.parent.color <- RED
+            z <- z.parent.parent
+        else 
+            if z == z.parent.right
+                z <- z.parent
+                left_rotate(T, z)
+            z.parent.color <- BLACK
+            z.parent.parent.color <- RED
+            right_rotate(T, z.parent.parent)
+    else
+      y <- z.parent.parent.right
+       if y.color == RED
+            z.parent.color <- BLACK
+            y.color <- BLACK
+            z.parent.parent.color <- RED
+            z <- z.parent.parent
+        else 
+            if z == z.parent.left
+                z <- z.parent
+                right_rotate(T, z)
+            z.parent.color <- BLACK
+            z.parent.parent.color <- RED
+            left_rotate(T, z.parent.parent)
+T.root.color <- BLACK    
+```
+
+**T3 (30 points)**: Implement the rebalancing pseudocode in Python
+```python
+
+```
+
+You might be wondering with `left_rotate` and `right_rotate` are. They are
+functions that represent common operations on trees. To understand how they work
+have a look at the plot below.
+
+```{r, out.width = "300px", echo=FALSE, fig.align = "center", fig.cap="Left and right rotation."}
+knitr::include_graphics("rb-tree-rotation.png")
+```
+
+Below you can find the Python code for the left_rotate method.
+
+```python
+def left_rotate(self, x):
+    y = x.right
+    x.right = y.left
+
+    if y.left != self.nil:
+        y.left.parent = x
+    y.parent = x.parent
+    if x.parent == self.nil:
+        self.root = y
+    elif x == x.parent.left:
+        x.parent._left = y
+    else:
+        x.parent._right = y
+    y._left = x
+    x.parent = y
+```
+
+**T4 (20 points)**: Implement the code for `right_rotate`
+
+## Validating the Red-Black tree invariants
+
+**T5 (30 points)**: Create a function that given a `RBTree` object it will exhaustively search
+whether the five invariants described above are maintained.
+
+```python
+def check_rb_tree(tree):
+    "@return: True, only if tree satisfies all the Red-Black tree invariants"
+    return False
+```
+
+## Proving performance properties
+
+**T6 (10 points)**: Prove that the average and worse case complexity for the
+insertion in Red-Black trees is $O(log(n))$.
+
+
+## References
+
+1. A Red-Black tree [in Java](http://algs4.cs.princeton.edu/33balanced/RedBlackBST.java.html)
+2. A Red-Black tree [in C](https://www.cs.auckland.ac.nz/software/AlgAnim/red_black.html)
+3. Wikipedia on [Red-Black Trees](https://en.wikipedia.org/wiki/Red–black_tree)
+
