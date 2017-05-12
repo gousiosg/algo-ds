@@ -8,10 +8,10 @@ output:
 
 Graphs are one of the most common data structures in computer science;
 graph-based modeling of problems is at the heart of many systems we use
-every day (e.g. routing in Google Maps, recommending friends on Facebook).
+every day, such as routing in Google Maps or recommending friends on Facebook.
 
 [Social Network Analysis](https://en.wikipedia.org/wiki/Social_network_analysis)
-is a branch of sociology that explores social structures through the use
+(SNA) is a branch of sociology that explores social structures through the use
 of analytical tools, such as graphs. In this assignment, you will implement
 basic social network analysis algorithms on a graph extracted from GitHub.
 
@@ -49,7 +49,7 @@ below.
 
 ## Basic graph metrics
 
-**T (5 points):** Who are the 10 most connected users?
+**T (10 points):** Who are the 10 most connected users?
 
 ```python
 def most_connected(graph, n = 10):
@@ -62,18 +62,13 @@ def most_connected(graph, n = 10):
 _Hint_: it helps if you first define a method called `in_degree` that calculates
 the number of incoming edges in to a node.
 
-**T (5 points):** 
-
-## Excluding nodes that have no connections
-
-The data provided in the 
-
-**T (20 points):** Write a function that takes a graph and returns
-a graph excluding nodes with no connections
-
-
+**T (10 points):** What is the mean and what is the meadian number of connections?
 
 ## Computing shortest paths
+
+Shortest paths are the basis for many network measures. We have seen
+two algorithms to calculate shortest paths (Dijkstra and Bellman–Ford); now, 
+you will need to implement one!
 
 **T (20 points):** Write a function that computes the shortest paths
 between all node pairs in the graph. 
@@ -83,19 +78,32 @@ def shortest_paths(graph):
   """
   Computes the shortest paths between any pair of nodes in the graph
   
-  @return A dictionary whose keys are a node pair and the values are the length 
+  @return A dictionary whose keys are node pairs and values are sequences
+  indicating the shortest path between the node pair.
   """
   pass
 ```
 
 _Hint_: Choose the appropriate shortest path algorithm for undirected graph
-with no edge weights.
+with no edge weights. A pair of nodes $(n_1, n_2)$ is, for our purposes,
+equivalent to the pair $(n_2, n_1)$.
+
+_Hint_: How to find all unique node pairs? Given that you create a non-duplicate
+list of all your nodes, you can use Python's `itertools.combinations` function 
+like so:
+
+```{python}
+from itertools import combinations
+a = [1,2,3,4,5]
+pairs = list(combinations(a, 2))
+print pairs
+```
 
 ## 6 degrees of separation
 A commonly stated fact in social networks is that everyone is seperated by
 everyone else by just 6 intermediate people. Otherwise stated, you can get
 introduced to [Donald Knuth](https://en.wikipedia.org/wiki/Donald_Knuth) by a 
-friend who knows a friend who knows a friend who knows a friend who knows Knuth.
+friend who has a friend who has a friend who has a friend who knows Knuth.
 To estimate whether this is true for our dataset, we will need to calculate
 the graph diameter. The diameter of a graph is the greatest distance between any 
 pair of vertices. To calculate it, we need to find the longest shortest path
