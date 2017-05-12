@@ -2,8 +2,9 @@
 title: "Algorithms and data structures"
 subtitle: Programming assignment 4 -- Graphs
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  word_document: default
 ---
 
 Graphs are one of the most common data structures in computer science;
@@ -98,6 +99,13 @@ a = [1,2,3,4,5]
 pairs = list(combinations(a, 2))
 print pairs
 ```
+
+**T (10 points), bonus** For very big graphs, computations such as the above
+can consume very big amounts of memory due to intermediate objects that
+need to be held in memory. One such example is the intermediate array 
+that holds the combinations of nodes. One way to deal with this issue is to
+create a _generator_ function that will calculate the shortest path every time
+it is called. In this **bonus** task, you have to implement this function.
 
 ## 6 degrees of separation
 A commonly stated fact in social networks is that everyone is seperated by
