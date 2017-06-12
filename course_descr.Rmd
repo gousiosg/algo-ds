@@ -64,22 +64,27 @@ This course enables the student to:
 
 ## Contents
 
-|Week |Lecture | Topic | Homework|
-|:---:|:------:|-------|---------|
-| 1 | 1 | Course introduction, Recursion  | |
-| 1 | 1 | Algorithm Analysis   | |
-| 2 | 1 | Basic Data Structures (Lists, Stacks, Sets) | |
-| 2 | 2 | Algorithms for basic data structures | |
-| 3 | 1 | Trees (Binary trees)  | |
-| 3 | 2 | More Trees (B+ Trees) | |
-| 5 | 1 | Graphs (Representation and Traversal) | |
-| 5 | 1 | Graph algorithms (Topological sorting, Routing) | |
-| 4 | 1 | Sorting | |
-| 4 | 2 | Searching | |
-| 6 | 1 | Hashing | |
-| 6 | 2 | Strings and string search  | |
-| 7 | 1 | Dynamic programming (Memoization, Shortest paths) | |
-| 7 | 2 | Genetic algorithms  | |
+|Week |Lecture | Lecturer | Topic | Homework|
+|:---:|:------:|----------|-------|---------|
+| 1 | 1 | Course introduction, Recursion  | GG | |
+| 1 | 1 | Algorithm Analysis   | GG | |
+| 2 | 1 | Basic Data Structures (Lists, Stacks, Sets) | GG | |
+| 2 | 2 | Algorithms for basic data structures | GG | |
+| 3 | 1 | Trees (Binary trees)  | GG | |
+| 3 | 2 | More Trees (B+ Trees) | GG | |
+| 5 | 1 | Graphs (Representation and Traversal) | PK ||
+| 5 | 1 | Graph algorithms (Topological sorting, Centrality) | PK ||
+| 4 | 1 | Sorting | GG ||
+| 4 | 2 | Searching | GG ||
+| 6 | 1 | Hashing | GG ||
+| 6 | 2 | Strings and string search  | GG ||
+| 7 | 1 | Dynamic programming (Memoization, Shortest paths) | GG||
+| 7 | 2 | Genetic algorithms  | GG||
+
+**Lecturers**
+* GG: Georgios Gousios
+* PV: Pavel Kucherbaev
+
 
 ## Assessment
 
