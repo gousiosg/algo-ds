@@ -72,10 +72,10 @@ This course enables the student to:
 | 2 | 2 | Algorithms for basic data structures | |
 | 3 | 1 | Trees (Binary trees)  | |
 | 3 | 2 | More Trees (B+ Trees) | |
-| 5 | 1 | Graphs (Representation and Traversal) | |
-| 5 | 1 | Graph algorithms (Topological sorting, Routing) | |
-| 4 | 1 | Sorting | |
-| 4 | 2 | Searching | |
+| 4 | 1 | Graphs (Representation and Traversal) | |
+| 4 | 1 | Graph algorithms (Topological sorting, Routing) | |
+| 5 | 1 | Sorting | |
+| 5 | 2 | Searching | |
 | 6 | 1 | Hashing | |
 | 6 | 2 | Strings and string search  | |
 | 7 | 1 | Dynamic programming (Memoization, Shortest paths) | |

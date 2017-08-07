@@ -2,8 +2,8 @@
 title: "Algorithms and data structures"
 subtitle: Programming assignment 4 -- Graphs
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
   word_document: default
 ---
 
