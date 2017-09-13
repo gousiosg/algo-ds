@@ -214,3 +214,17 @@ def intersection():
 ```
 
 ### Dictionaries
+
+A dictionary is an abstract data type
+that represents a collection of (key, value) pairs.
+Given two lists of elements, such as the following,
+we can use a dictionary to reduce complexity
+of searching for a specific element in the data structure.
+
+**T20 (10 points)**: Implement a dictionary as a collection of (key, value) pairs.
+
+_Hint_: You should not use the *dict* from Python.
+
+$Names = [``Max", ``David", ``Sophie", ``Anne", ... ]$
+
+$Grades = [``10", ``7", ``8", ``10", ... ]$
