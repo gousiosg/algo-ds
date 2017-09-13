@@ -171,7 +171,3 @@ _Hint_: Use the methods `get_previous` and `remove`.
 
 **T15 (5 points)**: Prove when the complexity to delete a node in a doubly linked list is $O(1)$
 and $O(n)$.
-
-### Sets
-
-### Dictionaries
