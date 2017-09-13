@@ -171,3 +171,46 @@ _Hint_: Use the methods `get_previous` and `remove`.
 
 **T15 (5 points)**: Prove when the complexity to delete a node in a doubly linked list is $O(1)$
 and $O(n)$.
+
+### Sets
+
+The following questions ask from you to apply set operations on elements.
+Keep in mind that you should not use the ready *Sets* library of Python. 
+
+**T16 (5 points)**: Given a list $L = [a, b, c, ...]$ you can create a set, $S$, of elements.
+Implement a set constructor.
+
+**T17 (5 points)**: Given two lists $L1 = [a1, b1, c1, ...]$ and $L2 = [a2, b2, c2, ...]$,
+implement a $union$ method that returns to a new set $S$.
+
+_Hint_: Use the constructor of a set you implemented in T16.
+
+```python
+def union():
+  """Union of sets."""
+  pass
+```
+
+**T18 (5 points)**: Given two lists $L1 = [a1, b1, c1, ...]$ and $L2 = [a2, b2, c2, ...]$,
+implement a $diffence$ method that returns to a new set $S$.
+
+_Hint_: Use the constructor of a set you implemented in T16.
+
+```python
+def difference():
+  """Difference between sets."""
+  pass
+```
+
+**T19 (5 points)**: Given two lists $L1 = [a1, b1, c1, ...]$ and $L2 = [a2, b2, c2, ...]$,
+implement a $intersection$ method that returns to a new set $S$.
+
+_Hint_: Use the constructor of a set you implemented in T16.
+
+```python
+def intersection():
+  """Intersection between sets."""
+  pass
+```
+
+### Dictionaries
