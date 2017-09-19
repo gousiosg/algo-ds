@@ -6,17 +6,17 @@ output:
   html_document: default
 ---
 
-A Red–Black tree is a kind of self-balancing binary search tree. The main
-difference to normal binary trees, is that they store an extra bit (the _color_)
-in each node. This bit can be either be 0 (_black_) or 1 (_red_). This is
-how a red-black tree looks like, conceptually:
+A Red–Black tree is a self-balancing binary search tree. The main difference to
+a normal binary tree is an extra bit that stores the parity  (the _color_) of
+each node. This bit can be either be 0 (_black_) or 1 (_red_). An example of a
+red-black tree is shown in Figure 1 (Hardcoded) 
 
-```{r, out.width = "300px", echo=FALSE, fig.align = "center", fig.cap="A red-black tree"}
+```{r rbtree, out.width = "300px", echo=FALSE, fig.align = "center", fig.cap="A red-black tree"}
 knitr::include_graphics("rb-tree.png")
 ```
 
 The following invariant must be satisfied every time an operation is
-being done on a node of a Red-Black tree:
+being made on node of a Red-Black tree:
 
 1. Every node is either red or black
 2. The root is always black
@@ -44,8 +44,9 @@ class RBNode:
         return str("(%s)%s" % (self._color, self._key))
 ```
 
-The tree itself is nothing more that a collection of nodes starting from
-a root node. The constructor initializes a root node to a provided value
+The data structure of the tree is nothing more than a collection of nodes with
+the root node as the starting point. The constructor initializes a root node to
+a provided value
 
 ```python
 class RBTree:
@@ -57,17 +58,17 @@ class RBTree:
         self.root.key = key
 ```
 
-Your task for this assignment is to constuct algorithms to manipulate Red-Black
-trees.
+Your task for this assignment is to construct algorithms that
+manipulate Red-Black trees.
 
 ## Constructing a Red-Black Tree
-We start constructing an Red-Black tree by calling the constructor
+We start constructing a Red-Black tree by calling the constructor
 ```
 tree = RBTree(5)
 ```
 Inserting a node consists of three steps:
 
-1. Finding the appropriate point to insert the node to
+1. Finding the appropriate branch to insert the node in the tree
 2. Inserting the node and creating links to the tree
 3. Rebalancing the tree
 
@@ -189,8 +190,8 @@ def left_rotate(self, x):
 
 ## Validating the Red-Black tree invariants
 
-**T5 (30 points)**: Create a function that given a `RBTree` object it will exhaustively search
-whether the five invariants described above are maintained.
+**T5 (30 points)**: Create a function that given a `RBTree` object it will
+exhaustively search whether the five invariants described above are maintained.
 
 ```python
 def check_rb_tree(tree):
