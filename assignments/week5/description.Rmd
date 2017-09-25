@@ -1,0 +1,10 @@
+---
+title: "Algorithms and data structures"
+subtitle: Programming assignment 5 -- Sort&Search
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+
