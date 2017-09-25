@@ -1,10 +1,34 @@
 ---
 title: "Algorithms and data structures"
-subtitle: Programming assignment 5 -- Sort&Search
+subtitle: Programming assignment 5 -- Searching 
 output:
   html_document: default
   pdf_document: default
   word_document: default
 ---
+
+A fundamental area in Computer Science is to develop _algorithmic_ processes for
+efficiently _storing_ and _retrieving_ data structures of growing classes of
+datasets with good performance. Two important building blocks in solving such
+problems are _Sorting_ and _Searching_ algorithms. From the previous lectures,
+several classes of data structures were introduced such as lists, trees and
+graphs that maps a given data set into a specific organization and structure of
+that data. On a functional-level, the data is the same but _working_ with the
+data structure such as performing an _insert_ or _finding an element_ comes with
+it's trade-offs to performance.
+
+The goal of this assignment is to separate the internals of a data structure
+from its operations (e.g search, insert, deletion) to understand how the overall
+performance varies between three dimensions: _classes of datasets, data
+structures & algorithms_.
+
+## Loading three different classes of data into three data structures
+
+## Implement sorting algorithms
+
+## Implement Search
+
+## Performance Comparison 
+
 
 
