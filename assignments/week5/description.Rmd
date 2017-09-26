@@ -8,27 +8,156 @@ output:
 ---
 
 A fundamental area in Computer Science is to develop _algorithmic_ processes for
-efficiently _storing_ and _retrieving_ data structures of growing classes of
-datasets with good performance. Two important building blocks in solving such
-problems are _Sorting_ and _Searching_ algorithms. From the previous lectures,
-several classes of data structures were introduced such as lists, trees and
-graphs that maps a given data set into a specific organization and structure of
-that data. On a functional-level, the data is the same but _working_ with the
-data structure such as performing an _insert_ or _finding an element_ comes with
-it's trade-offs to performance.
+efficiently _storing_ and _retrieving_ data structures with good performance.
+Two important building blocks in solving such problems are _Sorting_ and
+_Searching_ algorithms. From the previous lectures, several classes of data
+structures were introduced such as _lists_, _trees_ and _graphs_ that maps a
+given dataset into the organization of that data structure. On a
+functional-level, the data is the same but _working_ with the data structure
+such as performing an _insert_ or _finding an element_ comes with it's
+trade-offs to performance.
 
 The goal of this assignment is to separate the internals of a data structure
-from its operations (e.g search, insert, deletion) to understand how the overall
-performance varies between three dimensions: _classes of datasets, data
-structures & algorithms_.
+from its operations to understand how the overall
+performance varies between a sorted and unsorted data structure. The two
+performance aspects that you will investigate is the **time complexity** and **space
+complexity**
 
-## Loading three different classes of data into three data structures
+For this task, we will work on a dataset from [_Brandweer
+Amsterdam-Amstelland_](https://goo.gl/tE3Ahi)
+that includes more than 125.000 alarms in this region. 
+The dataset is compressed due to the large size of the data, you have to first
+unzip the data and the resulting CSV-file will be ~124MB. To read the CSV-data
+as a table we first store the data in a 2D array.
 
-## Implement sorting algorithms
+```python
+import csv
+def load(csv_file):
+  """
+    Loads the data from the file in the provided argument into a 2D array
+  """
+  with open(csv_file) as csvDataFile:
+      return [row for row in csv.reader(csvDataFile, delimiter=';')]
+```
 
-## Implement Search
+The first element of the 2D array is an overview of the dataset and should look
+like this
+```
+[['incident_id',
+  'start_tijd',
+  'incident_type',
+  'landelijke_meldingsclassificatie_niveau1',
+  'landelijke_meldingsclassificatie_niveau2',
+  'landelijke_meldingsclassificatie_niveau3',
+  'datum',
+  'jaar',
+  'maand_nr',
+  'maand_naam',
+  'dag_nr',
+  'dag_naam',
+  'week_nr',
+  'kwartaal',
+  'prioriteit',
+  'uur',
+  'dagdeel',
+  'objecttype',
+  'objectfunctie',
+  'buurt',
+  'wijk',
+  'woonplaats',
+  'gemeente'],
+  ......
+  ]
+```
 
-## Performance Comparison 
+## Ordering the dataset
+We can observe by inspecting the first 5 rows in the 2D array that the data is
+_unordered_ and the unique identification of each row is the *incident_id*.
+
+In the consecutive tasks, you have to order the dataset according to the
+*incident_id* and according to date 
 
 
+**T (20 points):** Your task is to implement the **insertion sort** algorithm
+and sort only for the *incident_id*, this algorithm is relatively slow and
+cannot scale well, therefore we partition the 2D array. 
+
+```python
+def insertionSort(table, f, limit=150,*args, **kwargs):
+  """
+    Takes a data table, take a subset of 150 elements and sorts it
+    NB: first value of the array is a schema of the data
+  """
+  subtable = table[1:limit+1]
+  pass
+```
+
+A helper function _f_ in the argument list is used for comparing the elements,
+the _incident_id_ is currently a string format and needs to be converted to an
+integer value, the value "0" is the index values for *incident_id* and "6" for
+*datum*
+
+```python
+def cmpf(a , b):
+    return int(a[0]) > int(b[0])
+
+def cmpfDatum(a , b):
+    #import datetime
+    #6 = datum
+    # 2008/01/03 00:00:00.000000000, remove microsec
+    return datetime.datetime.strptime(a[6][:-10],'%Y/%m/%d %H:%M:%S') >
+    datetime.datetime.strptime(b[6][:-10],'%Y/%m/%d %H:%M:%S')
+
+```
+Try for different sizes and see that it takes longer time to sort
+
+As seen, it takes longer time the greater the size is, an improvement to this
+algorithm is to use *divide and conquer*-approach by dividing it to sub lists.
+An improvement to this algorithm is called the *shell algorithm*
+
+**T (20 points):** Your task is to implement the *shell algorithm* by modifying
+your solution of the algorithm, the shell sort is provided here
+
+```python
+def shellSort(table, f, limit):
+    sublistcount = len(alist)//2
+    while sublistcount > 0:
+      for startposition in range(sublistcount):
+        gapInsertionSort(table, f,startposition,sublistcount,*args, **kwargs)
+      print("After increments of size",sublistcount,
+                                   "The list is",table)
+
+      sublistcount = sublistcount // 2
+
+```
+
+Try for same use cases, can you see the performance difference?
+
+We can still do better, we want to be able to process 124,000 and sort these
+rows in the dataset, the previous algorithms have a high time complexity but a
+constant space complexity. There are two other algorithms that have a "O(n log
+n)" time complexity but there space complexity varies. For *merge sort*, the
+space complexity is O (n) which means a linear growth of the space but for a
+*quick sort*, the space complexity is constant but the performance could degrade
+to "O(n^2)" depending on the data and selection of the pivot. For instance, if
+the dataset is ordered or the elements are the same. This is not the case for
+the dataset that we are using
+
+**T (40 points):** Your task is to implement the *quick sort algorithm*, the
+stubs for the algorithm is presented here
+
+```python
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+    pass
+
+def partition(alist,first,last):
+    pass
+```
+**T (30 points):** Create a benchmark that shows the data size vs time for all
+these algorithms
+
+## Searching the dataset
 
