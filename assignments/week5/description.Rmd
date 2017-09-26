@@ -161,3 +161,11 @@ these algorithms
 
 ## Searching the dataset
 
+Linear search using unsorted array 
+
+Binary search using the sorted array
+
+Find multiple values with binary search
+
+
+
