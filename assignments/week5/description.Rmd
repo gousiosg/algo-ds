@@ -177,7 +177,8 @@ selection of the pivot. For instance, if the dataset is ordered or the elements
 are the same. This is not the case for the dataset that we are using
 
 **T (40 points):** Your task is to implement the *quick sort algorithm*, the
-stubs for the algorithm is presented here
+stubs for the algorithm is presented here and the challenge here is choosing the
+pivot such that it can in short time process all the records.
 
 ```python
 def quickSort(table):
@@ -194,12 +195,57 @@ def partition(alist,table,last):
 these algorithms
 
 ## Searching the dataset
+The final part of the assignment is to perform find elements in a data set. We
+will use two search techniques, a simple linear search and binary search.
 
-Linear search using unsorted array 
+**T (30 points):** Create a linear search algorithm and your task is to find the
+following: (I have to check on the dataset)
 
-Binary search using the sorted array
+```python
+def lsearch(sortedTable,f,field='incident_id',find=12345,*args, **kwargs):
+    pass
+```
+*Hint 1:* You have to use the same compare function as in the previous tasks to
+provide for *f*
 
-Find multiple values with binary search
+*Hint 2:* The *field=...* represents the format, you can maintain an enum that
+converts a name to the index number in the array
 
+We could observe that for two of the search queries, they took considerable
+time, this due to the fact that we don't know where the items are. Many
+algorithms are designed with the idea that the data set is sorted. Therefore, we
+will try the same on a sorted data set. 
+
+```python
+
+sortedTable = quickSort(table)
+def lsearch(sortedTable,f,field='incident_id',find=12345,*args, **kwargs):
+    pass
+```
+
+Try the same search queries, you will notice that the search executed faster.
+
+We can further enhance the *search process* by exploiting the properties of
+using a sorted array. A binary search algorithm uses the properties of a sorted
+algorithm. The process is very intuitive and can be illustrated using the
+*De Telefoongids* that is a sorted dataset with name and telephone numbers ordered.
+If you look for someone with the surname "Hejderup", you will start at the index
+H and continue the search there.
+
+**T (30 points):** Your task is to implement a binary search version with the
+same search queries as in the previous task.
+
+```python
+
+sortedTable = quickSort(table)
+def bsearch(sortedTable,f,field='incident_id',find=12345,*args, **kwargs):
+    pass
+```
+
+*Optional (Bonus task)*
+
+**T (30 points):** Last task is to find multiple entries, your task is to modify
+the binary search such that all results for the municipality of Amsterdam is
+returned. 
 
 
