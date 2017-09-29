@@ -30,7 +30,7 @@ structure you will work with is a conventional 2D list structure also known as a
 *Matrix*. The concepts and performance measurements discussed in this assignment
 should be applicable for other data structures such as a _graph_.
 
-In this assignment you will work with a open public dataset from [_Brandweer
+In this assignment, you will work with an open public dataset from [_Brandweer
 Amsterdam-Amstelland_](https://goo.gl/tE3Ahi) that contains over **125.000**
 fire alarms reported in this region. The dataset is provided in a compressed
 zip-format and the resulting CSV-file will be ~124MB. While there are handy
@@ -40,7 +40,8 @@ Python. To read a CSV-file to a 2D array, we do the following:
 
 
 ```python
-import csv
+import csv #NB: don't forget to include the csv library
+
 def load(csv_file):
   """
     Loads the data from the file in the provided argument into a 2D array
@@ -50,8 +51,8 @@ def load(csv_file):
 ```
 If we inspect the first element of the resulting array, we obtain information
 about the structure of the dataset and this is shown below. Consecutive elements
-of the array follow this format or also known as a _schema_.
-
+of the array follow this format where the first element in the row is the
+*incident_id* and the last element is the *gementee*
 ```
 [['incident_id',
   'start_tijd',
@@ -83,15 +84,16 @@ of the array follow this format or also known as a _schema_.
 
 ## Ordering the dataset
 We can observe by inspecting the first 5 rows in the 2D array that the data is
-_unordered_ and the unique identification of each row is the *incident_id*.
-
-In the consecutive tasks, you have to order the dataset according to the
-*incident_id* and according to date 
+_unordered_, the *incident_id* that represents the unique identification of each
+fire alarm event and the creation time stamp of each event is out-of-sync.
 
 
-**T (20 points):** Your task is to implement the **insertion sort** algorithm
-and sort only for the *incident_id*, this algorithm is relatively slow and
-cannot scale well, therefore we partition the 2D array. 
+**T (30 points):** Your first task is to implement the **insertion sort
+algorithm** to sort the dataset according to the *incident_id* and the creation
+date. Notice that the algorithm is slow and will not scale. Therefore only a
+subset of the dataset will be used. From the function definition below, the
+_table_ argument represents the 2D array, _f_ is the compare function and _limit_
+describes the size of the dataset (NB: the offset is always the first element)
 
 ```python
 def insertionSort(table, f, limit=150,*args, **kwargs):
@@ -103,38 +105,58 @@ def insertionSort(table, f, limit=150,*args, **kwargs):
   pass
 ```
 
-A helper function _f_ in the argument list is used for comparing the elements,
-the _incident_id_ is currently a string format and needs to be converted to an
-integer value, the value "0" is the index values for *incident_id* and "6" for
-*datum*
+The compare function _f_ that is provided in the argument list is used for
+comparing two elements and is the piece of information the sort algorithm needs
+to know in which order to sort elements. The _incident_id_ should be sorted as an
+Integer but in the 2D array it is a String. Therefore we need to
+convert to an Integer and also explain the _natural order_ of this type. The "0"
+indicates _incident_id_
 
 ```python
-def cmpf(a , b):
-    return int(a[0]) > int(b[0])
+def cmpf(rowA , rowB):
+    return int(rowA[0]) > int(rowB[0])
+```
+Similarly, this has to be done for date comparison 
 
-def cmpfDatum(a , b):
+```python
+def cmpfDatum(rowA , rowB):
     #import datetime
     #6 = datum
     # 2008/01/03 00:00:00.000000000, remove microsec
-    return datetime.datetime.strptime(a[6][:-10],'%Y/%m/%d %H:%M:%S') >
-    datetime.datetime.strptime(b[6][:-10],'%Y/%m/%d %H:%M:%S')
+    return datetime.datetime.strptime(rowA[6][:-10],'%Y/%m/%d %H:%M:%S') >
+    datetime.datetime.strptime(rowB[6][:-10],'%Y/%m/%d %H:%M:%S')
 
 ```
-Try for different sizes and see that it takes longer time to sort
 
-As seen, it takes longer time the greater the size is, an improvement to this
-algorithm is to use *divide and conquer*-approach by dividing it to sub lists.
-An improvement to this algorithm is called the *shell algorithm*
+After implementing the algorithm, try out the following _limit_ values:
 
-**T (20 points):** Your task is to implement the *shell algorithm* by modifying
-your solution of the algorithm, the shell sort is provided here
+- limit=25
+- limit=75
+- limit=100
+- limit=150
+- limit=250
+
+Notice that the time increases with the size of the data. An improvement to the
+algorithm is to treat this problem using a *divide and conquer*-approach that
+divides the dataset into sub-lists. This improvement is called the *shell
+algorithm*
+
+
+**T (10 points):** Your task is to modify the current implementation of the
+**insertion sort** algorithm to work with *shell sort algorithm*. The modified
+version should be called **gapInsertionSort** and use the arguments specified
+below. You have to solve how the **startposition** and **sublistcount** is
+used to make this work.
+
 
 ```python
-def shellSort(table, f, limit):
-    sublistcount = len(alist)//2
+def shellSort(table, f, limit, *args, **kwargs):
+    subtable = table[1:limit+1]
+    sublistcount = len(subtable)//2
     while sublistcount > 0:
       for startposition in range(sublistcount):
-        gapInsertionSort(table, f,startposition,sublistcount,*args, **kwargs)
+        #implement the function call below
+        gapInsertionSort(subtable,f,startposition,sublistcount,*args, **kwargs)
       print("After increments of size",sublistcount,
                                    "The list is",table)
 
@@ -142,31 +164,32 @@ def shellSort(table, f, limit):
 
 ```
 
-Try for same use cases, can you see the performance difference?
+Try for the same *limit* sizes as in the previous task and notice the
+difference, you will also observe that it will not be able process much more.
 
-We can still do better, we want to be able to process 124,000 and sort these
-rows in the dataset, the previous algorithms have a high time complexity but a
-constant space complexity. There are two other algorithms that have a "O(n log
-n)" time complexity but there space complexity varies. For *merge sort*, the
-space complexity is O (n) which means a linear growth of the space but for a
-*quick sort*, the space complexity is constant but the performance could degrade
-to "O(n^2)" depending on the data and selection of the pivot. For instance, if
-the dataset is ordered or the elements are the same. This is not the case for
-the dataset that we are using
+We can identify that this is not well enough, we are not able to process 124,000
+records and we need to have an algorithm with a lower time complexity. There are
+two other algorithms that have a "O(n log n)" time complexity but there space
+complexity varies. For *merge sort*, the space complexity is O (n) which means a
+linear growth of the space but for a *quick sort*, the space complexity is
+constant but the performance could degrade to "O(n^2)" depending on the data and
+selection of the pivot. For instance, if the dataset is ordered or the elements
+are the same. This is not the case for the dataset that we are using
 
 **T (40 points):** Your task is to implement the *quick sort algorithm*, the
 stubs for the algorithm is presented here
 
 ```python
-def quickSort(alist):
-   quickSortHelper(alist,0,len(alist)-1)
+def quickSort(table):
+   quickSortHelper(table,0,len(alist)-1)
 
-def quickSortHelper(alist,first,last):
+def quickSortHelper(table,first,last):
     pass
 
-def partition(alist,first,last):
+def partition(alist,table,last):
     pass
 ```
+
 **T (30 points):** Create a benchmark that shows the data size vs time for all
 these algorithms
 
