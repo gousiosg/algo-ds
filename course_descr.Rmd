@@ -70,12 +70,12 @@ This course enables the student to:
 | 1 | 1 | Algorithm Analysis   | GG | |
 | 2 | 1 | Basic Data Structures (Lists, Stacks, Sets) | GG | |
 | 2 | 2 | Algorithms for basic data structures | GG | |
-| 3 | 1 | Trees (Binary trees)  | GG | |
-| 3 | 2 | More Trees (B+ Trees) | GG | |
+| 3 | 1 | Trees (Binary trees)  | JH | |
+| 3 | 2 | More Trees (B+ Trees) | JH | |
 | 5 | 1 | Graphs (Representation and Traversal) | PK ||
 | 5 | 1 | Graph algorithms (Topological sorting, Centrality) | PK ||
-| 4 | 1 | Sorting | GG ||
-| 4 | 2 | Searching | GG ||
+| 4 | 1 | Sorting | JH ||
+| 4 | 2 | Searching | JH ||
 | 6 | 1 | Hashing | GG ||
 | 6 | 2 | Strings and string search  | GG ||
 | 7 | 1 | Dynamic programming (Memoization, Shortest paths) | GG||
@@ -84,6 +84,7 @@ This course enables the student to:
 **Lecturers**
 * GG: Georgios Gousios
 * PV: Pavel Kucherbaev
+* JH: Joseph Hejderup
 
 
 ## Assessment
