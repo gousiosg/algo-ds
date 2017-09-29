@@ -225,3 +225,9 @@ vignettes/*.pdf
 
 # End of https://www.gitignore.io/api/r,python,pycharm
 .Rproj.user
+
+# Avoid uploading the generated csv file for assignment 5
+assignments/week5/brwaa_2010-2015.csv
+
+
+
