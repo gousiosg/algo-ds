@@ -1,0 +1,251 @@
+---
+title: "Algorithms and data structures"
+subtitle: Programming assignment 5 -- Searching 
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+A fundamental area in Computer Science is to develop _algorithmic_ processes for
+efficiently _storing_ and _retrieving_ data with good performance. Nowadays,
+data is fast-produced leading to high volume of data in no time. It is
+anticipated that _Internet of Things_ (IoT) devices will generate [400
+zettabytes](https://goo.gl/xu4NcT) of data in 2018. Performing analytics or
+science on such large datasets poses many problems with performance. Two
+important building blocks in solving such problems are _Sorting_ and _Searching_
+algorithms. From the previous lectures, several classes of data structures were
+introduced such as _lists_, _trees_ and _graphs_ that maps a given dataset into
+the organization of that data structure. On a functional-level, the data is the
+same but _working_ with the data structure such as performing an _insert_ or
+_finding an element_ comes with it's trade-offs to performance. This can be
+important to consider depending on the character of the dataset and it's
+application constraints.
+
+The goal of this assignment is to separate the internals of a data structure
+from its operations to understand how the overall performance varies between a
+sorted and unsorted data structure. The two performance aspects that you will
+investigate is the **time complexity** and **space complexity**. The data
+structure you will work with is a conventional 2D list structure also known as a
+*Matrix*. The concepts and performance measurements discussed in this assignment
+should be applicable for other data structures such as a _graph_.
+
+In this assignment, you will work with an open public dataset from [_Brandweer
+Amsterdam-Amstelland_](https://goo.gl/tE3Ahi) that contains over **125.000**
+fire alarms reported in this region. The dataset is provided in a compressed
+zip-format and the resulting CSV-file will be ~124MB. While there are handy
+libraries such as [_pandas_](http://pandas.pydata.org/) that can read a CSV-file
+into a table, we will only restrict to using core libraries that is part of
+Python. To read a CSV-file to a 2D array, we do the following:
+
+
+```python
+import csv #NB: don't forget to include the csv library
+
+def load(csv_file):
+  """
+    Loads the data from the file in the provided argument into a 2D array
+  """
+  with open(csv_file) as csvDataFile:
+      return [row for row in csv.reader(csvDataFile, delimiter=';')]
+```
+If we inspect the first element of the resulting array, we obtain information
+about the structure of the dataset and this is shown below. Consecutive elements
+of the array follow this format where the first element in the row is the
+*incident_id* and the last element is the *gementee*
+```
+[['incident_id',
+  'start_tijd',
+  'incident_type',
+  'landelijke_meldingsclassificatie_niveau1',
+  'landelijke_meldingsclassificatie_niveau2',
+  'landelijke_meldingsclassificatie_niveau3',
+  'datum',
+  'jaar',
+  'maand_nr',
+  'maand_naam',
+  'dag_nr',
+  'dag_naam',
+  'week_nr',
+  'kwartaal',
+  'prioriteit',
+  'uur',
+  'dagdeel',
+  'objecttype',
+  'objectfunctie',
+  'buurt',
+  'wijk',
+  'woonplaats',
+  'gemeente'],
+  ......
+  ]
+```
+
+
+## Ordering the dataset
+We can observe by inspecting the first 5 rows in the 2D array that the data is
+_unordered_, the *incident_id* that represents the unique identification of each
+fire alarm event and the creation time stamp of each event is out-of-sync.
+
+
+**T (30 points):** Your first task is to implement the **insertion sort
+algorithm** to sort the dataset according to the *incident_id* and the creation
+date. Notice that the algorithm is slow and will not scale. Therefore only a
+subset of the dataset will be used. From the function definition below, the
+_table_ argument represents the 2D array, _f_ is the compare function and _limit_
+describes the size of the dataset (NB: the offset is always the first element)
+
+```python
+def insertionSort(table, f, limit=150,*args, **kwargs):
+  """
+    Takes a data table, take a subset of 150 elements and sorts it
+    NB: first value of the array is a schema of the data
+  """
+  subtable = table[1:limit+1]
+  pass
+```
+
+The compare function _f_ that is provided in the argument list is used for
+comparing two elements and is the piece of information the sort algorithm needs
+to know in which order to sort elements. The _incident_id_ should be sorted as an
+Integer but in the 2D array it is a String. Therefore we need to
+convert to an Integer and also explain the _natural order_ of this type. The "0"
+indicates _incident_id_
+
+```python
+def cmpf(rowA , rowB):
+    return int(rowA[0]) > int(rowB[0])
+```
+Similarly, this has to be done for date comparison 
+
+```python
+def cmpfDatum(rowA , rowB):
+    #import datetime
+    #6 = datum
+    # 2008/01/03 00:00:00.000000000, remove microsec
+    return datetime.datetime.strptime(rowA[6][:-10],'%Y/%m/%d %H:%M:%S') >
+    datetime.datetime.strptime(rowB[6][:-10],'%Y/%m/%d %H:%M:%S')
+
+```
+
+After implementing the algorithm, try out the following _limit_ values:
+
+- limit=25
+- limit=75
+- limit=100
+- limit=150
+- limit=250
+
+Notice that the time increases with the size of the data. An improvement to the
+algorithm is to treat this problem using a *divide and conquer*-approach that
+divides the dataset into sub-lists. This improvement is called the *shell
+algorithm*
+
+
+**T (10 points):** Your task is to modify the current implementation of the
+**insertion sort** algorithm to work with *shell sort algorithm*. The modified
+version should be called **gapInsertionSort** and use the arguments specified
+below. You have to solve how the **startposition** and **sublistcount** is
+used to make this work.
+
+
+```python
+def shellSort(table, f, limit, *args, **kwargs):
+    subtable = table[1:limit+1]
+    sublistcount = len(subtable)//2
+    while sublistcount > 0:
+      for startposition in range(sublistcount):
+        #implement the function call below
+        gapInsertionSort(subtable,f,startposition,sublistcount,*args, **kwargs)
+      print("After increments of size",sublistcount,
+                                   "The list is",table)
+
+      sublistcount = sublistcount // 2
+
+```
+
+Try for the same *limit* sizes as in the previous task and notice the
+difference, you will also observe that it will not be able process much more.
+
+We can identify that this is not well enough, we are not able to process 124,000
+records and we need to have an algorithm with a lower time complexity. There are
+two other algorithms that have a "O(n log n)" time complexity but there space
+complexity varies. For *merge sort*, the space complexity is O (n) which means a
+linear growth of the space but for a *quick sort*, the space complexity is
+constant but the performance could degrade to "O(n^2)" depending on the data and
+selection of the pivot. For instance, if the dataset is ordered or the elements
+are the same. This is not the case for the dataset that we are using
+
+**T (40 points):** Your task is to implement the *quick sort algorithm*, the
+stubs for the algorithm is presented here and the challenge here is choosing the
+pivot such that it can in short time process all the records.
+
+```python
+def quickSort(table):
+   quickSortHelper(table,0,len(alist)-1)
+
+def quickSortHelper(table,first,last):
+    pass
+
+def partition(alist,table,last):
+    pass
+```
+
+**T (30 points):** Create a benchmark that shows the data size vs time for all
+these algorithms
+
+## Searching the dataset
+The final part of the assignment is to perform find elements in a data set. We
+will use two search techniques, a simple linear search and binary search.
+
+**T (30 points):** Create a linear search algorithm and your task is to find the
+following: (I have to check on the dataset)
+
+```python
+def lsearch(sortedTable,f,field='incident_id',find=12345,*args, **kwargs):
+    pass
+```
+*Hint 1:* You have to use the same compare function as in the previous tasks to
+provide for *f*
+
+*Hint 2:* The *field=...* represents the format, you can maintain an enum that
+converts a name to the index number in the array
+
+We could observe that for two of the search queries, they took considerable
+time, this due to the fact that we don't know where the items are. Many
+algorithms are designed with the idea that the data set is sorted. Therefore, we
+will try the same on a sorted data set. 
+
+```python
+
+sortedTable = quickSort(table)
+def lsearch(sortedTable,f,field='incident_id',find=12345,*args, **kwargs):
+    pass
+```
+
+Try the same search queries, you will notice that the search executed faster.
+
+We can further enhance the *search process* by exploiting the properties of
+using a sorted array. A binary search algorithm uses the properties of a sorted
+algorithm. The process is very intuitive and can be illustrated using the
+*De Telefoongids* that is a sorted dataset with name and telephone numbers ordered.
+If you look for someone with the surname "Hejderup", you will start at the index
+H and continue the search there.
+
+**T (30 points):** Your task is to implement a binary search version with the
+same search queries as in the previous task.
+
+```python
+
+sortedTable = quickSort(table)
+def bsearch(sortedTable,f,field='incident_id',find=12345,*args, **kwargs):
+    pass
+```
+
+*Optional (Bonus task)*
+
+**T (30 points):** Last task is to find multiple entries, your task is to modify
+the binary search such that all results for the municipality of Amsterdam is
+returned. 
+
+
