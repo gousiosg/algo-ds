@@ -64,24 +64,7 @@ This course enables the student to:
 
 ## Contents
 
-<<<<<<< HEAD
-|Week |Lecture | Topic | Homework|
-|:---:|:------:|-------|---------|
-| 1 | 1 | Course introduction, Recursion  | |
-| 1 | 1 | Algorithm Analysis   | |
-| 2 | 1 | Basic Data Structures (Lists, Stacks, Sets) | |
-| 2 | 2 | Algorithms for basic data structures | |
-| 3 | 1 | Trees (Binary trees)  | |
-| 3 | 2 | More Trees (B+ Trees) | |
-| 4 | 1 | Graphs (Representation and Traversal) | |
-| 4 | 1 | Graph algorithms (Topological sorting, Routing) | |
-| 5 | 1 | Sorting | |
-| 5 | 2 | Searching | |
-| 6 | 1 | Hashing | |
-| 6 | 2 | Strings and string search  | |
-| 7 | 1 | Dynamic programming (Memoization, Shortest paths) | |
-| 7 | 2 | Genetic algorithms  | |
-=======
+
 |Week |Lecture | Lecturer | Topic | Homework|
 |:---:|:------:|----------|-------|---------|
 | 1 | 1 | Course introduction, Recursion  | GG | |
@@ -103,8 +86,6 @@ This course enables the student to:
 * GG: Georgios Gousios
 * PV: Pavel Kucherbaev
 * JH: Joseph Hejderup
-
->>>>>>> 2e7b8268f8513a28e0b75680b8c16315a1531ad3
 
 ## Assessment
 
