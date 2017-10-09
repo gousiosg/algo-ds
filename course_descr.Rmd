@@ -65,27 +65,28 @@ This course enables the student to:
 ## Contents
 
 
-|Week |Lecture | Lecturer | Topic | Homework|
+|Week |Lecture | Topic | Lecturer | Homework|
 |:---:|:------:|----------|-------|---------|
 | 1 | 1 | Course introduction, Recursion  | GG | |
 | 1 | 1 | Algorithm Analysis   | GG | |
-| 2 | 1 | Basic Data Structures (Lists, Stacks, Sets) | GG | |
-| 2 | 2 | Algorithms for basic data structures | GG | |
+| 2 | 1 | Basic Data Structures (Lists, Stacks, Sets) | MK | |
+| 2 | 2 | Algorithms for basic data structures | MK | |
 | 3 | 1 | Trees (Binary trees)  | JH | |
 | 3 | 2 | More Trees (B+ Trees) | JH | |
-| 5 | 1 | Graphs (Representation and Traversal) | PK ||
+| 4 | 1 | Graphs (Representation and Traversal) | PK ||
 | 5 | 1 | Graph algorithms (Topological sorting, Centrality) | PK ||
-| 4 | 1 | Sorting | JH ||
-| 4 | 2 | Searching | JH ||
-| 6 | 1 | Hashing | GG ||
-| 6 | 2 | Strings and string search  | GG ||
-| 7 | 1 | Dynamic programming (Memoization, Shortest paths) | GG||
-| 7 | 2 | Genetic algorithms  | GG||
+| 5 | 1 | Sorting | JH ||
+| 5 | 2 | Searching | JH ||
+| 6 | 1 | Strings and string search  | GG ||
+| 6 | 2 | Genetic algorithms  | MS ||
+| 7 | 1 | Overall Q/A | GG ||
 
 **Lecturers**
 * GG: Georgios Gousios
 * PV: Pavel Kucherbaev
 * JH: Joseph Hejderup
+* MK: Maria Kechagia
+* MS: Mozhan Soltani
 
 ## Assessment
 
