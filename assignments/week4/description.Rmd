@@ -67,9 +67,7 @@ the number of incoming edges in to a node.
 
 ## Computing shortest paths
 
-Shortest paths are the basis for many network measures. We have seen
-two algorithms to calculate shortest paths (Dijkstra and Bellman–Ford); now, 
-you will need to implement one!
+Shortest paths are the basis for many network measures. You will need to implement Dijkstra algorithm.
 
 **T (20 points):** Write a function that computes the shortest paths
 between all node pairs in the graph. 
