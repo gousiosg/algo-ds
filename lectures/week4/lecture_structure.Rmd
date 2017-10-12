@@ -1,0 +1,43 @@
+---
+title: "Graph Dracula"
+date: "`r Sys.Date()`"
+author: Pavel Kucherbaev
+output:
+  revealjs::revealjs_presentation:
+    theme: solarized
+    highlight: pygments
+    center: true
+    reveal_options:
+        slideNumber: true
+        previewLinks: true
+        progress: true
+---
+
+For structure I used: 
+
+- https://classroom.udacity.com/courses/cs215/
+- https://classroom.udacity.com/courses/ud513/
+- the book Introduction to algorithms
+
+# Lecture 1
+
+## Part 1
+- What is a graph
+- Directions and cycles
+- Graph representation (Edge list, Adjacency list, Adjacency matrix)
+
+## Part 2
+- Euler path, Hamiltonian path
+- Types of graphs
+- Centrality (e.g. betweenness, closeness, eigenvector, node)
+
+#Lecture 2
+
+## Part 1
+- Bredth-first search
+- Depth-first search
+
+## Part 2
+- Shortest path. Dijkstra algorithm.
+- All-pairs shortest path.
+- Recap of the material
