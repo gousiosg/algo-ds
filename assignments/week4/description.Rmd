@@ -98,13 +98,6 @@ pairs = list(combinations(a, 2))
 print pairs
 ```
 
-**T (10 points), bonus** For very big graphs, computations such as the above
-can consume very big amounts of memory due to intermediate objects that
-need to be held in memory. One such example is the intermediate array 
-that holds the combinations of nodes. One way to deal with this issue is to
-create a _generator_ function that will calculate the shortest path every time
-it is called. In this **bonus** task, you have to implement this function.
-
 ## Ranking important users
 
 One of the primary uses of SNA is to identify important/influencial nodes.
