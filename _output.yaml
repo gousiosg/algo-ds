@@ -1,7 +1,10 @@
 revealjs::revealjs_presentation:
   highlight: pygments
   center: false
-  theme: black
+  theme: white
+  css: theme.css
   reveal_options:
     slideNumber: true
     previewLinks: true
+    chalkboard: true
+linkcolor: blue

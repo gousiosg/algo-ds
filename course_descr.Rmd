@@ -2,7 +2,7 @@
 title: "Algorithms and Data Structures"
 subtitle: "Course information"
 author: "Georgios Gousios"
-
+date: "`r format(Sys.time(), '%d %B %Y')`"
 output: revealjs::revealjs_presentation
 bibliography: bibliography.bib
 csl: ieee.csl
@@ -80,8 +80,10 @@ This course enables the student to:
 | 6 | 1 | Strings and string search  | GG ||
 | 6 | 2 | Genetic algorithms  | MS ||
 | 7 | 1 | Overall Q/A | GG ||
+| 7 | 2 | No lecture | -- ||
 
 **Lecturers**
+
 * GG: Georgios Gousios
 * PV: Pavel Kucherbaev
 * JH: Joseph Hejderup
