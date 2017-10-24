@@ -1,0 +1,50 @@
+---
+title: "Trees"
+date: "`r Sys.Date()`"
+author: Joseph Hejderup
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
+---
+
+```{r child="header.Rmd", include=FALSE}
+```
+
+# Tree as a data structure 
+
+## Why order data to a tree structure?
+
+## Definition of a tree
+
+## Tree terminology
+
+## Traversing a tree
+
+# Binary Trees
+
+## Properties
+
+## Binary Search Trees (BST)
+
+## Searching in a Binary Search Tree
+
+## Tree Manipulation
+- include cost of each operation
+
+### Insertion
+### Deletion
+
+## Random Binary Tree
+
+# Self-balancing binary search tree
+
+## Treap
+
+## AVL Tree
+
+## WAVL Tree
+
+## Scapegoat Tree
+
+```{r child="footer.Rmd", include=FALSE}
+```
