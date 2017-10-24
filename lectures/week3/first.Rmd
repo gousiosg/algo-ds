@@ -2,17 +2,13 @@
 title: "`r emo::ji('tree')`, `r emo::ji('tree')` & `r emo::ji('tree')`"
 date: "`r Sys.Date()`"
 author: Joseph Hejderup
-output:
-  revealjs::revealjs_presentation:
-    theme: solarized
-    highlight: pygments
-    center: true
-    reveal_options:
-        slideNumber: true
-        previewLinks: true
-        progress: true
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
 ---
 
+```{r child="header.Rmd", include=FALSE}
+```
 
 # Tree as a data structure 
 
@@ -50,6 +46,5 @@ output:
 
 ## Scapegoat Tree
 
-
-
-
+```{r child="footer.Rmd", include=FALSE}
+```

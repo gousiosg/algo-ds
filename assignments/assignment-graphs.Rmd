@@ -1,11 +1,14 @@
 ---
 title: "Algorithms and data structures"
-subtitle: Programming assignment 4 -- Graphs
-output:
-  pdf_document: default
-  html_document: default
-  word_document: default
+subtitle: "Programming assignment 4 -- Graphs"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
 ---
+
+```{r child="header.Rmd", include=FALSE}
+```
 
 Graphs are one of the most common data structures in computer science;
 graph-based modeling of problems is at the heart of many systems we use
@@ -123,3 +126,6 @@ def betweenness(graph):
 
 **T (10 points):** Use the function above to rank the nodes (users) in
 terms of importance.
+
+```{r child="footer.Rmd", include=FALSE}
+```

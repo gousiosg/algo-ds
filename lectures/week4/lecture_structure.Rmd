@@ -1,17 +1,14 @@
 ---
 title: "Graph Dracula"
-date: "`r Sys.Date()`"
-author: Pavel Kucherbaev
-output:
-  revealjs::revealjs_presentation:
-    theme: solarized
-    highlight: pygments
-    center: true
-    reveal_options:
-        slideNumber: true
-        previewLinks: true
-        progress: true
+author: "Pavel Kucherbaev"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
 ---
+
+```{r child="header.Rmd", include=FALSE}
+```
 
 For structure I used: 
 
@@ -41,3 +38,6 @@ For structure I used:
 - Shortest path. Dijkstra algorithm.
 - All-pairs shortest path.
 - Recap of the material
+
+```{r child="footer.Rmd", include=FALSE}
+```

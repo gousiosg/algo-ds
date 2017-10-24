@@ -1,9 +1,11 @@
 ---
 title: "Algorithms and data structures"
 subtitle: Programming assignment 3 -- Red-Black Trees
-output:
-  pdf_document: default
-  html_document: default
+author: "Georgios Gousios"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
 ---
 
 A Red–Black tree is a self-balancing binary search tree. The main difference to
@@ -11,9 +13,11 @@ a normal binary tree is an extra bit that stores the parity  (the _color_) of
 each node. This bit can be either be 0 (_black_) or 1 (_red_). An example of a
 red-black tree is shown in Figure 1 (Hardcoded) 
 
-```{r rbtree, out.width = "300px", echo=FALSE, fig.align = "center", fig.cap="A red-black tree"}
-knitr::include_graphics("rb-tree.png")
+```{r child="header.Rmd", include=FALSE}
 ```
+
+
+![A Red-Black tree](rb-tree.png)
 
 The following invariant must be satisfied every time an operation is
 being made on node of a Red-Black tree:
@@ -211,3 +215,5 @@ insertion in Red-Black trees is $O(log(n))$.
 2. A Red-Black tree [in C](https://www.cs.auckland.ac.nz/software/AlgAnim/red_black.html)
 3. Wikipedia on [Red-Black Trees](https://en.wikipedia.org/wiki/Red–black_tree)
 
+```{r child="footer.Rmd", include=FALSE}
+```

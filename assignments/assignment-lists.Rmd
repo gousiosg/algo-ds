@@ -1,11 +1,13 @@
 ---
 title: "Algorithms and data structures"
 subtitle: "Programming assignment 2 -  Doubly Linked List "
-output: pdf_document
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r child="header.Rmd", include=FALSE}
 ```
 
 ### Doubly Linked List
@@ -228,3 +230,6 @@ _Hint_: You should not use the *dict* from Python.
 $Names = [``Max", ``David", ``Sophie", ``Anne", ... ]$
 
 $Grades = [``10", ``7", ``8", ``10", ... ]$
+
+```{r child="footer.Rmd", include=FALSE}
+```

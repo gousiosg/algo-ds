@@ -1,14 +1,13 @@
 ---
 title: "Basic Data Structures"
 author: "Maria Kechagia"
-date: "18/10/2017"
-output:
-  ioslides_presentation: default
-  slidy_presentation: default
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r child="header.Rmd", include=FALSE}
 ```
 
 ## Sets
@@ -164,3 +163,6 @@ and the ```next``` pointer of the tail of the list points to its head.
 - Ordering
 
 - Hashing
+
+```{r child="footer.Rmd", include=FALSE}
+```
