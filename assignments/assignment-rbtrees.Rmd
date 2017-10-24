@@ -112,9 +112,8 @@ After inserting the node, the tree potentially needs to be rebalanced.
 An example of why this is so can be seen in the following plot. What
 we see here is that the insertion of node 4 violates invariant number 4.
 
-```{r, out.width = "200px", echo=FALSE, fig.align = "center", fig.cap="Violating Red-Black tree invariants on insert. Node 5 has a red node as child."}
-knitr::include_graphics("rb-invariant-violation.jpg")
-```
+![Violating Red-Black tree invariants on insert. Node 5 has a red node as child.](rb-invariant-violation.jpg)
+
 
 The rebalancing operation can be quite complicated; the pseudocode below
 takes care of all the cases.
@@ -166,9 +165,7 @@ You might be wondering with `left_rotate` and `right_rotate` are. They are
 functions that represent common operations on trees. To understand how they work
 have a look at the plot below.
 
-```{r, out.width = "300px", echo=FALSE, fig.align = "center", fig.cap="Left and right rotation."}
-knitr::include_graphics("rb-tree-rotation.png")
-```
+![Rotating a Red-Black tree](rb-tree-rotation.png)
 
 Below you can find the Python code for the left_rotate method.
 

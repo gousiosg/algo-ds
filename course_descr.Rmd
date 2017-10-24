@@ -10,6 +10,9 @@ nocite: |
   @Cormen09,@Louridas17
 ---
 
+```{r child="header.Rmd", include=FALSE}
+```
+
 ## General description
 
 Algorithms and data structures are fundamental notions in computer science.
@@ -69,13 +72,13 @@ This course enables the student to:
 |:---:|:------:|----------|-------|---------|
 | 1 | 1 | Course introduction, Recursion  | GG | |
 | 1 | 1 | Algorithm Analysis   | GG | |
-| 2 | 1 | Basic Data Structures (Lists, Stacks, Sets) | MK | |
+| 2 | 1 | [Basic Data Structures](basic-structures.nb.html) (Lists, Stacks, Sets) | MK | [Doubly-linked lists](assignment-lists.ipynb) |
 | 2 | 2 | Algorithms for basic data structures | MK | |
-| 3 | 1 | Trees (Binary trees)  | JH | |
+| 3 | 1 | [Trees](trees.nb.html) (Binary trees)  | JH | [Red-Black Trees](assignment-rbtrees.ipynb) |
 | 3 | 2 | More Trees (B+ Trees) | JH | |
-| 4 | 1 | Graphs (Representation and Traversal) | PK ||
+| 4 | 1 | [Graphs](graphs.nb.html) (Representation and Traversal) | PK | [Graph algorithms](assignment-graphs.ipynb)|
 | 5 | 1 | Graph algorithms (Topological sorting, Centrality) | PK ||
-| 5 | 1 | Sorting | JH ||
+| 5 | 1 | Sorting | JH | [Searching](assignment-searching.ipynb)|
 | 5 | 2 | Searching | JH ||
 | 6 | 1 | Strings and string search  | GG ||
 | 6 | 2 | Genetic algorithms  | MS ||
@@ -99,15 +102,5 @@ assessment criteria specified below:
 All individual assignments must have a passing grade.
 * Computer Exam (60%)
 
-## Bibliography
-
-If you would like to get an in-depth treatment of the subject, I recommend
-investing in the following books:
-
-<div id="refs"></div>
-
-## Copyright
-![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
-This work is (c) 2017 - onwards by Georgios Gousios and licensed under the
-[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
-](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+```{r child="footer.Rmd", include=FALSE}
+```
