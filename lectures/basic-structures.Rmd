@@ -1,20 +1,21 @@
 ---
 title: "Basic Data Structures"
 author: "Maria Kechagia"
-date: "`r format(Sys.time(), '%d %B %Y')`"
-output: revealjs::revealjs_presentation
-bibliography: bibliography.bib
-csl: ieee.csl
+date: "18/10/2017"
+output:
+  ioslides_presentation: default
+  slidy_presentation: default
 ---
 
-```{r child="header.Rmd", include=FALSE}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## Sets
 
 In mathematics, a **set** is a collection of *distinct* elemets.
 
-![A set of shapes](figures/set-of-shapes.svg)
+![](/Users/marki/Documents/myrepos/algo-ds/lectures/week2/figures/set-of-shapes.svg)
 
 ## Dynamic Sets
 
@@ -156,13 +157,116 @@ whereas the maxinum element is the *tail* of the list.
 the ```prev``` pointer of the head of the list points to its tail,
 and the ```next``` pointer of the tail of the list points to its head.
 
-## Data Structure Algorithms
+## Representation of Data Structures in Computer Memory
 
-- Searching
+An **array** is allocated as one block of memory.
+Each array element has its own space in the array and it can be directly accessed
+using the ```[]``` syntax.
+The following figure illustrates how an array might look like in memory.
 
-- Ordering
+![](/Users/marki/Documents/myrepos/algo-ds/lectures/week2/figures/array-memory.png)
 
-- Hashing
+## Disadvantages of Arrays
 
-```{r child="footer.Rmd", include=FALSE}
+- The size of the arrays is *fixed*.
+This means that this size is known at compile time.
+
+- To avoid the above case, we can declare arrays
+with more capasity, in case we need this in the future.
+Even though this strategy can be convenient,
+we maybe have wasted space in the array.
+Also, if we finally need to process much more elements
+than the capacity of the array,
+the code will break.
+
+- Inserting new elements at the front of the array is expensive,
+because the already stored elements need to be shifted over to make room
+to the new added elements.
+
+To overcome these problems,
+we can use **linked lists** that separately allocate memory for each element,
+when it is actually necessary.
+
+## Linked List in Memory
+
+- Contrary to arrays that allocate memory for all its elements
+together in block of memory,
+linked lists *separately* allocate space for *each* element
+in its own block of memory called as "linked list element" or "node".
+
+- The list uses *pointers* to connect all its nodes together
+(i.e. such as the links in a chain).
+
+- Each *node* has two fields.
+A "data" field that stores the element and a "next" field,
+which is the pointer to the next node.
+Each node is allocated in the *heap*.
+
+![](/Users/marki/Documents/myrepos/algo-ds/lectures/week2/figures/ll-memory.png)
+
+## Linked List in Python
+
+In order to implement a linked list in Python,
+we need to create a **Node**
+that will be store *data* and a *reference* to the next node.
+
+## The Class Node
+
+```python
+class Node:
+    def __init__(self,initdata):
+        self.data = initdata
+        self.next = None
+
+    def getData(self):
+        return self.data
+
+    def getNext(self):
+        return self.next
+
+    def setData(self,newdata):
+        self.data = newdata
+
+    def setNext(self,newnext):
+        self.next = newnext
 ```
+
+## The New Node
+
+```python
+>>> temp = Node(93)
+>>> temp.getData()
+93
+```
+
+![](/Users/marki/Documents/myrepos/algo-ds/lectures/week2/figures/node.png)
+
+## An Unordered List Class
+
+```python
+class UnorderedList:
+
+    def __init__(self):
+        self.head = None
+        
+    def isEmpty(self):
+      return self.head == None
+      
+    def add(self,item):
+      temp = Node(item)
+      temp.setNext(self.head)
+      self.head = temp
+```
+
+## The New List
+
+```python
+>>> mylist.add(31)
+>>> mylist.add(77)
+>>> mylist.add(17)
+>>> mylist.add(93)
+>>> mylist.add(26)
+>>> mylist.add(54)
+```
+
+![](/Users/marki/Documents/myrepos/algo-ds/lectures/week2/figures/ll.png)
