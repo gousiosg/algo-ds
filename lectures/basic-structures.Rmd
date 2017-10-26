@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 In mathematics, a **set** is a collection of *distinct* elemets.
 
-![](/Users/marki/Documents/myrepos/algo-ds/lectures/figures/set-of-shapes.svg)
+![](./figures/set-of-shapes.svg)
 
 ## Dynamic Sets
 
@@ -164,7 +164,7 @@ Each array element has its own space in the array and it can be directly accesse
 using the ```[]``` syntax.
 The following figure illustrates how an array might look like in memory.
 
-![](/Users/marki/Documents/myrepos/algo-ds/lectures/figures/array-memory.png)
+![](./figures/array-memory.png)
 
 ## Disadvantages of Arrays
 
@@ -202,7 +202,7 @@ A "data" field that stores the element and a "next" field,
 which is the pointer to the next node.
 Each node is allocated in the *heap*.
 
-![](/Users/marki/Documents/myrepos/algo-ds/lectures/figures/ll-memory.png)
+![](./figures/ll-memory.png)
 
 ## Linked List in Python
 
@@ -239,7 +239,7 @@ class Node:
 93
 ```
 
-![](/Users/marki/Documents/myrepos/algo-ds/lectures/figures/node.png)
+![](./figures/node.png)
 
 ## An Unordered List Class
 
@@ -269,4 +269,4 @@ class UnorderedList:
 >>> mylist.add(54)
 ```
 
-![](/Users/marki/Documents/myrepos/algo-ds/lectures/figures/ll.png)
+![](./figures/ll.png)
