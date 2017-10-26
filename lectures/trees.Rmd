@@ -10,9 +10,34 @@ csl: ieee.csl
 ```{r child="header.Rmd", include=FALSE}
 ```
 
-# Tree as a data structure 
+# Tree as a data structure {data-background="figures/tree_american.jpg"}
 
-## Why order data to a tree structure?
+## Why organize data as a tree structure?
+
+- Humans like hierarchies and *hierarchical* ordering. Examples are *family
+  tree*, *governance*, *species* 
+- This form of systematic organization in a hierarchical order helps computers
+  to localize and make decisions in a much more efficient way then linear data
+  structures
+
+## Example: Visiting a distant aunt
+
+- You only meet her once every three years, she is from your dad's side. There
+  is a huge family gathering next week and you need to find her address.
+  Learning from the previous lecture, the data is organized in this fashion
+
+![](./figures/tree_linear.svg)
+
+## Example: Visiting a distant aunt
+
+If we structure the family in a tree, we can find it her address in less time,
+we know she is on the dad side, thus we avoid exploring half the family!
+
+![](./figures/tree_nonlinear.svg)
+
+
+
+
 
 ## Definition of a tree
 
