@@ -131,29 +131,117 @@ class BinaryTree():
             self.left = tree
 ```
 
-## 
 
+## Does shape matter?
 
+Short Answer: YES!
 
+- The depth of the tree impacts the time of traversing a tree
+- The order in which we add elements matters, the shape it can take, is shown in
+  the next slide
 
-
-## Types of Binary Trees
-
-
+## Three different types of a tree?
+![](./figures/tree_types.svg)
 
 
 ## Binary Search Trees (BST)
+- As the name indication, it provides means to search in a Binary Tree
+  structure
+- A binary tree is a Binary Search tree if the value of the node is greater the
+  values of each node in the left subtree and smaller than the values of each
+  node in the right subtree
+
+## Example of a BST  
+
+![](./figures/tree_bst.svg)
+
 
 ## Searching in a Binary Search Tree
 
-## Tree Manipulation
-- include cost of each operation
+If we are looking for element X:
 
-### Insertion
+1. Compare current node's key with X. If it's equal, we've found the key. All
+   done.
+2. If X is less than node's key, we start looking at node's left subtree. It's
+   because we know that right subtree cannot contain anything greater than X.
+3. If X is greater than node's key, we start looking in the right subtree.
+4. We repeat this process until we find the key or we reach the leaf node. If we
+   reach the leaf node and haven't found the key as yet, we return not found.
 
-### Deletion
+## Example: Lookup value 49 in a BST
 
-## Random Binary Tree
+![](./figures/tree_bst_search_1.svg)
+
+## Example: Lookup value 49 in a BST
+
+![](./figures/tree_bst_search_2.svg)
+
+## Example: Lookup value 49 in a BST
+
+![](./figures/tree_bst_search_3.svg)
+
+
+## Inserting a value into a BST
+
+1. Compare current node's key with K.
+2. If K is less than the current node,
+    1. If left child of current node is Null, we insert K as the left child of
+    current node and return.
+    2. If the left child is not Null, the left child becomes the new current
+       node, and we repeat the process from step 1.
+3. If K is greater than the current node,
+    1. If right child of current node is Null, we insert K as the right child of
+       the current node and return.
+    2. If the right child is not Null, the right child becomes the new current
+       node, and we repeat the process from step 1.
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_1.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_2.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_3.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_4.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_5.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_6.svg)
+
+## Removing a value from a BST
+
+When we have to delete a node with two children, we have two options. Let's say
+that the node to be deleted has key X.
+
+1. Replace the current node's key with its predecessor and then trigger delete
+   for predecessor in node's left subtree.
+2. Replace the current node's key with its successor and then trigger delete for
+   predecessor in node's right subtree.
+
+## Removing 40 from the BST Example
+
+![](./figures/tree_rm_1.svg)
+
+
+## Removing 40 from the BST Example
+
+![](./figures/tree_rm_2.svg)
+
+## Removing 40 from the BST Example
+
+![](./figures/tree_rm_3.svg)
+
 
 # Self-balancing binary search tree
 
