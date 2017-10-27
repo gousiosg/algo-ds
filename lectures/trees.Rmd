@@ -36,18 +36,111 @@ we know she is on the dad side, thus we avoid exploring half the family!
 ![](./figures/tree_nonlinear.svg)
 
 
-
-
-
 ## Definition of a tree
+
+![](./figures/tree_def.svg)
 
 ## Tree terminology
 
-## Traversing a tree
+- The **root** node does not have a **parent node**
+- A **parent** node has zero, one or more **children**
+- Certain nodes are both a parent and child
+- Nodes on the same level, are *siblings*
+- Each branch of the tree are disjoint and is a sub-tree of the tree
+- This is called *m-ary tree*
 
-# Binary Trees
+## Traversing a tree
+There are three types of ways to traverse a tree
+
+
+- Pre-order
+- In-order
+- Post-order
+
+## Pre-order
+
+![](./figures/preorder.png)
+
+
+## In-order
+
+![](./figures/inorder.png)
+
+
+## Post-Order
+
+![](./figures/postorder.png)
+
+# Binary Trees  {data-background="figures/tree_binary_intro.svg"}
 
 ## Properties
+
+- A Binary tree is a *2-ary* tree with zero, one or two *children* (left or
+    right)
+- The structure is simple and forms more of a "decision" tree, where each step
+  resembles a yes or no answer
+- This makes it efficient for sorting and searching 
+  
+- The depth of a node is the number of edges from the root to the node.
+- The height of a node is the number of edges from the node to the deepest leaf.
+- The height of a tree is a height of the root.
+- A full binary tree.is a binary tree in which each node has exactly zero or two
+  children.
+- A complete binary tree is a binary tree, which is completely filled, with the
+  possible exception of the bottom level, which is filled from left to right.
+
+## Implementation
+
+```python
+class BinaryTree():
+
+    def __init__(self,rootid):
+      self.left = None
+      self.right = None
+      self.rootid = rootid
+
+    def getLeftChild(self):
+        return self.left
+    def getRightChild(self):
+        return self.right
+    def setNodeValue(self,value):
+        self.rootid = value
+    def getNodeValue(self):
+        return self.rootid
+
+```
+
+## Adding elements to the tree
+
+```python
+
+    def insertRight(self,newNode):
+        if self.right == None:
+            self.right = BinaryTree(newNode)
+        else:
+            tree = BinaryTree(newNode)
+            tree.right = self.right
+            self.right = tree
+
+    def insertLeft(self,newNode):
+        if self.left == None:
+            self.left = BinaryTree(newNode)
+        else:
+            tree = BinaryTree(newNode)
+            tree.left = self.left
+            self.left = tree
+```
+
+## 
+
+
+
+
+
+## Types of Binary Trees
+
+
+
 
 ## Binary Search Trees (BST)
 
@@ -57,6 +150,7 @@ we know she is on the dad side, thus we avoid exploring half the family!
 - include cost of each operation
 
 ### Insertion
+
 ### Deletion
 
 ## Random Binary Tree
@@ -70,6 +164,9 @@ we know she is on the dad side, thus we avoid exploring half the family!
 ## WAVL Tree
 
 ## Scapegoat Tree
+
+# B+ Trees
+
 
 ```{r child="footer.Rmd", include=FALSE}
 ```
