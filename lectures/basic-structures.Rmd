@@ -518,19 +518,196 @@ XX: the table to be added here.
 
 ## Sorting
 
+Sorting is the process of assigning the elements of a collection (e.g. list)
+in a particular order (e.g. put words in an alphabetical order).
+
+A typical *systematic way* to sort the elements of a collection
+is, *first*, to compare two values from the collection
+seeing which is the smaller (or greater).
+
+And, *second*, if the two values are not in the correct order,
+based on their *comparison*,
+we need to *exchange* them.
+
+This *exchange* is expensive and,
+therefore, the totall *number* of the needed exchanges
+will indicate the *efficiency* of a sorting algorithm.
+
 ## Bubble Sort
+
+![](./figures/bubble-sort.png)
+
+## Bubble Sort Implementation
+
+```python
+def bubbleSort(alist):
+    for passnum in range(len(alist)-1,0,-1):
+        for i in range(passnum):
+            if alist[i]>alist[i+1]:
+                temp = alist[i]
+                alist[i] = alist[i+1]
+                alist[i+1] = temp
+```
+
+```python
+alist = [54,26,93,17,77,31,44,55,20]
+bubbleSort(alist)
+print(alist)
+```
+
+```python
+[17, 20, 26, 31, 44, 54, 55, 77, 93]
+```
+
+## Bubble Sort Complexity
+
+Regardless of how the items are arranged in the initial list,
+$n−1$ passes will be made to sort a list of size $n$.
+
+In the *best* case scenario,
+if the list is already ordered,
+we will need to perform no exchanges.
+
+However, in the *worst* case, every comparison will cause an exchange.
+Therefore, the complexity of the algorithm is $O(n^2)$.
 
 ## Selection Sort
 
+The selection sort makes *one* exchange for every pass in the list.
+The algorithm finds the greater element in the list
+and then places it in the proper location (from the end of the list).
+
+![](./figures/selection-sort.png)
+
+## Selection Sort Implementation
+
+```python
+def selectionSort(alist):
+   for fillslot in range(len(alist)-1,0,-1):
+       positionOfMax=0
+       for location in range(1,fillslot+1):
+           if alist[location]>alist[positionOfMax]:
+               positionOfMax = location
+
+       temp = alist[fillslot]
+       alist[fillslot] = alist[positionOfMax]
+       alist[positionOfMax] = temp
+```
+
+```python
+alist = [54,26,93,17,77,31,44,55,20]
+selectionSort(alist)
+print(alist)
+```
+
+```python
+[17, 20, 26, 31, 44, 54, 55, 77, 93]
+```
+
+## Selection Sort Complexity
+
+The selection sort makes the same number of comparisons
+as the bubble sort and is therefore also $O(n^2)$.
+
+However, due to the reduction in the number of exchanges,
+the selection sort typically executes faster than the bubble sort.
+
 ## Insertion Sort
+
+The insertion sort algorith maintains
+a sorted sublist in the lowest positions of a list.
+Each new item is "inserted" sorted
+to the sublist.
+
+![](./figures/insertion-sort.png)
+
+## Insertion Sort Implementation
+
+```python
+def insertionSort(alist):
+   for index in range(1,len(alist)):
+
+     currentvalue = alist[index]
+     position = index
+
+     while position>0 and alist[position-1]>currentvalue:
+         alist[position]=alist[position-1]
+         position = position-1
+
+     alist[position]=currentvalue
+```
+
+```python
+alist = [54,26,93,17,77,31,44,55,20]
+insertionSort(alist)
+print(alist)
+```
+
+```python
+[17, 20, 26, 31, 44, 54, 55, 77, 93]
+```
+
+## Insertion Sort Complexity
+
+The maximum number of comparisons for an insertion sort
+is the sum of the first $n−1$ integers.
+This is $O(n^2)$.
+
+However, in the best case,
+only one comparison needs to be done on each pass.
+This would be the case for an already sorted list.
 
 ## Shell Sort
 
+This alrgorithm starts by sorting pairs of elements far apart from each other,
+then progressively reducing the gap between elements to be compared.
+
+It is a generalization of the bubble and insertion sort algorithms.
+
+XX: to be continued
+
 ## Merge Sort
+
+Merge sort is a recursive algorithm that continually splits a list in the middle.
+
+After two halves are sorted,
+then the **merge** operation is performed.
+
+![](./figures/split.png)
+
+## Merge
+
+![](./figures/merge.png)
+
+## Complexity of Merge Sort
+
+A merge sort is an $O(n log n)$ algorithm.
+
+Can you explain why?
 
 ## Quick Sort
 
-## Summary
+A quick sort first selects a value,
+which is called the *pivot* value.
+
+The role of the pivot value is to assist with splitting the list.
+The actual position where the pivot value belongs in the final sorted list,
+commonly called the split point,
+will be used to divide the list for subsequent calls to the quick sort.
+
+## How does it works?
+
+![](./figures/quick-sort.png)
+
+## Quick Sort Complexity
+
+In the worst case, the split points may not be in the middle and
+can be very skewed to the left or the right.
+In this case, sorting a list of $n$ items divides into
+sorting a list of $0$ items and a list of $n−1$ items.
+
+Then sorting a list of $n−1$ divides into a list of size $0$ and a list of size $n−2$, and so on.
+The result is an $O(n^2)$ sort with all of the overhead that recursion requires.
 
 ## Bibliography
 
