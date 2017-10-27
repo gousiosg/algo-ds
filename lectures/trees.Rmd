@@ -245,15 +245,34 @@ that the node to be deleted has key X.
 
 # Self-balancing binary search tree
 
-## Treap
+## 
+
+A self-balancing binary search tree or height-balanced binary search tree is a
+binary search tree (BST) that attempts to keep its height, or the number of
+levels of nodes beneath the root, as small as possible at all times,
+automatically.
+
+- Most operations on a BST take time proportional to the height of the tree, so it
+is desirable to keep the height small.
+
+- Self-balancing binary trees solve this problem by performing transformations on
+the tree at key times, in order to reduce the height. Although a certain
+overhead is involved, it is justified in the long run by ensuring fast execution
+of later operations.
+
+- The height must always be at most the ceiling of log2n.
+
+- Balanced BSTs are not always so precisely balanced, since it can be expensive to
+keep a tree at minimum height at all times; instead, most algorithms keep the
+height within a constant factor of this lower bound.
 
 ## AVL Tree
-
-## WAVL Tree
 
 ## Scapegoat Tree
 
 # B+ Trees
+
+## 
 
 
 ```{r child="footer.Rmd", include=FALSE}
