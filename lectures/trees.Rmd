@@ -266,14 +266,135 @@ of later operations.
 keep a tree at minimum height at all times; instead, most algorithms keep the
 height within a constant factor of this lower bound.
 
+## Typical Binary Tree
+
+``` python
+class Node:
+   """
+   AVL Tree Node class
+   """
+
+   def __init__(self, key):
+      """
+      Node constructor
+      """
+      self.left = None
+      self.right = None
+      self.key = key
+
+   def __str__(self):
+      return "%s" % self.key
+```
+
 ## AVL Tree
 
-## Scapegoat Tree
+``` python
+class AVLTree():
+    """
+    Implementation of AVL tree
+    """
+    def __init__(self):
+        self.node = None
+        self.height = -1
+        self.balance = 0
+```
+
+## Insertion
+
+```python
+    def insert(self, key):
+        """
+        Insert new key into node
+        """
+        # Create new node
+        n = Node(key)
+
+        # Initial tree
+        if self.node == None:
+            self.node = n
+            self.node.left = AVLTree()
+            self.node.right = AVLTree()
+        # Insert key to the left subtree
+        elif key < self.node.key:
+            self.node.left.insert(key)
+        # Insert key to the right subtree
+        elif key > self.node.key:
+            self.node.right.insert(key)
+
+        # Exit, key already exists in the tree
+            
+        # Rebalance tree if needed
+        self.rebalance()
+```
+
+## Traversal
+
+```python
+    def inorder_traverse(self):
+        """
+        Inorder traversal of the tree
+            Left subree + root + Right subtree
+        """
+        result = []
+
+        if not self.node:
+            return result
+        
+        result.extend(self.node.left.inorder_traverse())
+        result.append(self.node.key)
+        result.extend(self.node.right.inorder_traverse())
+
+        return result
+```
+
+## Deletion
+```python
+    def delete(self, key):
+        if self.node != None:
+            if self.node.key == key:
+                # Key found in leaf node, just erase it
+                if not self.node.left.node and not self.node.right.node:
+                    self.node = None
+                # Node has only one subtree (right), replace root with that one
+                elif not self.node.left.node:                
+                    self.node = self.node.right.node
+                # Node has only one subtree (left), replace root with that one
+                elif not self.node.right.node:
+                    self.node = self.node.left.node
+                else:
+                    # Find  successor as smallest node in right subtree or
+                    #       predecessor as largest node in left subtree
+                    successor = self.node.right.node  
+                    while successor and successor.left.node:
+                        successor = successor.left.node
+
+                    if successor:
+                        self.node.key = successor.key
+
+                        # Delete successor from the replaced node right subree
+                        self.node.right.delete(successor.key)
+
+            elif key < self.node.key:
+                self.node.left.delete(key)
+
+            elif key > self.node.key:
+                self.node.right.delete(key)
+
+            # Rebalance tree
+            self.rebalance()
+
+```
+
+### Rebalance
+
+``` python
+ def rebalance(self):
+```
+
 
 # B+ Trees
 
-## 
 
 
-```{r child="footer.Rmd", include=FALSE}
+## ```{r child="footer.Rmd", include=FALSE}
 ```
