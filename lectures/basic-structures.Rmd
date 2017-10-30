@@ -19,7 +19,8 @@ In mathematics, a **set** is a collection of *distinct* elemets.
 
 ## Dynamic Sets
 
-- Sets can be manipulated using appropriate algorithms. Then, sets can grow, shrink, or change over time.
+- Sets can be manipulated using appropriate algorithms.
+Then, sets can grow, shrink, or change over time.
 
 - Dynamic sets can support basic operations such as:
 *insert* elements to a set, *remove* elements from a set,
@@ -43,38 +44,47 @@ or *search* whether an element belongs to a set.
 
 ## Stacks and Queues (1)
 
-- Stacks and queues are dynamic sets where the way an element can be removed from a set is prespecified.
+- Stacks and queues are *abstract data types* that represent *dynamic sets*,
+where the way an element can be removed from a set is prespecified.
 
 - In a **stack**, the element to be removed is the one that was most recently inserted into the stack. We name this policy as: *last-in, first-out*, or *LIFO*.
 
-- If a **stack** consists of elements ```S[1..S.top]```, ```S[1]``` is the element at the bottom of the stack and ```S[S.top]``` is the element at the top of the stack. If ```S.top = 0```, the stack is *empty*.
+- If a **stack** consists of elements ```S[1..S.top]```, ```S[1]``` is the element at the *bottom* of the stack and ```S[S.top]``` is the element at the *top* of the stack. If ```S.top = 0```, the stack is *empty*.
 
 ## Stacks and Queues (2)
 
 - In a **queue**, the element to be removed is the one that belongs to the set for the longest time. We name this policy as: *first-in, first-out*, or *FIFO*.
 
-- If a **queue** consists of elements ```Q[1..n]```, ```Q.heap``` points to its head and ```Q.tail``` points the *next* position where a new element can be added to the queue. When ```Q.heap = Q.tail```, it means that the queue is *empty*.
+- If a **queue** consists of elements ```Q[1..n]```, ```Q.heap``` points to its *head* and ```Q.tail``` points the *next* position where a new element can be added to the queue. When ```Q.heap = Q.tail```, it means that the queue is *empty*.
 
 ## Stack Operations
 
 - The `insert` operation on a stack is called as `push`.
 Additionally, the `remove` operation is called as `pop`.
 
-- In the following example, we implement a stack as an *array* of *n* elements
-to demonstate the `push` and `pop` operations.
+- The `top` operation on a stack
+returns that most recently-added element.
 
+- The `empty` operation checks
+whether the stack is empty.
+
+## Stack Implementation with Array
+
+- Which is the top element in the stack below?
 ```{r echo=FALSE}
   # The top element is the 4th one.
   x <- matrix(list(15,6,2,9,"N","N","N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]")))
   x
 ```
-
+- In which positions of the following stack,
+new elements 17 and 3 are going to be added?
 ```{r echo=FALSE}
   # New elements (5th and 6th) are added to the end of the stack.
   x <- matrix(list(15,6,2,9,17,3,"N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]")))
   x
 ```
-
+- If we remove the 6th element of the following stack,
+which will be the top one?
 ```{r echo=FALSE}
   # When the 6th element is removed, the next top element is the 5th
   x <- matrix(list(15,6,2,9,17,"[3]","N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]")))
@@ -84,23 +94,25 @@ to demonstate the `push` and `pop` operations.
 ## Queue Operations
 
 - The `insert` operation on a queue is called as `enqueue`.
-Additionally, the `remove` operation is called as `denqueue`.
+Additionally, the `remove` operation is called as `dequeue`.
 
-- In the following example, we implement a queue as an *array* of *n* elements
-to demonstate the `enqueue` and `denqueue` operations.
+## Queue Implementation with Array
 
+- Which are the *head* and *tail* of the following queque?
 ```{r echo=FALSE}
   # Q.tail = 7 and Q.head = 12
   x <- matrix(list("N","N","N","N","N","N",15,6,9,8,4,"N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
   x
 ```
-
+- If we add elements to the positions $3-6$,
+which are going to be the *head* and *tail* of the following queque?
 ```{r echo=FALSE}
   # Q.tail = 3 and Q.head = 7
   x <- matrix(list(3,5,"N","N","N","N",15,6,9,8,4,17), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
   x
 ```
-
+- If we remove the $5th$ element,
+which are going to be the *head* and *tail* of the following queque?
 ```{r echo=FALSE}
   # Q.tail = 3 and Q.head = 8
   x <- matrix(list(3,5,"N","N","N","N","[15]",6,9,8,4,17), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
@@ -115,14 +127,9 @@ in a specific order.
 
 Typically, we can create a list
 by writing the values (items) we want to store
-in a comma-separated list
-and into square brackets.
+in a comma-separated list.
 
-```python
-   list = [1, 2, 3, 4, 5]
-   print(list)
-```
-  1, 2, 3, 4, 5
+$1, 2, 3, 4, 5$
 
 ## Linked Lists
 
@@ -130,9 +137,11 @@ and into square brackets.
 are arranged in a linear order and this order is determined
 by poiters attached to each element of the list.
 
-- There are two types of linked lists: *singly* and *doubled*.
+- There are two types of linked lists: *doubled* and *singly*.
 
 - Linked lists support *all* the operations of dynamic sets.
+
+## Doubly Linked Lists
 
 - A **doubly linked list** ```L``` represents a dynamic set ```{1, 4, 9, 16}```,
 where the attribute ```L.heap``` points to the head of the list
@@ -166,45 +175,51 @@ The following figure illustrates how an array might look like in memory.
 
 ![](./figures/array-memory.png)
 
-## Disadvantages of Arrays
+## Disadvantages of Arrays (1)
 
-- The size of the arrays is *fixed*.
+The size of the arrays is *fixed*.
 This means that this size is known at compile time.
 
-- To avoid the above case, we can declare arrays
+To avoid the above case, we can declare arrays
 with more capasity, in case we need this in the future.
+
 Even though this strategy can be convenient,
 we maybe have wasted space in the array.
 Also, if we finally need to process much more elements
 than the capacity of the array,
 the code will break.
 
-- Inserting new elements at the front of the array is expensive,
+## Disadvantages of Arrays (2)
+
+Inserting new elements at the front of the array is expensive,
 because the already stored elements need to be shifted over to make room
 to the new added elements.
 
 To overcome these problems,
-we can use **linked lists** that separately allocate memory for each element,
+we can use **linked lists**
+that separately allocate memory for each element,
 when it is actually necessary.
 
 ## Linked List in Memory
 
-- Contrary to arrays that allocate memory for all its elements
+Contrary to arrays that allocate memory for all its elements
 together in block of memory,
 linked lists *separately* allocate space for *each* element
 in its own block of memory called as "linked list element" or "node".
 
-- The list uses *pointers* to connect all its nodes together
+The list uses *pointers* to connect all its nodes together
 (i.e. such as the links in a chain).
 
-- Each *node* has two fields.
+## Linked List Nodes
+
+Each *node* has two fields.
 A "data" field that stores the element and a "next" field,
 which is the pointer to the next node.
 Each node is allocated in the *heap*.
 
 ![](./figures/ll-memory.png)
 
-## Linked List in Python
+## Implementation of a Linked List in Python
 
 In order to implement a linked list in Python,
 we need to create a **Node**
@@ -389,326 +404,65 @@ def remove(self,item):
         previous.setNext(current.getNext())
 ```
 
-## Searching and Sorting Algorithms
+## Maps
 
-- Explain and implement sequential search and binary search.
+A map is an abstract data structure that stores
+key-value pairs and
+there cannot be duplicate keys.
 
-- Explain and implement selection sort, bubble sort, merge sort, quick sort, insertion sort, and shell sort.
+Such a data structure is also called as:
+*associative array*, *symbol table*, or *dictionary*.
 
-## Searching
+Maps are usuful in order to:
 
-A search returns ```true``` if the element is found in a collection, and
-```false``` when it does not reside in that collection.
+- store objects to specific keys, and
 
-In Python, we can use the ```in``` operator
-to search whether an element is a member of a particular collection of items.
+- lookup of the values associated with a particular key.
 
-But, how is this operation actually implemented?
+## An Example of a Map
 
-```python
->>> 15 in [3,5,2,4,1]
-False
->>> 3 in [3,5,2,4,1]
-True
->>>
-```
+![](./figures/dictionary.png)
 
-## Sequential Search
+## Operations of the Map Data Type
 
-When elements are stored in a collection,
-such as a list, where there are relative to each other,
-we say that these elements have a linear or sequential relationship.
-Since the values of lists are indexed,
-it is possible to order the items and process them in a sequence.
+- The method `put` adds a new key-value pair to a map.
+If the `key` is already in the map, it replaces the old value for that key.
 
-```python
-def sequentialSearch(alist, item):
-    pos = 0
-    found = False
-    while pos < len(alist) and not found:
-        if alist[pos] == item:
-            found = True
-        else:
-            pos = pos+1
-	
-    return found
-```
+- The method `get` returns the value of that key,
+or `None` if there is no value.
 
-## Complexity of Sequential Search
+- The method `delete` removes a key-value pair from a map.
 
-To find the **complexity** of a sequential search algorithm,
-we need to count the number of the comparisons we need to perform
-until we find the element we are looking for in a collection.
+## Implementation of a Map
 
-If we make the assumption that the elements of a list are in a **random order**
-the probability to find an element in a particular position,
-is the same as if it was allocated in any other position in the list.
+- Arrays
 
-Whereas if the elements are in an **ascending order**,
-we still need to make ```n``` comparisons to find a particular element,
-but our search will be faster if the element is not, finally, in the list.
+- Linked-lists
 
-## Comparisons in Random Assignment
+- Binary search trees
 
-If an element does not belong in a randomly ordered list, ```L = {2, 6, 1, ... n}```,
-we will need to conduct ```n``` comparisons for a sequential search.
+- Hash tables
 
-On the contrary, if an element does belong in the above list,
-we will conduct eather ```1``` comparison (best case scenario),
-or ```n``` coparisons (worst case scenario) to find the right element.
+## A Linked List Implementation of a Map
 
-Therefore, the complexity of the sequential search algorithm is ```O(n)```.
+- store key-value pairs in doubly-linked list 
 
-## Comparisons in Ordered List
+- `get(k)`:
+  iterate the list until you find the item with key k.
 
-If an element does not belong in a ordered list, ```L = {1, 2, 3, ... n}```,
-we will need to conduct either ```1``` comparison (best case scenario)
-or ```n``` comparisons (worst case scenario) for a sequential search.
-What if we search for the element ```30``` in the following list?
+- `put(k, v)`: Given Node x = get(k),
+if (x!=null): replace the value in x with v,
+else: create a new node(k,v) and add it at the front of the list.
 
-If an element does belong in the above list,
-we will conduct eather ```1``` comparison (best case scenario),
-or ```n``` coparisons (worst case scenario) to find the right element.
+- `remove(k)`: Given Node x = get(k),
+if(x==null): return null,
+else: remove node x from the list.
 
-Therefore, the complexity of the sequential search algorithm is again ```O(n)```.
+- Complexity: $O(n)$ on a map with $n$ elements.
 
-![](./figures/ordered-ll.png)
+## Implementing Maps Using Hashing
 
-## Binary Search
+Given interger keys in the range from $0$ to $99$.
 
-We can split the list in the middle and appling the searching process
-in its both halfs.
-For instance, consider to find the element ```54```
-by using the so-called *divide and conquer* strategy.
-
-![](./figures/binary.png)
-
-## Implementation of Binary Search Algorithm
-
-```python
-	def binarySearch(alist, item):
-	    first = 0
-	    last = len(alist)-1
-	    found = False
-	    while first<=last and not found:
-	        midpoint = (first + last)//2
-	        if alist[midpoint] == item:
-	            found = True
-	        else:
-	            if item < alist[midpoint]:
-	                last = midpoint-1
-	            else:
-	                first = midpoint+1
-	    return found
-```
-
-## Complexity of Binary Search
-
-To estimate the complexity of a binary search algorithm,
-we should take into account that each comparison eliminates
-about half of the remaining elements.
-
-If we have an *ordered* list of ```n``` elements,
-around $n/2$ elements will be left after the first comparison.
-After the second comparison, there will be around $n/4$, and so on.
-
-The following table helps to understand how many time we need to split a list.
-
-XX: the table to be added here.
-
-## Sorting
-
-Sorting is the process of assigning the elements of a collection (e.g. list)
-in a particular order (e.g. put words in an alphabetical order).
-
-A typical *systematic way* to sort the elements of a collection
-is, *first*, to compare two values from the collection
-seeing which is the smaller (or greater).
-
-And, *second*, if the two values are not in the correct order,
-based on their *comparison*,
-we need to *exchange* them.
-
-This *exchange* is expensive and,
-therefore, the totall *number* of the needed exchanges
-will indicate the *efficiency* of a sorting algorithm.
-
-## Bubble Sort
-
-![](./figures/bubble-sort.png)
-
-## Bubble Sort Implementation
-
-```python
-def bubbleSort(alist):
-    for passnum in range(len(alist)-1,0,-1):
-        for i in range(passnum):
-            if alist[i]>alist[i+1]:
-                temp = alist[i]
-                alist[i] = alist[i+1]
-                alist[i+1] = temp
-```
-
-```python
-alist = [54,26,93,17,77,31,44,55,20]
-bubbleSort(alist)
-print(alist)
-```
-
-```python
-[17, 20, 26, 31, 44, 54, 55, 77, 93]
-```
-
-## Bubble Sort Complexity
-
-Regardless of how the items are arranged in the initial list,
-$n−1$ passes will be made to sort a list of size $n$.
-
-In the *best* case scenario,
-if the list is already ordered,
-we will need to perform no exchanges.
-
-However, in the *worst* case, every comparison will cause an exchange.
-Therefore, the complexity of the algorithm is $O(n^2)$.
-
-## Selection Sort
-
-The selection sort makes *one* exchange for every pass in the list.
-The algorithm finds the greater element in the list
-and then places it in the proper location (from the end of the list).
-
-![](./figures/selection-sort.png)
-
-## Selection Sort Implementation
-
-```python
-def selectionSort(alist):
-   for fillslot in range(len(alist)-1,0,-1):
-       positionOfMax=0
-       for location in range(1,fillslot+1):
-           if alist[location]>alist[positionOfMax]:
-               positionOfMax = location
-
-       temp = alist[fillslot]
-       alist[fillslot] = alist[positionOfMax]
-       alist[positionOfMax] = temp
-```
-
-```python
-alist = [54,26,93,17,77,31,44,55,20]
-selectionSort(alist)
-print(alist)
-```
-
-```python
-[17, 20, 26, 31, 44, 54, 55, 77, 93]
-```
-
-## Selection Sort Complexity
-
-The selection sort makes the same number of comparisons
-as the bubble sort and is therefore also $O(n^2)$.
-
-However, due to the reduction in the number of exchanges,
-the selection sort typically executes faster than the bubble sort.
-
-## Insertion Sort
-
-The insertion sort algorith maintains
-a sorted sublist in the lowest positions of a list.
-Each new item is "inserted" sorted
-to the sublist.
-
-![](./figures/insertion-sort.png)
-
-## Insertion Sort Implementation
-
-```python
-def insertionSort(alist):
-   for index in range(1,len(alist)):
-
-     currentvalue = alist[index]
-     position = index
-
-     while position>0 and alist[position-1]>currentvalue:
-         alist[position]=alist[position-1]
-         position = position-1
-
-     alist[position]=currentvalue
-```
-
-```python
-alist = [54,26,93,17,77,31,44,55,20]
-insertionSort(alist)
-print(alist)
-```
-
-```python
-[17, 20, 26, 31, 44, 54, 55, 77, 93]
-```
-
-## Insertion Sort Complexity
-
-The maximum number of comparisons for an insertion sort
-is the sum of the first $n−1$ integers.
-This is $O(n^2)$.
-
-However, in the best case,
-only one comparison needs to be done on each pass.
-This would be the case for an already sorted list.
-
-## Shell Sort
-
-This alrgorithm starts by sorting pairs of elements far apart from each other,
-then progressively reducing the gap between elements to be compared.
-
-It is a generalization of the bubble and insertion sort algorithms.
-
-XX: to be continued
-
-## Merge Sort
-
-Merge sort is a recursive algorithm that continually splits a list in the middle.
-
-After two halves are sorted,
-then the **merge** operation is performed.
-
-![](./figures/split.png)
-
-## Merge
-
-![](./figures/merge.png)
-
-## Complexity of Merge Sort
-
-A merge sort is an $O(n log n)$ algorithm.
-
-Can you explain why?
-
-## Quick Sort
-
-A quick sort first selects a value,
-which is called the *pivot* value.
-
-The role of the pivot value is to assist with splitting the list.
-The actual position where the pivot value belongs in the final sorted list,
-commonly called the split point,
-will be used to divide the list for subsequent calls to the quick sort.
-
-## How does it works?
-
-![](./figures/quick-sort.png)
-
-## Quick Sort Complexity
-
-In the worst case, the split points may not be in the middle and
-can be very skewed to the left or the right.
-In this case, sorting a list of $n$ items divides into
-sorting a list of $0$ items and a list of $n−1$ items.
-
-Then sorting a list of $n−1$ divides into a list of size $0$ and a list of size $n−2$, and so on.
-The result is an $O(n^2)$ sort with all of the overhead that recursion requires.
-
-## Bibliography
-
-- Problem Solving with Algorithms and Data Structures using Python, by Brad Miller and David Ranum, Luther College.
+- We store the keys in an array, such as: $T[0..99]$.
+- $T$ is initially empty.
