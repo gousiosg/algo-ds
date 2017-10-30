@@ -385,14 +385,28 @@ class AVLTree():
 
 ```
 
-### Rebalance
+## Rebalance
 
 ``` python
  def rebalance(self):
 ```
 
+# B-Trees & B+ trees
 
-# B+ Trees
+## B-Trees
+
+- Primarily used by relational databases
+- Provides an efficient way to implement common database features such as *join,
+  fast deletion and ordering of rows* 
+- AVL is ideal for in-memory while B-Tree is made for disk-based storage
+
+## Implementation
+
+There are two types of way to implement a B-Tree
+- Iterative
+- Recursive
+
+## Some key implementation details
 
 
 
