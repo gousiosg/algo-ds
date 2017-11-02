@@ -63,7 +63,7 @@ where the way an element can be removed from a set is prespecified.
 Additionally, the `remove` operation is called as `pop`.
 
 - The `top` operation on a stack
-returns that most recently-added element.
+returns that most recently added element.
 
 - The `empty` operation checks
 whether the stack is empty.
@@ -445,24 +445,136 @@ or `None` if there is no value.
 
 ## A Linked List Implementation of a Map
 
-- store key-value pairs in doubly-linked list 
+We can store key-value pairs in a linked list
+as it is illustrated in the following figure.
+
+![](./figures/map-ll.png)
+
+## Basic Operations
 
 - `get(k)`:
-  iterate the list until you find the item with key k.
+It iterates the list until
+it finds the item with key `k`.
 
-- `put(k, v)`: Given Node x = get(k),
-if (x!=null): replace the value in x with v,
-else: create a new node(k,v) and add it at the front of the list.
+- `put(k, v)`: Given Node `x = get(k)`,
+if `x` exists, it replaces the value of `x` with `v`.
+Otherwise, it creates a new `node(k,v)`
+and adds this at the front of the list.
 
-- `remove(k)`: Given Node x = get(k),
-if(x==null): return null,
-else: remove node x from the list.
+- `remove(k)`: Given Node `x = get(k)`,
+if `x` does not exist, it returns `null`.
+Otherwise, it removes node `x` from the list.
 
 - Complexity: $O(n)$ on a map with $n$ elements.
 
 ## Implementing Maps Using Hashing
 
-Given interger keys in the range from $0$ to $99$.
+- Can we do better in complexity terms?
 
-- We store the keys in an array, such as: $T[0..99]$.
-- $T$ is initially empty.
+- Yes, by building a type of a data structure
+that can search in $O(1)$ time.
+This can be achieved with a concept called as **hashing**.
+
+## Hash Tables
+
+- A **hash table** is a collection of elements
+that are stored in such a way
+that it is easy for one to find them later.
+
+- The positions of a hash table start from $0$
+and at each position, it can store an item.
+
+- The **mapping** between an element and a slot in the collection,
+where an element belongs to is called **hash function**.
+However, we are going to talk in another lecture about it.
+
+## Initialization of a Hash Table
+
+- We are initializing a hash table
+by adding the special Python `None` value
+to the slots of the table.
+
+![](./figures/hash-map.png)
+
+## How does it work?
+
+- Assume that we have the set $S= {54,26,93,17,77,31}$
+and we want to add the items into a hash table of size $11$.
+
+- A simple hash function takes an item and
+divides it by the table size.
+
+- The remainder is the hash value,
+which will indicate the positions
+where the items will be inserted in the hash table.
+
+XX: To add the hash table here.
+
+## Implementation of Map in Python
+
+```python
+class HashTable:
+    def __init__(self):
+        self.size = 11
+        self.slots = [None] * self.size
+        self.data = [None] * self.size
+```
+
+## Put Values
+
+```python
+def put(self,key,data):
+  hashvalue = self.hashfunction(key,len(self.slots))
+
+  if self.slots[hashvalue] == None:
+    self.slots[hashvalue] = key
+    self.data[hashvalue] = data
+  else:
+    if self.slots[hashvalue] == key:
+      self.data[hashvalue] = data  #replace
+    else:
+      nextslot = self.rehash(hashvalue,len(self.slots))
+      while self.slots[nextslot] != None and \
+                      self.slots[nextslot] != key:
+        nextslot = self.rehash(nextslot,len(self.slots))
+
+      if self.slots[nextslot] == None:
+        self.slots[nextslot]=key
+        self.data[nextslot]=data
+      else:
+        self.data[nextslot] = data #replace
+
+def hashfunction(self,key,size):
+     return key%size
+
+def rehash(self,oldhash,size):
+    return (oldhash+1)%size
+```
+
+## Get Values
+
+```python
+def get(self,key):
+  startslot = self.hashfunction(key,len(self.slots))
+
+  data = None
+  stop = False
+  found = False
+  position = startslot
+  while self.slots[position] != None and  \
+                       not found and not stop:
+     if self.slots[position] == key:
+       found = True
+       data = self.data[position]
+     else:
+       position=self.rehash(position,len(self.slots))
+       if position == startslot:
+           stop = True
+  return data
+
+def __getitem__(self,key):
+    return self.get(key)
+
+def __setitem__(self,key,data):
+    self.put(key,data)
+```
