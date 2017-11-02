@@ -578,3 +578,9 @@ def __getitem__(self,key):
 def __setitem__(self,key,data):
     self.put(key,data)
 ```
+
+## References
+
+- Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 2009. Introduction to Algorithms, Third Edition (3rd ed.). The MIT Press.
+
+- Bradley N. Miller and David L. Ranum. 2011. Problem Solving with Algorithms and Data Structures Using Python SECOND EDITION (2nd ed.). Franklin, Beedle & Associates Inc., Wilsonville, OR, USA.
