@@ -1,0 +1,152 @@
+---
+title: "Algorithms and Data Structures"
+subtitle: "Course information"
+author: "Georgios Gousios"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
+nocite: |
+  @Cormen09,@Louridas17
+---
+
+```{r child="header.Rmd", include=FALSE}
+```
+
+## General description
+
+Algorithm: named after محمد بن موسى الخوارزمی ([Muhammad ibn Musa al-Khwarizmi](https://en.wikipedia.org/wiki/Muhammad_ibn_Musa_al-Khwarizmi))
+
+: Any well-defined computational procedure that
+takes some value, or set of values, as input and produces some value, or set of values,
+as output. [@Cormen09]
+
+Data Structure:
+
+: A particular way of storing and organising data in memory so that it can be 
+used efficiently.
+
+Algorithms and data structures are fundamental notions in computer science.
+This course will teach you how to use data structures to represent data and
+algorithms to process them in efficient ways. The course uses the Python
+programming language.
+
+```{python}
+def hello():
+  print "Hello World"
+
+hello()
+```
+
+The course examines the implementation of basic data structures, such as arrays, 
+lists, stacks, sets, trees and graphs along with algorithms for efficiently
+creating, storing, searching and traversing them. It also touches upon
+more advanced topics such as genetic algorithms and dynamic programming.
+
+## Learning Objectives
+
+This course enables the student to:
+
+* Understand, explain, and implement standard data structures.
+* Understand, explain, and implement standard algorithms.
+* Apply standard data structures and algorithms to solve programming tasks.
+* Analyse and compare implementations with respect to their time and space complexity.
+* Understand and explain advanced topics in algorithm design
+
+## Course Organization
+
+* **5 ECTS**: This means that you need to devote at least 140 hours of study
+  for this course.
+
+* **Lectures**: The course consists of 14 2-hour lectures. You are not required,
+  but you are **strongly encouraged**, to attend.
+
+* **Lecturers**: The course is supervised by Georgios Gousios, who is responsible
+for the content, assignments and exams. Several lectures will help with the lectures.
+
+* **Homework**: In the homework assignments, you will have to write code or
+reply to open questions. You will always work in groups of 2.
+
+* **Groups**: The groups will be generated randomly and will be different
+per assignment.
+
+* **Labs**: 4 hours per week, designed to help you work together and get support
+  from teaching assistants.
+
+* **Teaching Assistants**: Teaching assistants will be available during
+  lab hours to help you with solving your assignments. Do be active in asking
+  questions, but don't expect them to provide you with solutions to the
+  exercises.
+
+
+## Assignments
+
+You can find the course assignments linked through this page.
+*All assignments are mandatory.*
+
+Your submission material is a
+[Jupyter notebook](http://jupyter.org) including the full assignment text,
+your solutions and the results of running your solutions on the provided
+datasets.
+
+You submit your assignments **THE DAY BEFORE** the deadline. For example, the
+deadline for the first assignment is on 29/11. You must submit your assignment
+by Nov 28, 23:59.
+
+To submit your assignment, you must export the Jupyter notebook to PDF (Save as...)
+and upload it to the designated BrightSpace folder (you can find those on
+BrightSpace). Name your submission file as `student_id1-student_id2.pdf`,
+replacing `student_id1` and `student_id2` with your TU Delft IDs. It is enough
+if one member of each group uploads a version of the assignment.
+
+The assignments are signed-off and graded by TAs.
+You are expected to be at the lab at the designated timeslot
+assigned to your group. Timeslots will be announced well in advance.
+During your timeslot, you must be able to demonstrate a notebook with your
+solution running live. The TAs will compare your results with the ground truth
+and grade your solution in place.
+
+**Late submission**: All submissions must be handed in time, with no
+exceptions. Any late submission will be discarded and will be graded with 0.
+In case of *provable* sickness, please contact the course
+teacher to arrange a case-specific deadline.
+
+## Contents
+
+
+|Week |Lecture | Topic | Lecturer | Assignment (Deadline)|
+|:---:|:------:|----------|-------|---------|
+| 1 | 1 | [Course introduction](course-intro.html), [Recursion](recursion.html) | GG | |
+| 1 | 1 | [Algorithm Analysis](complexity.html)   | GG | |
+| 2 | 1 | [Basic Data Structures](basic-structures.html) (Lists, Stacks, Sets) | MK | [Doubly-linked lists](assignment-lists.ipynb) (29/11/2017) |
+| 2 | 2 | Algorithms for basic data structures | MK | |
+| 3 | 1 | [Trees](trees.html) (Binary trees)  | JH | [Red-Black Trees](assignment-rbtrees.ipynb) (13/12/2017) |
+| 3 | 2 | More Trees (B+ Trees) | JH | |
+| 4 | 1 | [Graphs](graphs.html) (Representation and Traversal) | PK | [Graph algorithms](assignment-graphs.ipynb) (10/01/2018)|
+| 4 | 2 | Graph algorithms (Topological sorting, Centrality) | PK ||
+| 5 | 1 | Sorting | JH | [Searching](assignment-searching.ipynb) (16/01/2018)|
+| 5 | 2 | Searching | JH ||
+| 6 | 1 | Strings and string search  | GG ||
+| 6 | 2 | Genetic algorithms  | MS ||
+| 7 | 1 | Overall Q/A | GG ||
+| 7 | 2 | No lecture | -- ||
+
+**Lecturers**
+
+* GG: Georgios Gousios
+* PV: Pavel Kucherbaev
+* JH: Joseph Hejderup
+* MK: Maria Kechagia
+* MS: Mozhan Soltani
+
+## Assessment
+
+In order to pass the course, you must obtain a passing grade (6+) to all the
+assessment criteria specified below:
+
+* Assignments (40%): Grade calculated as mean grade for all assignments. 
+All individual assignments must have a passing grade.
+* Written Exam (60%):
+
+```{r child="footer.Rmd", include=FALSE}
+```
