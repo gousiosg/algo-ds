@@ -1,0 +1,125 @@
+---
+title: "Course Introduction"
+author: "Georgios Gousios"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+nocite:
+csl: ieee.csl
+bibliography: bibliography.bib
+---
+
+```{r child="header.Rmd", include=FALSE}
+```
+
+## In this course, we will learn
+
+* Programming techniques, specifically functional programming, useful
+for Big Data Systems.
+* Basic distributed systems theory, applied on databases and file systems
+* How to process big and fast data with modern systems
+
+## Tools and technologies
+
+During our course we will learn how to process data with
+
+* Spark, and related libraries
+* Flink
+
+We will learn to store out data in HDFS and MongoDB.
+
+The course will be using the following 2 languages
+
+* Scala: the de-facto standard for high performance data processing
+* Python: the richest data analysis environment
+
+You can submit your assignments in any of those!
+
+## Grades
+
+* 60% final exam, written + multiple-choice. Minimum grade 6.
+* 40% assignments
+* 10% optional assignment
+
+There will be resit, there is no mid-term.
+
+You can transfer your assignment grade AS A WHOLE. No individual assignment
+resubmissions!
+
+## Assignments
+
+* The course consists of 4 obligatory assignments, and 1 optional one.
+
+* You always work in groups
+
+* We will be using [Jupyter notebooks](http://jupyter.org) to submit
+the assignments.
+
+* Grade: $\frac{\sum_{assign=1}^{5} grade(assign)}{5}$, aka the mean
+    * No submission? Grade $\rightarrow$ 0
+    * Late submission? Grade $\rightarrow$ 0
+    * Non-show for sign-off? Grade $\rightarrow$ 0
+
+* Most assignment grades add to $> 10$
+
+## Assignment sign-off
+
+Deadlines for each assignment are on the course's web site
+
+**One day before the deadline** (before 23:59) you must:
+
+* Upload a PDF version of your Jupyter notebook to Brighspace, at
+a designated location
+* Book a designated timeslot with an examiner, using a Doodle link
+
+**On the deadline date**
+
+* You show up at the designated timeslot
+    * late arrivals are graded with 0
+* You present a LIVE version of the Jupyter notebook
+    * The examiner might ask you to re-run parts of the code
+
+## Forming groups
+
+All assignments are done in pairs
+
+* The groups are formed semi-randomly per assignment.
+    * You will be notified about your group
+* Problems within the group? Talk to the TAs!
+
+## Getting help
+
+* Generally, two types of Wednesdays
+  * Practicum Wednesdays: you work on you assignments and TAs provide help
+  * Sign-off Wednesdays: you only need to be there for sign-off, but you can
+  be there longer before/after to work on other assignments
+
+* The TAs will add everybody to a Slack channel
+
+## Course resources
+
+* The course VM: Contains all software (Spark, HDFS, Flink) you may need pre-installed
+    * Provided only for convenience: no technical support
+
+* The course cluster
+    * `bdp1.ewi.tudelft.nl` from within TU Delft or VPN.
+    * Ask me for the password :-)
+    * Dataset to upload that you would like to analyze? Email me the link!
+    * The first rule of the BDP cluster: respect the others!
+
+## Slide symbols
+
+* **Q** A question with a known answer; this will be revealed, but we should
+work together towards it!
+
+* **D** A open discussion item; we need to think and discuss.
+
+## Lecture notes
+
+* Freely available on the web, on my homepage (http://gousios.org/teaching.html)
+
+* You can print/download them before the lecture and bring them along to make
+additional notes.
+
+* I am looking forward to improve them! If you have suggestions etc, let me know!
+
+```{r child="footer.Rmd", include=FALSE}
+```
