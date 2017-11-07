@@ -10,55 +10,63 @@ bibliography: bibliography.bib
 ```{r child="header.Rmd", include=FALSE}
 ```
 
-## In this course, we will learn
+## Algorithms and Data Structures
 
-* Programming techniques, specifically functional programming, useful
-for Big Data Systems.
-* Basic distributed systems theory, applied on databases and file systems
-* How to process big and fast data with modern systems
+> **Algorithm**: Any well-defined computational procedure that takes some value, or set of values, as input and produces some value, or set of values, as output.
+
+. . .
+
+> **Data structure**: A particular way of storing and organising data in memory so that it can be used efficiently.
+
+. . .
+
+Programming is the _means_ to express a solution to a problem.
+
+Algorithms and Data Structures are the heart of CS.
+
+## Learning objectives
+
+* Understand, explain, and implement standard data structures.
+* Understand, explain, and implement standard algorithms.
+* Apply standard data structures and algorithms to solve programming tasks.
+* Analyse and compare implementations with respect to their time and space complexity.
+* Understand and explain advanced topics in algorithm design
 
 ## Tools and technologies
 
-During our course we will learn how to process data with
+* We will be using Python throughout the course.
 
-* Spark, and related libraries
-* Flink
-
-We will learn to store out data in HDFS and MongoDB.
-
-The course will be using the following 2 languages
-
-* Scala: the de-facto standard for high performance data processing
-* Python: the richest data analysis environment
-
-You can submit your assignments in any of those!
-
-## Grades
-
-* 60% final exam, written + multiple-choice. Minimum grade 6.
-* 40% assignments
-* 10% optional assignment
-
-There will be resit, there is no mid-term.
-
-You can transfer your assignment grade AS A WHOLE. No individual assignment
-resubmissions!
-
-## Assignments
-
-* The course consists of 4 obligatory assignments, and 1 optional one.
-
-* You always work in groups
+* You can use your favourite editor or IDE (I recommend PyCharm) 
 
 * We will be using [Jupyter notebooks](http://jupyter.org) to submit
 the assignments.
 
-* Grade: $\frac{\sum_{assign=1}^{5} grade(assign)}{5}$, aka the mean
+* We will be using Brightspace for assignment uploads and sending announcements.
+Remember to subscribe!
+
+## Assignments
+
+* The course work consists of 4 obligatory assignments.
+
+* You always work in groups
+
+* The groups are randomly created per assignment
+
+* Grade: $\frac{\sum_{assign=1}^{4} grade(assign)}{4}$, aka the mean
     * No submission? Grade $\rightarrow$ 0
     * Late submission? Grade $\rightarrow$ 0
     * Non-show for sign-off? Grade $\rightarrow$ 0
 
 * Most assignment grades add to $> 10$
+
+## Grades
+
+* 60% final exam, written + multiple-choice. Minimum grade 6.
+* 40% assignments
+
+There will be a resit, there is no mid-term.
+
+You can transfer your assignment grade to the resit AS A WHOLE!
 
 ## Assignment sign-off
 
@@ -68,7 +76,8 @@ Deadlines for each assignment are on the course's web site
 
 * Upload a PDF version of your Jupyter notebook to Brighspace, at
 a designated location
-* Book a designated timeslot with an examiner, using a Doodle link
+* Book a designated timeslot with an examiner, using a Doodle link provided
+to you
 
 **On the deadline date**
 
@@ -81,29 +90,33 @@ a designated location
 
 All assignments are done in pairs
 
-* The groups are formed semi-randomly per assignment.
+* The groups are formed randomly per assignment.
     * You will be notified about your group
 * Problems within the group? Talk to the TAs!
 
 ## Getting help
 
-* Generally, two types of Wednesdays
-  * Practicum Wednesdays: you work on you assignments and TAs provide help
-  * Sign-off Wednesdays: you only need to be there for sign-off, but you can
+* Generally, two types of Thursdays
+  * Practicum Thursdays: you work on you assignments and TAs provide help
+  * Sign-off Thursdays: you only need to be there for sign-off, but you can
   be there longer before/after to work on other assignments
 
 * The TAs will add everybody to a Slack channel
 
-## Course resources
+## TAs and their role
 
-* The course VM: Contains all software (Spark, HDFS, Flink) you may need pre-installed
-    * Provided only for convenience: no technical support
+The TAs are there to help you! They are responsible for
 
-* The course cluster
-    * `bdp1.ewi.tudelft.nl` from within TU Delft or VPN.
-    * Ask me for the password :-)
-    * Dataset to upload that you would like to analyze? Email me the link!
-    * The first rule of the BDP cluster: respect the others!
+* facilitating your learning
+* grading your assignments and giving verbal feedback
+* monitoring your progress
+
+They are not responsible for:
+
+* Providing real-time support over Slack. Slack is asynchronous communication.
+* Solving problems for you
+
+Joris Quist and Wouter Zorgdrager will be TAs for this year.
 
 ## Slide symbols
 

@@ -114,8 +114,8 @@ teacher to arrange a case-specific deadline.
 ## Contents
 
 
-|Week |Lecture | Topic | Lecturer | Assignment (Deadline)|
-|:---:|:------:|----------|-------|---------|
+|Week |Lecture | Topic                | Lecturer | Assignment (Deadline)|
+|:---:|:------:|----------------------|----------|----------------------|
 | 1 | 1 | [Course introduction](course-intro.html), [Recursion](recursion.html) | GG | |
 | 1 | 1 | [Algorithm Analysis](complexity.html)   | GG | |
 | 2 | 1 | [Basic Data Structures](basic-structures.html) (Lists, Stacks, Sets) | MK | [Doubly-linked lists](assignment-lists.ipynb) (29/11/2017) |
