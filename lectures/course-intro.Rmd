@@ -88,10 +88,10 @@ to you
 
 ## Forming groups
 
-All assignments are done in pairs
+All assignments are done in pairs:
 
-* The groups are formed randomly per assignment.
-    * You will be notified about your group
+* You can decide your partner; fill in the Google form the TAs will distribute.
+* No partner? Ask the TAs!
 * Problems within the group? Talk to the TAs!
 
 ## Getting help
