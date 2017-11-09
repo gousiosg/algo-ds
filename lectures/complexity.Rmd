@@ -234,11 +234,13 @@ What is the asymptotic complexity of the following polynomials?
 $f(x) = 5x + 40$
 
 . . .
+
 $f(x) = O(x)$
 
 $f(x) = 5x^2 + 3x +2$
 
 . . .
+
 $f(x) = O(x^2)$
 
 ## Calculating the number of steps
@@ -252,7 +254,79 @@ What is a "step"?
 * Evaluating an expression: `x = x + 2` 
 * Accessing an array by index: `a[1]`
 * Calling a method: `x = foo(1,bar)`
-* 
+* Allocating memory: `x = Person("foo")`
+
+In general, any operation that consumes computing resources can be considered
+as a step
+
+## Calculating complexity - Example 1
+
+```python
+def foo(x):
+  if x == 0:
+    print x
+  else:
+    print x[0]
+```
+
+. . .
+
+Steps:
+
+* 1 comparison 
+* 1 printing operation
+* 1 (perhaps) accessing memory
+
+None of the above actions depend on the size of `x`. Therefore this algorithm
+is $O(1)$. This means that no matter how big `x` is, it will run in constant time.
+
+## Iteration
+
+```python
+def foo(a):
+  for i in a:
+    y = y + i
+    
+  return y
+```
+
+. . .
+
+Per item of a:
+
+* 1 memory access to "load" `a` in `i` 
+* 1 addition 
+* 1 assignment
+
+then, also a return statement
+
+Our complexity function is $f(x) = 3x + 1$, which can be upper bounded by $g(x) = 5x$.
+Therefore, the compexity class is $O(n)$
+
+## Matrix multiplication
+
+```python
+# a is (n x m) and b is (m x p). The result is (n x p)
+def matrix_multiply(a, b):
+  result = [[0 for x in range(len(a))] for y in range(len(b[0]))] 
+  for i in range(len(a[0])):
+    for j in range(len(b[0])):
+      sum = 0
+      for k in range(len(a)):
+        sum = sum + a[i][k] * b[k][j]
+        result[i][j] = sum
+
+  return result
+```
+
+Ignoring initialization, for each element in `a`, we need:
+
+* access `len(b[0])` times all elements in `b`
+* access `len(a)` times all lines in `a`
+* do a multiplication and an assignment
+
+$f(a,b) = len(a[0]) \times len(b[0]) \times len(a) + 1$ or $f(a,b) = n \times m \times p + 1$. 
+If we take $a = max(n, m, p)$, we can prove that $f(a,b)$ is bounded by $O(a^3)$.
 
 ```{r child="footer.Rmd", include=FALSE}
 ```
