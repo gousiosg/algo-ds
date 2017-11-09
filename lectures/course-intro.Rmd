@@ -1,0 +1,138 @@
+---
+title: "Course Introduction"
+author: "Georgios Gousios"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+nocite:
+csl: ieee.csl
+bibliography: bibliography.bib
+---
+
+```{r child="header.Rmd", include=FALSE}
+```
+
+## Algorithms and Data Structures
+
+> **Algorithm**: Any well-defined computational procedure that takes some value, or set of values, as input and produces some value, or set of values, as output.
+
+. . .
+
+> **Data structure**: A particular way of storing and organising data in memory so that it can be used efficiently.
+
+. . .
+
+Programming is the _means_ to express a solution to a problem.
+
+Algorithms and Data Structures are the heart of CS.
+
+## Learning objectives
+
+* Understand, explain, and implement standard data structures.
+* Understand, explain, and implement standard algorithms.
+* Apply standard data structures and algorithms to solve programming tasks.
+* Analyse and compare implementations with respect to their time and space complexity.
+* Understand and explain advanced topics in algorithm design
+
+## Tools and technologies
+
+* We will be using Python throughout the course.
+
+* You can use your favourite editor or IDE (I recommend PyCharm) 
+
+* We will be using [Jupyter notebooks](http://jupyter.org) to submit
+the assignments.
+
+* We will be using Brightspace for assignment uploads and sending announcements.
+Remember to subscribe!
+
+## Assignments
+
+* The course work consists of 4 obligatory assignments.
+
+* You always work in groups
+
+* The groups are randomly created per assignment
+
+* Grade: $\frac{\sum_{assign=1}^{4} grade(assign)}{4}$, aka the mean
+    * No submission? Grade $\rightarrow$ 0
+    * Late submission? Grade $\rightarrow$ 0
+    * Non-show for sign-off? Grade $\rightarrow$ 0
+
+* Most assignment grades add to $> 10$
+
+## Grades
+
+* 60% final exam, written + multiple-choice. Minimum grade 6.
+* 40% assignments
+
+There will be a resit, there is no mid-term.
+
+You can transfer your assignment grade to the resit AS A WHOLE!
+
+## Assignment sign-off
+
+Deadlines for each assignment are on the course's web site
+
+**One day before the deadline** (before 23:59) you must:
+
+* Upload a PDF version of your Jupyter notebook to Brighspace, at
+a designated location
+* Book a designated timeslot with an examiner, using a Doodle link provided
+to you
+
+**On the deadline date**
+
+* You show up at the designated timeslot
+    * late arrivals are graded with 0
+* You present a LIVE version of the Jupyter notebook
+    * The examiner might ask you to re-run parts of the code
+
+## Forming groups
+
+All assignments are done in pairs
+
+* The groups are formed randomly per assignment.
+    * You will be notified about your group
+* Problems within the group? Talk to the TAs!
+
+## Getting help
+
+* Generally, two types of Thursdays
+  * Practicum Thursdays: you work on you assignments and TAs provide help
+  * Sign-off Thursdays: you only need to be there for sign-off, but you can
+  be there longer before/after to work on other assignments
+
+* The TAs will add everybody to a Slack channel
+
+## TAs and their role
+
+The TAs are there to help you! They are responsible for
+
+* facilitating your learning
+* grading your assignments and giving verbal feedback
+* monitoring your progress
+
+They are not responsible for:
+
+* Providing real-time support over Slack. Slack is asynchronous communication.
+* Solving problems for you
+
+Joris Quist and Wouter Zorgdrager will be TAs for this year.
+
+## Slide symbols
+
+* **Q** A question with a known answer; this will be revealed, but we should
+work together towards it!
+
+* **D** A open discussion item; we need to think and discuss.
+
+## Lecture notes
+
+* Freely available on the web, on my homepage (http://gousios.org/teaching.html)
+
+* You can print/download them before the lecture and bring them along to make
+additional notes.
+
+* I am looking forward to improve them! If you have suggestions etc, let me know!
+
+```{r child="footer.Rmd", include=FALSE}
+```

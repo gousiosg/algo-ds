@@ -14,7 +14,7 @@ JUPYTER_SRC := assignments
 DEPS:=$(foreach dir,$(CONTENT_DIRS), $(foreach file, $(REQ_FILES), $(dir)/$(file)))
 INPUTS = $(shell find . -type f -name '*.Rmd' | egrep -v "header|footer")
 JUPYTER_INPUTS = $(shell find $(JUPYTER_SRC) -type f -name '*.ipynb'|grep -v "ipynb_checkpoints")
-OUTPUTS_HTML = $(INPUTS:.Rmd=.nb.html) $(JUPYTER_INPUTS:.ipynb=.nb.html)
+OUTPUTS_HTML = $(INPUTS:.Rmd=.html) $(JUPYTER_INPUTS:.ipynb=.html)
 OUTPUTS_PDF = $(INPUTS:.Rmd=.pdf) $(JUPYTER_INPUTS:.ipynb=.pdf)
 OUTPUTS_SLIDES = $(INPUTS:.Rmd=.reveal.html)
 
@@ -22,12 +22,12 @@ OUTPUTS_SLIDES = $(INPUTS:.Rmd=.reveal.html)
 	cd $(shell dirname $<) && \
 	jupyter nbconvert --to pdf $(shell basename $<)
 
-%.nb.html: %.ipynb
+%.html: %.ipynb
 	cd $(shell dirname $<) && \
 	jupyter nbconvert --to html --output=$(shell basename $@) $(shell basename $<)
 
-%.nb.html: %.Rmd  $(DEPS)
-	$(R) "library(rmarkdown); render('$<', output_file=gsub(pattern = '.Rmd', '.nb.html', basename('$<')), output_format = html_document())"
+%.html: %.Rmd  $(DEPS)
+	$(R) "library(rmarkdown); render('$<', output_file=gsub(pattern = '.Rmd', '.html', basename('$<')), output_format = html_document())"
 
 %.pdf: %.Rmd $(DEPS)
 	$(eval TMP := $(shell mktemp))
