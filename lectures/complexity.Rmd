@@ -85,7 +85,7 @@ by restricting its upper and lower bounds in terms of another function:
 
 $f(n) = \Theta(g(n))$ means that: 
 $\forall n > n_0: \exists c_1 > 0, c_2 > 0, n_0:$
-$0 <= c_1 g(n) \le f(n) \le c_2  g(n)$
+$0 \le c_1 g(n) \le f(n) \le c_2  g(n)$
 
 This means that there exist positive constants $c_1$, $c_2$, and $n_0$ such
 that if $f(n)$ is $\Theta(g(n))$, then $f(n)$ execution steps/time are bound by 
@@ -112,7 +112,8 @@ We take $c = 1$ and $n_0 = 2$ and replace in the "constructor:"
 
 $0 \le 2n^2 \le n^3$. The equation holds $\forall n$
 
-This also means that we can overestimate our compexity scale and be ok!
+This also means that we can easily overestimate our compexity scale; we need
+to be precise.
 
 ## Asymptotic growth
 
@@ -235,7 +236,8 @@ $f(x) = 5x + 40$
 
 . . .
 
-$f(x) = O(x)$
+$f(x) = O(x)$, because we can prove that there exists a $c_0 = 10$ for which
+$g(x) = 10x$ bounds $f(x)$
 
 $f(x) = 5x^2 + 3x +2$
 
@@ -257,7 +259,8 @@ What is a "step"?
 * Allocating memory: `x = Person("foo")`
 
 In general, any operation that consumes computing resources can be considered
-as a step
+as a step.
+
 
 ## Calculating complexity - Example 1
 
@@ -300,7 +303,7 @@ Per item of a:
 
 then, also a return statement
 
-Our complexity function is $f(x) = 3x + 1$, which can be upper bounded by $g(x) = 5x$.
+Our complexity function is $T(x) = 3x + 1$, which can be upper bounded by $g(x) = 5x$.
 Therefore, the compexity class is $O(n)$
 
 ## Matrix multiplication
@@ -319,6 +322,8 @@ def matrix_multiply(a, b):
   return result
 ```
 
+. . .
+
 Ignoring initialization, for each element in `a`, we need:
 
 * access `len(b[0])` times all elements in `b`
@@ -326,7 +331,135 @@ Ignoring initialization, for each element in `a`, we need:
 * do a multiplication and an assignment
 
 $f(a,b) = len(a[0]) \times len(b[0]) \times len(a) + 1$ or $f(a,b) = n \times m \times p + 1$. 
-If we take $a = max(n, m, p)$, we can prove that $f(a,b)$ is bounded by $O(a^3)$.
+If we take $a = max(n, m, p)$, we can prove that $f$ is bounded by $g(n) = n^3$.
+Therefore $f$ is $O(n^3)$
+
+## Steps and cost
+
+Our discussion up to now assumes that all steps have the same computational
+cost. However, this is not true.
+
+```
+Latency Comparison Numbers
+
+L1 cache reference                           0.5 ns
+Branch mispredict                            5   ns
+L2 cache reference                           7   ns
+Mutex lock/unlock                           25   ns
+Main memory reference                      100   ns
+Compress 1K bytes with Zippy             3,000   ns
+Send 1K bytes over 1 Gbps network       10,000   ns
+Read 4K randomly from SSD*             150,000   ns
+Read 1 MB sequentially from memory     250,000   ns
+Round trip within same datacenter      500,000   ns
+Read 1 MB sequentially from SSD*     1,000,000   ns
+Disk seek                           10,000,000   ns
+Read 1 MB sequentially from disk    20,000,000   ns
+Send packet CA->Netherlands->CA    150,000,000   ns
+```
+
+By Jonas Boner, available [here](https://gist.github.com/jboner/2841832)
+
+## Cost at human scale
+Humans are very bad at appreciating very small or very big numbers.
+Let's convert those numbers to something more relevant to humans:
+seconds
+
+```
+Latency Comparison Numbers
+                                         CPU time -> Human time
+L1 cache reference                         0.5 ns -> 0.5 secs
+Branch mispredict                            5 ns -> 5   secs
+L2 cache reference                           7 ns -> 7   secs
+Mutex lock/unlock                           25 ns -> 25  secs
+Main memory reference                      100 ns -> 100 secs
+Compress 1K bytes with Zippy             3,000 ns -> 50  mins
+Send 1K bytes over 1 Gbps network       10,000 ns -> 2.7 hrs
+Read 4K randomly from SSD*             150,000 ns -> 1.7 days
+Read 1 MB sequentially from memory     250,000 ns -> 2.9 days
+Round trip within same datacenter      500,000 ns -> 5.7 days
+Read 1 MB sequentially from SSD*     1,000,000 ns -> 11.5 days
+Disk seek                           10,000,000 ns -> 3.8 months
+Read 1 MB sequentially from disk    20,000,000 ns -> 7.6 months
+Send packet CA->Netherlands->CA    150,000,000 ns -> 4.8 years
+
+```
+
+It should be obvious now that when calculating complexity, not all steps
+are of the same cost.
+
+## Iteration cost
+
+```python       
+               #  cost    times
+def foo(a):    #     
+  for i in a:  #  c1      len(a)
+    y = y + i  #  c2 + c3 len(a)
+    
+  return y     #  
+```
+
+Associated costs:
+
+* `c1` Main memory reference or L2 cache reference
+* `c2` (Loading operands) L1 cache reference (x2), perhaps branch missprediction
+* `c3` (Storing result) Main memory reference
+
+Calculating costs is very complicated and depends on the computer architecture.
+This is why algorithm analysis usually avoids it.
+
+## Going back to `fib`
+
+```{python}
+def fib(x):
+  if x == 0: return 0
+  elif x == 1: return 1
+  else: return fib(x - 2) + fib(x - 1)
+```
+
+`fib`s compexity function depends on the size of `x`
+
+\[
+\begin{aligned}
+T(n) &= T(n-1) + T(n-2) + C\\
+     &= T(n-2) + T(n-3) + T(n-3) + T(n-4)\\
+     &= T(n-3) + T(n-4) + T(n-4) + T(n-5) + T(n-4) + T(n-5) + T(n-5) + T(n-6)\\
+     & \dots \\
+     &= 2 \times T(n-2) + \dots + 2^n \times T(n- len(x) - 2)\\
+     &< 2^n \times T(n - len(x) - 2)
+\end{aligned}
+\]
+
+Therefore, a (relatively loose) upper bound for `fib` is $O(n^2)$
+
+## `fib` complexity graphically
+
+![Fibonacci complexity, graphically](figures/fib-complexity.png)
+
+As we can see, $2^4$ is an over approximation for the last step, therefore
+$O(2^n)$ is a not too tight bound. 
+
+A tighter bound for `fib` is $O(\frac{1 + \sqrt 5}{2}^n) \approx O(1.618^{n})$
+
+. . .
+
+$\phi = \frac{1 + \sqrt 5}{2}$ is otherwise known as the [golden ratio](https://en.wikipedia.org/wiki/Golden_ratio)
+
+## Group exercise
+
+What is the complexity of Towers of Hanoi?
+
+```python
+def hanoi(n, source, tmp, target):
+  if n == 0:
+    return
+
+  # move tower of size n - 1 to helper
+  hanoi(n - 1, source, target, tmp)
+  print "Move disk %d from %s to %s" %(n, source, target)
+  # move tower of size n-1 from helper to target
+  hanoi(n - 1, tmp, source, target)
+```
 
 ```{r child="footer.Rmd", include=FALSE}
 ```
