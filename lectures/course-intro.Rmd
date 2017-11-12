@@ -50,14 +50,12 @@ Remember to subscribe!
 
 * You always work in groups
 
-* The groups are randomly created per assignment
-
 * Grade: $\frac{\sum_{assign=1}^{4} grade(assign)}{4}$, aka the mean
     * No submission? Grade $\rightarrow$ 0
     * Late submission? Grade $\rightarrow$ 0
     * Non-show for sign-off? Grade $\rightarrow$ 0
 
-* Most assignment grades add to $> 10$
+* All assignment grades add to $> 10$
 
 ## Grades
 
