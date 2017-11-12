@@ -14,63 +14,113 @@ csl: ieee.csl
 
 ## Why organize data as a tree structure?
 
-- Humans like hierarchies and *hierarchical* ordering. Examples are *family
-  tree*, *governance*, *species* 
-- This form of systematic organization in a hierarchical order helps computers
-  to localize and make decisions in a much more efficient way then linear data
+- Humans have a natural inclination towards hierarchical thinking and this have
+  had a profound impact on the way we reason, decide and look at *things*
+- Examples are social and political structures such as *family tree*,
+  *governance* and *species* 
+- Introducing *order* such as *hierarchical order* to data allows computers
+  to make decisions in a much more efficient way then linear data
   structures
 
-## Example: Visiting a distant aunt
 
-- You only meet her once every three years, she is from your dad's side. There
-  is a huge family gathering next week and you need to find her address.
-  Learning from the previous lecture, the data is organized in this fashion
+## Example: Visiting a distant aunt
+What do we know about this aunt and our family:
+
+- You only meet her once every three years
+- She is from your **dad's side**
+- There is a huge family gathering next week and you have been asked to find her
+  address.
+
+
+## Example: Visiting a distant aunt (1)
+- Equipped with the knowledge from the previous week, we would organize family
+  relatives in the following fashion:
 
 ![](./figures/tree_linear.svg)
 
-## Example: Visiting a distant aunt
-
-If we structure the family in a tree, we can find it her address in less time,
-we know she is on the dad side, thus we avoid exploring half the family!
+## Example: Visiting a distant aunt (2)
+Knowing the hierarchical **order** of our family, we would prefer making a
+family tree!
 
 ![](./figures/tree_nonlinear.svg)
 
+## Introducing the notion of *order* to a dataset
 
-## Definition of a tree
+- Provides the computer additional insights on the relation between data values
+- Allows the computer to examine the relationship between data values and make
+  decisions based on them
+- This makes lookup for a data value much faster, we can avoid examine a large
+  chunk of the data set
+- In the example, we knew the aunt was on the dad's side and thus avoided
+  looking into mom's side of relatives!
+- A tree is an example of organizing data values according to an **order** (e.g
+  hierarchical order)
 
+<!-- How can we integrate *order* in a data structure? -->
+
+## Tree terminology (1)
 ![](./figures/tree_def.svg)
 
-## Tree terminology
+## Tree Properties (1)
+A tree constitute with the following properties:
 
-- The **root** node does not have a **parent node**
-- A **parent** node has zero, one or more **children**
-- Certain nodes are both a parent and child
-- Nodes on the same level, are *siblings*
-- Each branch of the tree are disjoint and is a sub-tree of the tree
-- This is called *m-ary tree*
+* A single & special node named **root**, start node on top of tree and does not have a **parent**
+* Succeeding nodes can be either a **child** or **parent**
+ + A **child** node is connected by *at-least* a preceding node
+ + The *preceding* node is known as a **parent** node
+ + A **parent** node has *zero, one or more* children(successor nodes)
 
-## Traversing a tree
-There are three types of ways to traverse a tree
+## Tree terminology (2)
+![](./figures/tree_def_2.svg)
+
+## Tree Properties (2)
+
+* All nodes in a tree (except the **root**) are child nodes
+* **Siblings** are nodes with the same **parent**
+* **Subtree** are the descendants of a node
+* A node without children is a **leaf** node
+
+## Tree Height
+
+![](./figures/tree_height.svg)
+
+## Tree Depth
+
+![](./figures/tree_depth.svg)
+
+## Path 
+![](./figures/tree_path.svg)
 
 
-- Pre-order
-- In-order
-- Post-order
+## Traversal Methods
+Linear data structures have only one way to read data; a tree can be traversed
+in two ways: **depth-first** and **breath-first**(discussed next week). Three
+depth-first methods:
 
-## Pre-order
+* Pre-order
+* In-order
+* Post-order
 
-![](./figures/preorder.png)
+## Traversal Methods (1)
+
+![](./figures/tree_traversal_intro.svg)
 
 
-## In-order
+## Traversal Methods (3)
 
-![](./figures/inorder.png)
-
-
-## Post-Order
-
-![](./figures/postorder.png)
-
+### Pre-order traversal
+Visit this recursively 
+```
+root node => left sub-tree => right sub-tree
+```
+###In-order traversal
+```
+left sub-tree => root node => right sub-tree
+```
+### Post-order traversal
+```
+left sub-tree => right sub-tree => root node
+```
 # Binary Trees  {data-background="figures/tree_binary_intro.svg"}
 
 ## Properties
@@ -410,5 +460,5 @@ There are two types of way to implement a B-Tree
 
 
 
-## ```{r child="footer.Rmd", include=FALSE}
+```{r child="footer.Rmd", include=FALSE}
 ```
