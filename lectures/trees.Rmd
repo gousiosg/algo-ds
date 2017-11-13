@@ -66,9 +66,9 @@ A tree constitute with the following properties:
 
 * A single & special node named **root**, start node on top of tree and does not have a **parent**
 * Succeeding nodes can be either a **child** or **parent**
- + A **child** node is connected by *at-least* a preceding node
- + The *preceding* node is known as a **parent** node
- + A **parent** node has *zero, one or more* children(successor nodes)
+    + A **child** node is connected by *at-least* a preceding node
+    + The *preceding* node is known as a **parent** node
+    + A **parent** node has *zero, one or more* children(successor nodes)
 
 ## Tree terminology (2)
 ![](./figures/tree_def_2.svg)
@@ -123,21 +123,28 @@ left sub-tree => right sub-tree => root node
 ```
 # Binary Trees  {data-background="figures/tree_binary_intro.svg"}
 
-## Properties
+## Binary Trees
 
-- A Binary tree is a *2-ary* tree with zero, one or two *children* (left or
-    right)
-- The structure is simple and forms more of a "decision" tree, where each step
-  resembles a yes or no answer
-- This makes it efficient for sorting and searching 
-  
-- The depth of a node is the number of edges from the root to the node.
-- The height of a node is the number of edges from the node to the deepest leaf.
-- The height of a tree is a height of the root.
-- A full binary tree.is a binary tree in which each node has exactly zero or two
-  children.
-- A complete binary tree is a binary tree, which is completely filled, with the
-  possible exception of the bottom level, which is filled from left to right.
+* Each node contains a **data value**
+- Branching at each node occur either at **left** or **right**
+- A binary can be composed of zero, one or two children
+- Useful for Searching: Traversing either **left** or **right** to find the
+  target
+
+## Example
+
+![](./figures/tree_bt_example.svg)
+
+## Binary Search Tree (BST)
+*  Adding a notion of *order* to a Binary Tree structure
+*  A tree is ordered the following way:
+    + The child node on the **right** is **always** greater than its parent
+    + The child node on the **left** is **always** lesser than its parent
+
+## Example of a BST  
+
+![](./figures/tree_bst_example.svg)
+
 
 ## Implementation
 
@@ -194,16 +201,6 @@ Short Answer: YES!
 ![](./figures/tree_types.svg)
 
 
-## Binary Search Trees (BST)
-- As the name indication, it provides means to search in a Binary Tree
-  structure
-- A binary tree is a Binary Search tree if the value of the node is greater the
-  values of each node in the left subtree and smaller than the values of each
-  node in the right subtree
-
-## Example of a BST  
-
-![](./figures/tree_bst.svg)
 
 
 ## Searching in a Binary Search Tree
@@ -296,8 +293,7 @@ that the node to be deleted has key X.
 # Self-balancing binary search tree
 
 ## 
-
-A self-balancing binary search tree or height-balanced binary search tree is a
+<!-- A self-balancing binary search tree or height-balanced binary search tree is a
 binary search tree (BST) that attempts to keep its height, or the number of
 levels of nodes beneath the root, as small as possible at all times,
 automatically.
@@ -314,7 +310,7 @@ of later operations.
 
 - Balanced BSTs are not always so precisely balanced, since it can be expensive to
 keep a tree at minimum height at all times; instead, most algorithms keep the
-height within a constant factor of this lower bound.
+height within a constant factor of this lower bound. -->
 
 ## Typical Binary Tree
 
