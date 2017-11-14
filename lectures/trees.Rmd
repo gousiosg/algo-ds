@@ -127,13 +127,48 @@ left sub-tree => right sub-tree => root node
 
 * Each node contains a **data value**
 - Branching at each node occur either at **left** or **right**
-- A binary can be composed of zero, one or two children
+- A binary tree can be composed of zero, one or two children
 - Useful for Searching: Traversing either **left** or **right** to find the
   target
 
 ## Example
 
 ![](./figures/tree_bt_example.svg)
+
+## Implementation of the data structure
+``` python
+class Node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+# Examples
+root = Node(8) # root node & no children
+a = Node(2)
+a.left = Node(1)
+b.right = Node(6)
+root.left = a
+root.right = a
+
+#Q: How will the tree look like?
+
+
+```
+
+<!--
+        2
+       / \
+      /   \
+     /     \
+    1       3
+   / \     / \
+  0   7   9   1
+ /   / \     / \
+2   1   0   8   8
+       /
+      7
+  -->
 
 ## Binary Search Tree (BST)
 *  Adding a notion of *order* to a Binary Tree structure
@@ -146,47 +181,92 @@ left sub-tree => right sub-tree => root node
 ![](./figures/tree_bst_example.svg)
 
 
-## Implementation
+## Insertion in a BST
 
+We want to insert a data value $K$
+
+1. Compare $K$ with the data value $V$ of the current node.
+2. If $K < V$,
+    1. If `V.left is None`, we insert $K$ as left child of $V$.
+    2. If `V.left is not None`, left child of $V$ becomes the **new
+       current** node and start over from step 1.
+3. If $K > V$,
+    1. If `V.right is None`, we insert $K$the right child of $V$.
+    2. If `V.right is not None`, right child of $V$ becomes the **new
+       current** node and start over from step 1.
+
+## Insert function
 ```python
-class BinaryTree():
+def insert(self, data):
 
-    def __init__(self,rootid):
-      self.left = None
-      self.right = None
-      self.rootid = rootid
-
-    def getLeftChild(self):
-        return self.left
-    def getRightChild(self):
-        return self.right
-    def setNodeValue(self,value):
-        self.rootid = value
-    def getNodeValue(self):
-        return self.rootid
-
+    if data > self.data:
+        if self.right is None:
+            self.right = Node(data)
+        else:
+            #Q: why are we calling insert here?
+            self.right.insert(data)
+    else:
+        if self.left is None:
+            self.left = Node(data)
+        else:
+            #Q: why are we calling insert here?
+            self.left.insert(data)
 ```
 
-## Adding elements to the tree
 
-```python
+## Inserting a value into a BST
 
-    def insertRight(self,newNode):
-        if self.right == None:
-            self.right = BinaryTree(newNode)
-        else:
-            tree = BinaryTree(newNode)
-            tree.right = self.right
-            self.right = tree
+![](./figures/tree_bst_in_1.svg)
 
-    def insertLeft(self,newNode):
-        if self.left == None:
-            self.left = BinaryTree(newNode)
-        else:
-            tree = BinaryTree(newNode)
-            tree.left = self.left
-            self.left = tree
-```
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_2.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_3.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_4.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_5.svg)
+
+## Inserting a value into a BST
+
+![](./figures/tree_bst_in_6.svg)
+
+## Remove a node from a BST
+There are three situations to handle
+
+* **Leaf Node:** Straightforward to delete
+* **Node with one child:** Replace the node with it's only child
+* **Node with two children:** More complicated
+
+## Remove a node with two children
+We want to remove a node $K$ with $L$ as left node and $R$ as right node
+
+1. Perform a search for a minimum value $Min$ in the right subtree $R$
+   or search for a maximum value $Max$ in the left subtree $L$
+2. Replace $K$ data value with $Min$ or $Max$ value
+3. Remove node where we found the $Min$ or $Max$ in the tree
+
+NB: $K$ should be replaced with value that preserve the properties of a BST
+
+## Removing 40 from the BST Example
+
+![](./figures/tree_rm_1.svg)
+
+
+## Removing 40 from the BST Example
+
+![](./figures/tree_rm_2.svg)
+
+## Removing 40 from the BST Example
+
+![](./figures/tree_rm_3.svg)
 
 
 ## Does shape matter?
@@ -199,8 +279,6 @@ Short Answer: YES!
 
 ## Three different types of a tree?
 ![](./figures/tree_types.svg)
-
-
 
 
 ## Searching in a Binary Search Tree
@@ -227,67 +305,6 @@ If we are looking for element X:
 
 ![](./figures/tree_bst_search_3.svg)
 
-
-## Inserting a value into a BST
-
-1. Compare current node's key with K.
-2. If K is less than the current node,
-    1. If left child of current node is Null, we insert K as the left child of
-    current node and return.
-    2. If the left child is not Null, the left child becomes the new current
-       node, and we repeat the process from step 1.
-3. If K is greater than the current node,
-    1. If right child of current node is Null, we insert K as the right child of
-       the current node and return.
-    2. If the right child is not Null, the right child becomes the new current
-       node, and we repeat the process from step 1.
-
-## Inserting a value into a BST
-
-![](./figures/tree_bst_in_1.svg)
-
-## Inserting a value into a BST
-
-![](./figures/tree_bst_in_2.svg)
-
-## Inserting a value into a BST
-
-![](./figures/tree_bst_in_3.svg)
-
-## Inserting a value into a BST
-
-![](./figures/tree_bst_in_4.svg)
-
-## Inserting a value into a BST
-
-![](./figures/tree_bst_in_5.svg)
-
-## Inserting a value into a BST
-
-![](./figures/tree_bst_in_6.svg)
-
-## Removing a value from a BST
-
-When we have to delete a node with two children, we have two options. Let's say
-that the node to be deleted has key X.
-
-1. Replace the current node's key with its predecessor and then trigger delete
-   for predecessor in node's left subtree.
-2. Replace the current node's key with its successor and then trigger delete for
-   predecessor in node's right subtree.
-
-## Removing 40 from the BST Example
-
-![](./figures/tree_rm_1.svg)
-
-
-## Removing 40 from the BST Example
-
-![](./figures/tree_rm_2.svg)
-
-## Removing 40 from the BST Example
-
-![](./figures/tree_rm_3.svg)
 
 
 # Self-balancing binary search tree
