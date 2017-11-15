@@ -238,7 +238,52 @@ def insert(self, data):
 
 ![](./figures/tree_bst_in_6.svg)
 
+## Search in a BST
+
+We search for a value $key$ by visiting the nodes in the BST
+
+Compare the current node $V's$ value with $key$ 
+
+1. if `key == V.data`, we have found the value and terminate
+2. if `key > V.data`, we branch to `V.right`
+3. if `key < V.data`, we branch to `V.left`
+
+Base case: Repeat process above until:
+
+* `key == V.data`
+* `V.left == None && V.right == None` (e.g reach leaf-node)
+
+## Search function
+
+``` python
+def find(root,key):
+     
+    # Base Case: root is null or key is present at root
+    if root.left/right is None or root.val == key:
+        return root
+ 
+    # Key is greater than root's key
+    if root.val < key:
+        return find(root.right,key)
+   
+    # Key is smaller than root's key
+    return find((root.left,key)
+```
+
+## Example: Lookup value 49 in a BST
+
+![](./figures/tree_bst_search_1.svg)
+
+## Example: Lookup value 49 in a BST
+
+![](./figures/tree_bst_search_2.svg)
+
+## Example: Lookup value 49 in a BST
+
+![](./figures/tree_bst_search_3.svg)
+
 ## Remove a node from a BST
+<!-- before this slide show three examples -->
 There are three situations to handle
 
 * **Leaf Node:** Straightforward to delete
@@ -246,14 +291,21 @@ There are three situations to handle
 * **Node with two children:** More complicated
 
 ## Remove a node with two children
-We want to remove a node $K$ with $L$ as left node and $R$ as right node
+We want to remove a node $K$ with $L$ as left tree and $R$ as right tree
 
-1. Perform a search for a minimum value $Min$ in the right subtree $R$
-   or search for a maximum value $Max$ in the left subtree $L$
-2. Replace $K$ data value with $Min$ or $Max$ value
-3. Remove node where we found the $Min$ or $Max$ in the tree
+1. Perform a search to find node $K$
+2. Find the **successor node** $S$ of $K$
+3. Replace `K.data` with `S.data`
 
-NB: $K$ should be replaced with value that preserve the properties of a BST
+How do we find the **successor node** of $K$?
+
+
+## Successor node
+* The node with most minimum value in the **right sub-tree**
+* Traverse the left child in each branch until there is a node that don't have a left child.
+
+![](./figures/tree_min.svg){ width=80% }
+
 
 ## Removing 40 from the BST Example
 
@@ -269,6 +321,8 @@ NB: $K$ should be replaced with value that preserve the properties of a BST
 ![](./figures/tree_rm_3.svg)
 
 
+## Unbalanced Tree example
+
 ## Does shape matter?
 
 Short Answer: YES!
@@ -281,29 +335,7 @@ Short Answer: YES!
 ![](./figures/tree_types.svg)
 
 
-## Searching in a Binary Search Tree
 
-If we are looking for element X:
-
-1. Compare current node's key with X. If it's equal, we've found the key. All
-   done.
-2. If X is less than node's key, we start looking at node's left subtree. It's
-   because we know that right subtree cannot contain anything greater than X.
-3. If X is greater than node's key, we start looking in the right subtree.
-4. We repeat this process until we find the key or we reach the leaf node. If we
-   reach the leaf node and haven't found the key as yet, we return not found.
-
-## Example: Lookup value 49 in a BST
-
-![](./figures/tree_bst_search_1.svg)
-
-## Example: Lookup value 49 in a BST
-
-![](./figures/tree_bst_search_2.svg)
-
-## Example: Lookup value 49 in a BST
-
-![](./figures/tree_bst_search_3.svg)
 
 
 
