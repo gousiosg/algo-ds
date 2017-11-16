@@ -212,7 +212,7 @@ If the time to execute for input size $n = 1$ is 1 sec, then for input size $n =
 * An $O(n)$ algorithm will take 1000 secs
 * An $O(n^2)$ algorithm will take 277 hours
 * An $O(n^3)$ algorithm will take 32 years
-* An $O(e^x)$ algorithm will take billions of years!
+* An $O(e^n)$ algorithm will take billions of years!
 
 ## Examples with big-O 
 

@@ -90,8 +90,8 @@ your solutions and the results of running your solutions on the provided
 datasets.
 
 You submit your assignments **THE DAY BEFORE** the deadline. For example, the
-deadline for the first assignment is on 29/11. You must submit your assignment
-by Nov 28, 23:59.
+deadline for the first assignment is on 28/11. You must submit your assignment
+by Nov 27, 23:59.
 
 To submit your assignment, you must export the Jupyter notebook to PDF (Save as...)
 and upload it to the designated BrightSpace folder (you can find those on
@@ -118,13 +118,13 @@ teacher to arrange a case-specific deadline.
 |:---:|:------:|----------------------|----------|----------------------|
 | 1 | 1 | [Course introduction](course-intro.html), [Recursion](recursion.html) | GG | |
 | 1 | 1 | [Algorithm Analysis](complexity.html)   | GG | |
-| 2 | 1 | [Basic Data Structures](basic-structures.html) (Lists, Stacks, Sets) | MK | [Doubly-linked lists](assignment-lists.ipynb) (29/11/2017) |
+| 2 | 1 | [Basic Data Structures](basic-structures.html) (Lists, Stacks, Sets) | MK | Doubly-linked lists ([jypyter](assignment-lists.ipynb), [html](assignment-lists.html)) (28/11/2017) |
 | 2 | 2 | Algorithms for basic data structures | MK | |
-| 3 | 1 | [Trees](trees.html) (Binary trees)  | JH | [Red-Black Trees](assignment-rbtrees.ipynb) (13/12/2017) |
+| 3 | 1 | [Trees](trees.html) (Binary trees)  | JH | Red-Black Trees ([jupyter](assignment-rbtrees.ipynb), [html](assignment-lists.html)) (12/12/2017) |
 | 3 | 2 | More Trees (B+ Trees) | JH | |
-| 4 | 1 | [Graphs](graphs.html) (Representation and Traversal) | PK | [Graph algorithms](assignment-graphs.ipynb) (10/01/2018)|
+| 4 | 1 | [Graphs](graphs.html) (Representation and Traversal) | PK | Graph algorithms ([jupyter](assignment-graphs.ipynb), [html](assignment-lists.html)) (9/01/2018)|
 | 4 | 2 | Graph algorithms (Topological sorting, Centrality) | PK ||
-| 5 | 1 | Sorting | JH | [Searching](assignment-searching.ipynb) (16/01/2018)|
+| 5 | 1 | Sorting | JH | Searching ([jupyter](assignment-searching.ipynb), [html](assignment-lists.html)) (15/01/2018)|
 | 5 | 2 | Searching | JH ||
 | 6 | 1 | Strings and string search  | GG ||
 | 6 | 2 | Genetic algorithms  | MS ||
