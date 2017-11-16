@@ -293,6 +293,53 @@ which are going to be the *head* and *tail* of the following queque?
   x
 ```
 
+## ```isEmpty``` Operation
+
+```c
+#define MAX 6
+
+int intArray[MAX];
+int front = 0;
+int rear = -1;
+int itemCount = 0;
+
+bool isempty() {
+   if(front < 0 || front > rear) 
+      return true;
+   else
+      return false;
+}
+```
+
+## ```enqueue``` Operation
+
+```c
+int enqueue(int data)      
+   if(isfull())
+      return 0;
+   
+   rear = rear + 1;
+   queue[rear] = data;
+   
+   return 1;
+end procedure
+```
+
+## ```dequeue``` Operation
+
+```c
+int dequeue() {
+
+   if(isempty())
+      return 0;
+
+   int data = queue[front];
+   front = front + 1;
+
+   return data;
+}
+```
+
 ## Lists
 
 A **list** is a data structure that can store
