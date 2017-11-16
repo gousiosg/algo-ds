@@ -204,6 +204,59 @@ which will be the top one?
   x
 ```
 
+## ```isEmpty``` Operation
+
+```c
+int MAXSIZE = 8;       
+int stack[8];     
+int top = -1;
+
+int isempty() {
+
+   if(top == -1)
+      return 1;
+   else
+      return 0;
+}
+```
+
+## ```isTop``` Operation
+
+```c
+int isTop() {
+   return stack[top];
+}
+```
+
+## Push Operation
+
+```c
+
+void push(int data) {
+   if(!isFull()) {
+      top = top + 1;   
+      stack[top] = data;
+   } else {
+      printf("Could not insert more data, the stack is full.\n");
+   }
+}
+```
+
+## Pop Operation
+
+```c
+int pop(int data) {
+
+   if(!isempty()) {
+      data = stack[top];
+      top = top - 1;   
+      return data;
+   } else {
+      printf("Could not retrieve data, Stack is empty.\n");
+   }
+}
+```
+
 ## Queues
 
 - In a **queue**, the element to be removed is the one that belongs to the set for the longest time. We name this policy as: *first-in, first-out*, or *FIFO*.
@@ -211,13 +264,13 @@ which will be the top one?
 - If a **queue** consists of elements ```Q[1..n]```, ```Q.heap``` points to its *head* and ```Q.tail``` points the *next* position where a new element can be added to the queue. When ```Q.heap = Q.tail```, it means that the queue is *empty*.
 
 
-
 ## Queue Operations
 
 - The `insert` operation on a queue is called as `enqueue`.
 Additionally, the `remove` operation is called as `dequeue`.
 
-## Queue Implementation with Array
+
+## Representation of Queues Using Arrays
 
 - Which are the *head* and *tail* of the following queque?
 ```{r echo=FALSE}
