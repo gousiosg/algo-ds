@@ -62,7 +62,7 @@ that can be identified using numerical *indices*.
 ```cpp
 #include <stdio.h>
 
-// Insert item = 10 to the location with index (k) 4.
+// Insert item = 10 to the location of the 4th element.
 int main() {
    int arr[] = {1,2,3,4,5};
    int item = 10, k = 4, n = 5;
@@ -79,7 +79,7 @@ int main() {
 }
 ```
 
-## New Array Elements
+## New Array Elements After the ```insert``` operation
 
 ```
 The array elements after insertion :
@@ -90,6 +90,39 @@ arr[2] = 3
 arr[3] = 4 
 arr[4] = 10 
 arr[5] = 5
+```
+
+## Array Remove Operation
+
+```cpp
+#include <stdio.h>
+
+// Remove the 4th element.
+int main() {
+   int arr[] = {1,2,3,4,5};
+   int k = 4, n = 5;
+   int i, j;
+   
+   j = k;
+	
+   while( j < n) {
+      arr[j-1] = arr[j];
+      j = j + 1;
+   }
+	
+   n = n -1;
+}
+```
+
+## New Array Elements After the ```remove``` operation
+
+```
+The array elements after deletion:
+
+arr[0] = 1 
+arr[1] = 2 
+arr[2] = 3 
+arr[3] = 5
 ```
 
 ## Stacks
