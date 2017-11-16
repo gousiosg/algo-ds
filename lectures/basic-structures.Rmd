@@ -82,7 +82,7 @@ int main() {
 ## New Array Elements After the ```insert``` operation
 
 ```
-The array elements after insertion :
+The array after insertion:
 
 arr[0] = 1 
 arr[1] = 2 
@@ -117,12 +117,48 @@ int main() {
 ## New Array Elements After the ```remove``` operation
 
 ```
-The array elements after deletion:
+The array after deletion:
 
 arr[0] = 1 
 arr[1] = 2 
 arr[2] = 3 
 arr[3] = 5
+```
+
+## Array Search Operation
+
+```cpp
+#include <stdio.h>
+
+// Search for item = 5
+int main() {
+   int arr[] = {1,2,3,4,5};
+   int item = 5, n = 5;
+   int i = 0, j = 0;
+    
+   while( j < n){
+      if( arr[j] == item ) {
+         break;
+      }
+		
+      j = j + 1;
+   }
+
+}
+```
+
+## Found Item
+
+```
+Array elements:
+
+arr[0] = 1 
+arr[1] = 2 
+arr[2] = 3 
+arr[3] = 4 
+arr[4] = 5 
+
+The item = 5 is at the position 5 (4th element).
 ```
 
 ## Stacks
