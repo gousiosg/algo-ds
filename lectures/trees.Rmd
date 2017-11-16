@@ -14,186 +14,205 @@ csl: ieee.csl
 
 ## Why organize data as a tree structure?
 
-- Humans like hierarchies and *hierarchical* ordering. Examples are *family
-  tree*, *governance*, *species* 
-- This form of systematic organization in a hierarchical order helps computers
-  to localize and make decisions in a much more efficient way then linear data
+- Humans have a natural inclination towards hierarchical thinking and this have
+  had a profound impact on the way we reason, decide and look at *things*
+- Examples are social and political structures such as *family tree*,
+  *governance* and *species* 
+- Introducing *order* such as *hierarchical order* to data allows computers
+  to make decisions in a much more efficient way then linear data
   structures
 
-## Example: Visiting a distant aunt
 
-- You only meet her once every three years, she is from your dad's side. There
-  is a huge family gathering next week and you need to find her address.
-  Learning from the previous lecture, the data is organized in this fashion
+## Example: Visiting a distant aunt
+What do we know about this aunt and our family:
+
+- You only meet her once every three years
+- She is from your **dad's side**
+- There is a huge family gathering next week and you have been asked to find her
+  address.
+
+
+## Example: Visiting a distant aunt (1)
+- Equipped with the knowledge from the previous week, we would organize family
+  relatives in the following fashion:
 
 ![](./figures/tree_linear.svg)
 
-## Example: Visiting a distant aunt
-
-If we structure the family in a tree, we can find it her address in less time,
-we know she is on the dad side, thus we avoid exploring half the family!
+## Example: Visiting a distant aunt (2)
+Knowing the hierarchical **order** of our family, we would prefer making a
+family tree!
 
 ![](./figures/tree_nonlinear.svg)
 
+## Introducing the notion of *order* to a dataset
 
-## Definition of a tree
+- Provides the computer additional insights on the relation between data values
+- Allows the computer to examine the relationship between data values and make
+  decisions based on them
+- This makes lookup for a data value much faster, we can avoid examine a large
+  chunk of the data set
+- In the example, we knew the aunt was on the dad's side and thus avoided
+  looking into mom's side of relatives!
+- A tree is an example of organizing data values according to an **order** (e.g
+  hierarchical order)
 
+<!-- How can we integrate *order* in a data structure? -->
+
+## Tree terminology (1)
 ![](./figures/tree_def.svg)
 
-## Tree terminology
+## Tree Properties (1)
+A tree constitute with the following properties:
 
-- The **root** node does not have a **parent node**
-- A **parent** node has zero, one or more **children**
-- Certain nodes are both a parent and child
-- Nodes on the same level, are *siblings*
-- Each branch of the tree are disjoint and is a sub-tree of the tree
-- This is called *m-ary tree*
+* A single & special node named **root**, start node on top of tree and does not have a **parent**
+* Succeeding nodes can be either a **child** or **parent**
+    + A **child** node is connected by *at-least* a preceding node
+    + The *preceding* node is known as a **parent** node
+    + A **parent** node has *zero, one or more* children(successor nodes)
 
-## Traversing a tree
-There are three types of ways to traverse a tree
+## Tree terminology (2)
+![](./figures/tree_def_2.svg)
+
+## Tree Properties (2)
+
+* All nodes in a tree (except the **root**) are child nodes
+* **Siblings** are nodes with the same **parent**
+* **Subtree** are the descendants of a node
+* A node without children is a **leaf** node
+
+## Tree Height
+
+![](./figures/tree_height.svg)
+
+## Tree Depth
+
+![](./figures/tree_depth.svg)
+
+## Path 
+![](./figures/tree_path.svg)
 
 
-- Pre-order
-- In-order
-- Post-order
+## Traversal Methods
+Linear data structures have only one way to read data; a tree can be traversed
+in two ways: **depth-first** and **breath-first**(discussed next week). Three
+depth-first methods:
 
-## Pre-order
+* Pre-order
+* In-order
+* Post-order
 
-![](./figures/preorder.png)
+## Traversal Methods (1)
+
+![](./figures/tree_traversal_intro.svg)
 
 
-## In-order
+## Traversal Methods (3)
 
-![](./figures/inorder.png)
-
-
-## Post-Order
-
-![](./figures/postorder.png)
-
+### Pre-order traversal
+Visit this recursively 
+```
+root node => left sub-tree => right sub-tree
+```
+###In-order traversal
+```
+left sub-tree => root node => right sub-tree
+```
+### Post-order traversal
+```
+left sub-tree => right sub-tree => root node
+```
 # Binary Trees  {data-background="figures/tree_binary_intro.svg"}
 
-## Properties
+## Binary Trees
 
-- A Binary tree is a *2-ary* tree with zero, one or two *children* (left or
-    right)
-- The structure is simple and forms more of a "decision" tree, where each step
-  resembles a yes or no answer
-- This makes it efficient for sorting and searching 
-  
-- The depth of a node is the number of edges from the root to the node.
-- The height of a node is the number of edges from the node to the deepest leaf.
-- The height of a tree is a height of the root.
-- A full binary tree.is a binary tree in which each node has exactly zero or two
-  children.
-- A complete binary tree is a binary tree, which is completely filled, with the
-  possible exception of the bottom level, which is filled from left to right.
+* Each node contains a **data value**
+- Branching at each node occur either at **left** or **right**
+- A binary tree can be composed of zero, one or two children
+- Useful for Searching: Traversing either **left** or **right** to find the
+  target
 
-## Implementation
+## Example
 
-```python
-class BinaryTree():
+![](./figures/tree_bt_example.svg)
 
-    def __init__(self,rootid):
-      self.left = None
-      self.right = None
-      self.rootid = rootid
+## Implementation of the data structure
+``` python
+class Node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
 
-    def getLeftChild(self):
-        return self.left
-    def getRightChild(self):
-        return self.right
-    def setNodeValue(self,value):
-        self.rootid = value
-    def getNodeValue(self):
-        return self.rootid
+# Examples
+root = Node(8) # root node & no children
+a = Node(2)
+a.left = Node(1)
+b.right = Node(6)
+root.left = a
+root.right = a
+
+#Q: How will the tree look like?
+
 
 ```
 
-## Adding elements to the tree
+<!--
+        2
+       / \
+      /   \
+     /     \
+    1       3
+   / \     / \
+  0   7   9   1
+ /   / \     / \
+2   1   0   8   8
+       /
+      7
+  -->
 
-```python
-
-    def insertRight(self,newNode):
-        if self.right == None:
-            self.right = BinaryTree(newNode)
-        else:
-            tree = BinaryTree(newNode)
-            tree.right = self.right
-            self.right = tree
-
-    def insertLeft(self,newNode):
-        if self.left == None:
-            self.left = BinaryTree(newNode)
-        else:
-            tree = BinaryTree(newNode)
-            tree.left = self.left
-            self.left = tree
-```
-
-
-## Does shape matter?
-
-Short Answer: YES!
-
-- The depth of the tree impacts the time of traversing a tree
-- The order in which we add elements matters, the shape it can take, is shown in
-  the next slide
-
-## Three different types of a tree?
-![](./figures/tree_types.svg)
-
-
-## Binary Search Trees (BST)
-- As the name indication, it provides means to search in a Binary Tree
-  structure
-- A binary tree is a Binary Search tree if the value of the node is greater the
-  values of each node in the left subtree and smaller than the values of each
-  node in the right subtree
+## Binary Search Tree (BST)
+*  Adding a notion of *order* to a Binary Tree structure
+*  A tree is ordered the following way:
+    + The child node on the **right** is **always** greater than its parent
+    + The child node on the **left** is **always** lesser than its parent
 
 ## Example of a BST  
 
-![](./figures/tree_bst.svg)
+![](./figures/tree_bst_example.svg)
 
 
-## Searching in a Binary Search Tree
+## Insertion in a BST
 
-If we are looking for element X:
+We want to insert a data value $K$
 
-1. Compare current node's key with X. If it's equal, we've found the key. All
-   done.
-2. If X is less than node's key, we start looking at node's left subtree. It's
-   because we know that right subtree cannot contain anything greater than X.
-3. If X is greater than node's key, we start looking in the right subtree.
-4. We repeat this process until we find the key or we reach the leaf node. If we
-   reach the leaf node and haven't found the key as yet, we return not found.
+1. Compare $K$ with the data value $V$ of the current node.
+2. If $K < V$,
+    1. If `V.left is None`, we insert $K$ as left child of $V$.
+    2. If `V.left is not None`, left child of $V$ becomes the **new
+       current** node and start over from step 1.
+3. If $K > V$,
+    1. If `V.right is None`, we insert $K$the right child of $V$.
+    2. If `V.right is not None`, right child of $V$ becomes the **new
+       current** node and start over from step 1.
 
-## Example: Lookup value 49 in a BST
+## Insert function
+```python
+def insert(self, data):
 
-![](./figures/tree_bst_search_1.svg)
+    if data > self.data:
+        if self.right is None:
+            self.right = Node(data)
+        else:
+            #Q: why are we calling insert here?
+            self.right.insert(data)
+    else:
+        if self.left is None:
+            self.left = Node(data)
+        else:
+            #Q: why are we calling insert here?
+            self.left.insert(data)
+```
 
-## Example: Lookup value 49 in a BST
-
-![](./figures/tree_bst_search_2.svg)
-
-## Example: Lookup value 49 in a BST
-
-![](./figures/tree_bst_search_3.svg)
-
-
-## Inserting a value into a BST
-
-1. Compare current node's key with K.
-2. If K is less than the current node,
-    1. If left child of current node is Null, we insert K as the left child of
-    current node and return.
-    2. If the left child is not Null, the left child becomes the new current
-       node, and we repeat the process from step 1.
-3. If K is greater than the current node,
-    1. If right child of current node is Null, we insert K as the right child of
-       the current node and return.
-    2. If the right child is not Null, the right child becomes the new current
-       node, and we repeat the process from step 1.
 
 ## Inserting a value into a BST
 
@@ -219,15 +238,74 @@ If we are looking for element X:
 
 ![](./figures/tree_bst_in_6.svg)
 
-## Removing a value from a BST
+## Search in a BST
 
-When we have to delete a node with two children, we have two options. Let's say
-that the node to be deleted has key X.
+We search for a value $key$ by visiting the nodes in the BST
 
-1. Replace the current node's key with its predecessor and then trigger delete
-   for predecessor in node's left subtree.
-2. Replace the current node's key with its successor and then trigger delete for
-   predecessor in node's right subtree.
+Compare the current node $V's$ value with $key$ 
+
+1. if `key == V.data`, we have found the value and terminate
+2. if `key > V.data`, we branch to `V.right`
+3. if `key < V.data`, we branch to `V.left`
+
+Base case: Repeat process above until:
+
+* `key == V.data`
+* `V.left == None && V.right == None` (e.g reach leaf-node)
+
+## Search function
+
+``` python
+def find(root,key):
+     
+    # Base Case: root is null or key is present at root
+    if root.left/right is None or root.val == key:
+        return root
+ 
+    # Key is greater than root's key
+    if root.val < key:
+        return find(root.right,key)
+   
+    # Key is smaller than root's key
+    return find((root.left,key)
+```
+
+## Example: Lookup value 49 in a BST
+
+![](./figures/tree_bst_search_1.svg)
+
+## Example: Lookup value 49 in a BST
+
+![](./figures/tree_bst_search_2.svg)
+
+## Example: Lookup value 49 in a BST
+
+![](./figures/tree_bst_search_3.svg)
+
+## Remove a node from a BST
+<!-- before this slide show three examples -->
+There are three situations to handle
+
+* **Leaf Node:** Straightforward to delete
+* **Node with one child:** Replace the node with it's only child
+* **Node with two children:** More complicated
+
+## Remove a node with two children
+We want to remove a node $K$ with $L$ as left tree and $R$ as right tree
+
+1. Perform a search to find node $K$
+2. Find the **successor node** $S$ of $K$
+3. Replace `K.data` with `S.data`
+
+How do we find the **successor node** of $K$?
+
+
+## Successor node
+* The node with most minimum value in the **right sub-tree**
+* Traverse the left child in each branch until there is a node that don't have a left child.
+
+![](./figures/tree_min.svg){ width=80% }
+
 
 ## Removing 40 from the BST Example
 
@@ -243,11 +321,28 @@ that the node to be deleted has key X.
 ![](./figures/tree_rm_3.svg)
 
 
+## Unbalanced Tree example
+
+## Does shape matter?
+
+Short Answer: YES!
+
+- The depth of the tree impacts the time of traversing a tree
+- The order in which we add elements matters, the shape it can take, is shown in
+  the next slide
+
+## Three different types of a tree?
+![](./figures/tree_types.svg)
+
+
+
+
+
+
 # Self-balancing binary search tree
 
 ## 
-
-A self-balancing binary search tree or height-balanced binary search tree is a
+<!-- A self-balancing binary search tree or height-balanced binary search tree is a
 binary search tree (BST) that attempts to keep its height, or the number of
 levels of nodes beneath the root, as small as possible at all times,
 automatically.
@@ -264,7 +359,7 @@ of later operations.
 
 - Balanced BSTs are not always so precisely balanced, since it can be expensive to
 keep a tree at minimum height at all times; instead, most algorithms keep the
-height within a constant factor of this lower bound.
+height within a constant factor of this lower bound. -->
 
 ## Typical Binary Tree
 
@@ -410,5 +505,5 @@ There are two types of way to implement a B-Tree
 
 
 
-## ```{r child="footer.Rmd", include=FALSE}
+```{r child="footer.Rmd", include=FALSE}
 ```
