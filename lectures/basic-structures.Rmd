@@ -41,6 +41,57 @@ remove(S, x)
 search(S, k)
 ```
 
+## Arrays
+
+An array is a container that can hold a *fixed* number of items
+that should be of the same type.
+
+```
+int array[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+```
+
+- Each array item is called an *element*.
+
+- The location of each element in an array
+that can be identified using numerical *indices*.
+
+![](./figures/array.png)
+
+## Array Insert Operation
+
+```cpp
+#include <stdio.h>
+
+// Insert item = 10 to the location with index (k) 4.
+int main() {
+   int arr[] = {1,2,3,4,5};
+   int item = 10, k = 4, n = 5;
+   int j = n;
+  
+   n = n + 1;
+  
+   while( j >= k) {
+      arr[j+1] = arr[j];
+      j = j - 1;
+   }
+   
+   arr[k] = item;
+}
+```
+
+## New Array Elements
+
+```
+The array elements after insertion :
+
+arr[0] = 1 
+arr[1] = 2 
+arr[2] = 3 
+arr[3] = 4 
+arr[4] = 10 
+arr[5] = 5
+```
+
 ## Stacks
 
 - Stacks and queues are *abstract data types* that represent *dynamic sets*,
@@ -61,7 +112,7 @@ returns that most recently added element.
 - The `empty` operation checks
 whether the stack is empty.
 
-## Stack Implementation with Array
+## Representation of Stack Using Arrays
 
 - Which is the top element in the stack below?
 ```{r echo=FALSE}
