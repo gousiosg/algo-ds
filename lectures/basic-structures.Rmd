@@ -203,26 +203,27 @@ which will be the top one?
   x
 ```
 
-## Example of a Stack
+## ```isEmpty``` Stack Operation
 
-```c
-// Given the following array
-// for the demonstration of the operations
-int MAXSIZE = 8;       
-int stack[8];     
-int top = -1;
-```
+```python
+def main():
+	stack = [None] * 8;
+	maxsize = 8
+	if (isEmpty(stack, maxsize) == 0):
+		print("Empty stack")
 
-## ```isEmpty``` Operation
+def isEmpty(stack, n):
+	res = 0
+	j = 0
+	while( j < n):
+		if( stack[j] == stack[n-1]):
+			res = j
+			break
+		j = j + 1
+	return res
 
-```c
-int isempty() {
-
-   if(top == -1)
-      return 1;
-   else
-      return 0;
-}
+if __name__ == "__main__":
+    main()
 ```
 
 ## ```isTop``` Operation
