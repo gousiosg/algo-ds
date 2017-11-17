@@ -305,7 +305,7 @@ if __name__ == "__main__":
 
 - In a **queue**, the element to be removed is the one that belongs to the set for the longest time. We name this policy as: *first-in, first-out*, or *FIFO*.
 
-- If a **queue** consists of elements ```Q[1..n]```, ```Q.heap``` points to its *head* and ```Q.tail``` points the *next* position where a new element can be added to the queue. When ```Q.heap = Q.tail```, it means that the queue is *empty*.
+- If a **queue** consists of elements ```Q[1..n]```, ```Q.head``` points to its *head* and ```Q.tail``` points the *next* position where a new element can be added to the queue. When ```Q.head = Q.tail```, it means that the queue is *empty*.
 
 
 ## Queue Operations
@@ -336,59 +336,117 @@ which are going to be the *head* and *tail* of the following queque?
   x <- matrix(list(3,5,"N","N","N","N","[15]",6,9,8,4,17), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
   x
 ```
-## Example of a Queue
-
-```c
-// Given the following array
-// for the demonstration of the operations
-
-#define MAX 6
-
-int intArray[MAX];
-int front = 0;
-int rear = -1;
-int itemCount = 0;
-```
-
-## ```isEmpty``` Operation
-
-```c
-
-bool isempty() {
-   if(front < 0 || front > rear) 
-      return true;
-   else
-      return false;
-}
-```
 
 ## ```enqueue``` Operation
 
-```c
-int enqueue(int data)      
-   if(isfull())
-      return 0;
-   
-   rear = rear + 1;
-   queue[rear] = data;
-   
-   return 1;
-end procedure
+```python
+def enqueue(item):
+	global tail # -1
+	# ensure that the queue is not full
+	if (tail < maxsize - 1):
+		tail = tail + 1
+		arr[tail] = item
+	else:
+		print("The queue is full.")
+```
+
+## Example of ```enqueue``` Operation
+
+```python
+maxsize = 6
+arr = [None] * maxsize
+head = 0
+tail = -1
+
+def main():
+	enqueue(3)
+	enqueue(4)
+	enqueue(5)
+	print(str(arr) + " tail: " + str(tail))
+		
+if __name__ == "__main__":
+    main()
+    
+# Output:
+# [3, 4, 5, None, None, None] tail: 2
 ```
 
 ## ```dequeue``` Operation
 
-```c
-int dequeue() {
+```python
+def dequeue():
+	global head
+	global tail
+	# ensure that the queue is not empty
+	if (arr[head] == None):
+		print("The queue is empty.")
+	else:
+		item = arr[head]
+		if (head == tail):
+			head = 0
+			tail = -1
+		else:
+			head = head + 1
+		return item
+```
 
-   if(isempty())
-      return 0;
+## Example of ```dequeue``` Operation
 
-   int data = queue[front];
-   front = front + 1;
+```python
+maxsize = 6
+arr = [None] * maxsize
+head = 0
+tail = -1
 
-   return data;
-}
+def main():
+	enqueue(3)
+	enqueue(4)
+	print dequeue()
+	print dequeue()
+
+if __name__ == "__main__":
+    main()
+    
+# 3
+# 4
+```
+
+## ```isEmpty``` Operation
+
+```python
+def isEmpty():
+	global head
+	global tail
+
+	if (head < 0 or head > tail):
+		return True
+	else:
+		return False
+```
+
+## Example of ```isEmpty``` Operation
+
+```python
+maxsize = 6
+arr = [None] * maxsize
+head = 0
+tail = -1
+
+def main():
+	enqueue(3)
+	enqueue(4)
+	print dequeue()
+	print dequeue()
+	print(str(arr) + " tail: " + str(tail))
+	print(isEmpty())
+	
+if __name__ == "__main__":
+    main()
+    
+# 3
+# 4
+# [3, 4, None, None, None, None] tail: -1
+# True
 ```
 
 ## Lists
