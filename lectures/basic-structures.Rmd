@@ -203,7 +203,7 @@ which will be the top one?
   x
 ```
 
-## ```isEmpty``` Stack Operation
+## ```isEmpty``` Operation
 
 ```python
 def main():
@@ -228,33 +228,52 @@ if __name__ == "__main__":
 
 ## ```isTop``` Operation
 
-```c
-int isTop() {
-   return stack[top];
-}
+```python
+def main():
+	stack = [None] * 8;
+	maxsize = 8
+	stack[0]=1
+	stack[1]=2
+	print(isTop(stack, maxsize))
+
+def isTop(stack, n):
+	res = 0
+	j = 0
+	while( j < n):
+		if(stack[j] is None):
+			res = j
+			break
+		j = j + 1
+	return res - 1
+	
+if __name__ == "__main__":
+    main()
 ```
 
-## Push Operation
+## ```push``` Operation
 
-```c
+```python
+def main():
+	stack = [None] * 8;
+	maxsize = 8
+	stack[0]=1
+	stack[1]=2
+	item = 3
+	push(stack, item, maxsize)
+	print(stack)
 
-void push(int data) {
-   if(!isFull()) {
-      top = top + 1;   
-      stack[top] = data;
-   } else {
-      printf("Could not insert more data, the stack is full.\n");
-   }
-}
+def push(stack, item, n):
+	# index of the top element in the stack
+	top = isTop(stack, n)
+	# ensure that the stack is not full
+	if(top != n - 1):
+		top = top + 1
+		stack[top] = item
+	else:
+		print("The stack is full.")
 
-int isfull() {
-
-   if(top == MAXSIZE)
-      return 1;
-   else
-      return 0;
-}
-
+if __name__ == "__main__":
+    main()
 ```
 
 ## Pop Operation
