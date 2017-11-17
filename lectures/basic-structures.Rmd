@@ -11,17 +11,11 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Sets
+## Dynamic Collections
 
-In mathematics, a **set** is a collection of *distinct* elemets.
+Like all containers, dynamic collections can grow, shrink, or change over time.
 
-![](./figures/set-of-shapes.svg)
-
-## Dynamic Sets
-
-Like all containers, dynamic sets can grow, shrink, or change over time.
-
-- Dynamic sets support basic operations such as:
+- Dynamic collections support basic operations such as:
 *insert* elements to a set, *remove* elements from a set,
 or *search* whether an element belongs to a set.
 
@@ -41,9 +35,129 @@ remove(S, x)
 search(S, k)
 ```
 
+## Arrays
+
+An array is a container that can hold a *fixed* number of items
+that should be of the same type.
+
+```
+int array[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+```
+
+- Each array item is called an *element*.
+
+- The location of each element in an array
+can be identified using numerical *indices*.
+
+![](./figures/array.png)
+
+## Array Insert Operation
+
+```cpp
+#include <stdio.h>
+
+// Insert item = 10 in the location
+// of the 4th element (of the following array).
+int main() {
+   int arr[] = {1,2,3,4,5};
+   int item = 10, k = 4, n = 5;
+   int j = n;
+  
+   n = n + 1;
+   while( j >= k) {
+      arr[j+1] = arr[j];
+      j = j - 1;
+   }
+   
+   arr[k] = item;
+}
+```
+
+## New Array Elements After the ```insert``` operation
+
+```
+The array after insertion:
+
+arr[0] = 1 
+arr[1] = 2 
+arr[2] = 3 
+arr[3] = 4 
+arr[4] = 10 
+arr[5] = 5
+```
+
+## Array Remove Operation
+
+```cpp
+#include <stdio.h>
+
+// Remove the 4th element.
+int main() {
+   int arr[] = {1,2,3,4,5};
+   int k = 4, n = 5;
+   int i, j;
+   
+   j = k;
+	
+   while( j < n) {
+      arr[j-1] = arr[j];
+      j = j + 1;
+   }
+	
+   n = n -1;
+}
+```
+
+## New Array Elements After the ```remove``` operation
+
+```
+The array after deletion:
+
+arr[0] = 1 
+arr[1] = 2 
+arr[2] = 3 
+arr[3] = 5
+```
+
+## Array Search Operation
+
+```cpp
+#include <stdio.h>
+
+// Search for item = 5
+int main() {
+   int arr[] = {1,2,3,4,5};
+   int item = 5, n = 5;
+   int i = 0, j = 0;
+    
+   while( j < n){
+      if( arr[j] == item ) {
+         break;
+      }
+		
+      j = j + 1;
+   }
+
+}
+```
+
+## Found Item
+
+```
+Array elements:
+
+arr[0] = 1 
+arr[1] = 2 
+arr[2] = 3 
+arr[3] = 4 
+arr[4] = 5 
+
+The item = 5 is at the position 5 (4th element).
+```
+
 ## Stacks
 
-- Stacks and queues are *abstract data types* that represent *dynamic sets*,
+- Stacks and queues are *abstract data types* that represent *dynamic collections*,
 where the way an element can be removed from a set is prespecified.
 
 - In a **stack**, the element to be removed is the one that was most recently inserted into the stack. We name this policy as: *last-in, first-out*, or *LIFO*.
@@ -61,7 +175,7 @@ returns that most recently added element.
 - The `empty` operation checks
 whether the stack is empty.
 
-## Stack Implementation with Array
+## Representation of Stack Using Arrays
 
 - Which is the top element in the stack below?
 ```{r echo=FALSE}
@@ -84,6 +198,74 @@ which will be the top one?
   x
 ```
 
+## Example of a Stack
+
+```c
+// Given the following array
+// for the demonstration of the operations
+int MAXSIZE = 8;       
+int stack[8];     
+int top = -1;
+```
+
+## ```isEmpty``` Operation
+
+```c
+int isempty() {
+
+   if(top == -1)
+      return 1;
+   else
+      return 0;
+}
+```
+
+## ```isTop``` Operation
+
+```c
+int isTop() {
+   return stack[top];
+}
+```
+
+## Push Operation
+
+```c
+
+void push(int data) {
+   if(!isFull()) {
+      top = top + 1;   
+      stack[top] = data;
+   } else {
+      printf("Could not insert more data, the stack is full.\n");
+   }
+}
+
+int isfull() {
+
+   if(top == MAXSIZE)
+      return 1;
+   else
+      return 0;
+}
+
+```
+
+## Pop Operation
+
+```c
+int pop(int data) {
+
+   if(!isempty()) {
+      data = stack[top];
+      top = top - 1;   
+      return data;
+   } else {
+      printf("Could not retrieve data, Stack is empty.\n");
+   }
+}
+```
+
 ## Queues
 
 - In a **queue**, the element to be removed is the one that belongs to the set for the longest time. We name this policy as: *first-in, first-out*, or *FIFO*.
@@ -91,13 +273,13 @@ which will be the top one?
 - If a **queue** consists of elements ```Q[1..n]```, ```Q.heap``` points to its *head* and ```Q.tail``` points the *next* position where a new element can be added to the queue. When ```Q.heap = Q.tail```, it means that the queue is *empty*.
 
 
-
 ## Queue Operations
 
 - The `insert` operation on a queue is called as `enqueue`.
 Additionally, the `remove` operation is called as `dequeue`.
 
-## Queue Implementation with Array
+
+## Representation of Queues Using Arrays
 
 - Which are the *head* and *tail* of the following queque?
 ```{r echo=FALSE}
@@ -118,6 +300,60 @@ which are going to be the *head* and *tail* of the following queque?
   # Q.tail = 3 and Q.head = 8
   x <- matrix(list(3,5,"N","N","N","N","[15]",6,9,8,4,17), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
   x
+```
+## Example of a Queue
+
+```c
+// Given the following array
+// for the demonstration of the operations
+
+#define MAX 6
+
+int intArray[MAX];
+int front = 0;
+int rear = -1;
+int itemCount = 0;
+```
+
+## ```isEmpty``` Operation
+
+```c
+
+bool isempty() {
+   if(front < 0 || front > rear) 
+      return true;
+   else
+      return false;
+}
+```
+
+## ```enqueue``` Operation
+
+```c
+int enqueue(int data)      
+   if(isfull())
+      return 0;
+   
+   rear = rear + 1;
+   queue[rear] = data;
+   
+   return 1;
+end procedure
+```
+
+## ```dequeue``` Operation
+
+```c
+int dequeue() {
+
+   if(isempty())
+      return 0;
+
+   int data = queue[front];
+   front = front + 1;
+
+   return data;
+}
 ```
 
 ## Lists
@@ -579,6 +815,12 @@ def __getitem__(self,key):
 def __setitem__(self,key,data):
     self.put(key,data)
 ```
+
+## Sets
+
+In mathematics, a **set** is a collection of *distinct* elemets.
+
+![](./figures/set-of-shapes.svg)
 
 ## References
 
