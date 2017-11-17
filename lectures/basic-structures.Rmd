@@ -89,7 +89,7 @@ arr[4] = 10
 arr[5] = 5
 ```
 
-## Array Remove Operation
+## Array ```remove``` Operation
 
 ```python
 def main():
