@@ -89,24 +89,23 @@ arr[5] = 5
 
 ## Array Remove Operation
 
-```cpp
-#include <stdio.h>
+```python
+def main():
+	arr = [1, 2, 3, 4, 5]
+	k = 4
+	n = 5
+	j = k
 
-// Remove the 4th element.
-int main() {
-   int arr[] = {1,2,3,4,5};
-   int k = 4, n = 5;
-   int i, j;
-   
-   j = k;
-	
-   while( j < n) {
-      arr[j-1] = arr[j];
-      j = j + 1;
-   }
-	
-   n = n -1;
-}
+	while( j < n):
+		# Remove the 4th element
+		arr[j - 1] = arr[j]
+		j = j + 1
+
+	n = n - 1
+	arr = arr[:n]
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## New Array Elements After the ```remove``` operation
