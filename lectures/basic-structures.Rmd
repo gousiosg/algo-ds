@@ -121,24 +121,24 @@ arr[3] = 5
 
 ## Array Search Operation
 
-```cpp
-#include <stdio.h>
+```python
+def main():
+	arr = [1, 2, 3, 4, 5]
+	item = 5
+	n = 5
+	i = 0
+	j = 0
 
-// Search for item = 5
-int main() {
-   int arr[] = {1,2,3,4,5};
-   int item = 5, n = 5;
-   int i = 0, j = 0;
-    
-   while( j < n){
-      if( arr[j] == item ) {
-         break;
-      }
-		
-      j = j + 1;
-   }
+	while( j < n):
+	  // Search for item = 5
+		if( arr[j] == item ):
+			break
 
-}
+		j = j + 1
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## Found Item
@@ -152,7 +152,7 @@ arr[2] = 3
 arr[3] = 4 
 arr[4] = 5 
 
-The item = 5 is at the position 5 (4th element).
+The item = 5 has index = 4.
 ```
 
 ## Stacks
