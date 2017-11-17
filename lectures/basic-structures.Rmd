@@ -51,7 +51,7 @@ can be identified using numerical *indices*.
 
 ![](./figures/array.png)
 
-## Array Insert Operation
+## Array ```insert``` Operation
 
 ```python
 def main():
@@ -63,8 +63,10 @@ def main():
 	n = n + 1
 	# add one more cell to the array
 	arr = arr + [None]
-	
-	# insert 10 before the 5th item (index = 4) of arr
+	insert(arr, j, k, item)
+
+def insert(arr, j, k, item):
+	# insert a new item before the 5th item of arr
 	while( j >= k):
 	    arr[j+1] = arr[j]
 	    j = j - 1
@@ -119,23 +121,24 @@ arr[2] = 3
 arr[3] = 5
 ```
 
-## Array Search Operation
+## Array ```search``` Operation
 
 ```python
 def main():
 	arr = [1, 2, 3, 4, 5]
 	item = 5
 	n = 5
+	print(search(arr, item, n))
+
+def search(arr, item, n):
 	i = 0
 	j = 0
-
 	while( j < n):
-	  // Search for item = 5
 		if( arr[j] == item ):
 			break
-
 		j = j + 1
-
+	# index of the element
+	return j
 
 if __name__ == "__main__":
     main()
