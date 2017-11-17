@@ -41,7 +41,7 @@ An array is a container that can hold a *fixed* number of items
 that should be of the same type.
 
 ```
-int array[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 ```
 
 - Each array item is called an *element*.
@@ -53,24 +53,25 @@ can be identified using numerical *indices*.
 
 ## Array Insert Operation
 
-```cpp
-#include <stdio.h>
+```python
+def main():
+	arr = [1, 2, 3, 4, 5]
+	item = 10
+	k = 4
+	n = 5
+	j = n - 1
+	n = n + 1
+	# add one more cell to the array
+	arr = arr + [None]
+	
+	# insert 10 before the 5th item (index = 4) of arr
+	while( j >= k):
+	    arr[j+1] = arr[j]
+	    j = j - 1
+	arr[k] = item
 
-// Insert item = 10 in the location
-// of the 4th element (of the following array).
-int main() {
-   int arr[] = {1,2,3,4,5};
-   int item = 10, k = 4, n = 5;
-   int j = n;
-  
-   n = n + 1;
-   while( j >= k) {
-      arr[j+1] = arr[j];
-      j = j - 1;
-   }
-   
-   arr[k] = item;
-}
+if __name__ == "__main__":
+    main()
 ```
 
 ## New Array Elements After the ```insert``` operation
