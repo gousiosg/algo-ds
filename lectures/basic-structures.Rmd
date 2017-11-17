@@ -276,19 +276,29 @@ if __name__ == "__main__":
     main()
 ```
 
-## Pop Operation
+## ```pop``` Operation
 
-```c
-int pop(int data) {
+```python
+def main():
+	stack = [None] * 8;
+	maxsize = 8
+	stack[0]=1
+	stack[1]=2
+	print(pop(stack, maxsize))
+	print(isTop(stack, maxsize))
 
-   if(!isempty()) {
-      data = stack[top];
-      top = top - 1;   
-      return data;
-   } else {
-      printf("Could not retrieve data, Stack is empty.\n");
-   }
-}
+def pop(stack, n):
+	# ensure that the stack is not empty
+	if(isEmpty(stack, n) != 0):
+		# find the top item
+		top = isTop(stack, n)
+		stack[top] = None
+		return stack
+	else:
+		print("The stack is empty.")
+		
+if __name__ == "__main__":
+    main()
 ```
 
 ## Queues
