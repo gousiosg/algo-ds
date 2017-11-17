@@ -669,6 +669,50 @@ def append(self, new_data):
     last.next =  new_node
 ```
 
+## Sets
+
+In mathematics, a **set** is a collection of *distinct* elemets.
+
+![](./figures/set-of-shapes.svg)
+
+
+## Implement a Set from a List
+
+```python
+class Set(object):
+
+    def __init__(self, iterable):
+        data = list(iterable)
+        data.sort()
+        result = data[:1]
+        for elem in data[1:]:
+            if elem == result[-1]:
+                continue
+            # XX: The append method has been implement in the previous slide
+            result.append(elem)
+        self.data = result
+```
+
+## Add an Element to a Set
+
+```python
+def add(self, elem):
+  if elem not in self:
+      # TO-DO: Define this method
+      insort_left(self.data, elem)
+```
+
+## Remove an Element from a Set
+
+```python
+def remove(self, elem):
+  data = self.data
+  # TO-DO: Define this method
+  i = bisect_left(self.data, elem, 0)
+  if i<len(data) and data[i] == elem:
+      del data[i]
+```
+
 ## Maps
 
 A map is an abstract data structure that stores
@@ -843,12 +887,6 @@ def __getitem__(self,key):
 def __setitem__(self,key,data):
     self.put(key,data)
 ```
-
-## Sets
-
-In mathematics, a **set** is a collection of *distinct* elemets.
-
-![](./figures/set-of-shapes.svg)
 
 ## References
 
