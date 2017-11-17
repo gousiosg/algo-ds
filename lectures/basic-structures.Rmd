@@ -97,7 +97,9 @@ def main():
 	k = 4
 	n = 5
 	j = k
+	remove(arr, j, n)
 
+def remove(arr, j, n):
 	while( j < n):
 		# Remove the 4th element
 		arr[j - 1] = arr[j]
