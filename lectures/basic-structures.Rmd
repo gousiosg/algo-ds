@@ -11,28 +11,28 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Dynamic Collections
+## Collections
 
-Like all containers, dynamic collections can grow, shrink, or change over time.
+- Like all containers, collections can grow, shrink, or change over time.
 
-- Dynamic collections support basic operations such as:
-*insert* elements to a set, *remove* elements from a set,
-or *search* whether an element belongs to a set.
+- Collections support basic operations such as:
+*insert* elements to a collection, *remove* elements from a collection,
+or *search* whether an element belongs to a collection.
 
 ```python
-# Add an element to a set S pointed to by x.
-insert(S, x)
+# Add an element pointed to by x.
+insert(C, x)
 ```
 
 ```python
-# Given a pointer x to an element in a set S, remove x from S.
-remove(S, x)
+# Given a pointer x to an element in a collection C, remove x from C.
+remove(C, x)
 ```
 
 ```python
-# Given a set S and a key k, return a pointer x to an element in S.
+# Given a collection C and a key k, return a pointer x to an element in C.
 # Output: x.key = k or NIL
-search(S, k)
+search(C, k)
 ```
 
 ## Arrays
@@ -46,7 +46,7 @@ arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 - Each array item is called an *element*.
 
-- The location of each element in an array
+- The location of each element, in an array,
 can be identified using numerical *indices*.
 
 ![](./figures/array.png)
@@ -54,29 +54,41 @@ can be identified using numerical *indices*.
 ## Array ```insert``` Operation
 
 ```python
-def main():
-	arr = [1, 2, 3, 4, 5]
-	item = 10
-	k = 4
-	n = 5
+def insert(arr, item, k):
+	global n
 	j = n - 1
-	n = n + 1
 	# add one more cell to the array
+	n = n + 1
 	arr = arr + [None]
-	insert(arr, j, k, item)
 
-def insert(arr, j, k, item):
-	# insert a new item before the 5th item of arr
 	while( j >= k):
 	    arr[j+1] = arr[j]
 	    j = j - 1
+
 	arr[k] = item
+
+	return arr
+```
+
+## Example of the ```insert``` Operation
+
+```python
+arr = [1, 2, 3, 4, 5]
+n = 5
+
+def main():
+	print(arr)
+	# insert a new item before the 5th item of arr
+	print(insert(arr, 10, 4))
 
 if __name__ == "__main__":
     main()
+    
+# [1, 2, 3, 4, 5]
+# [1, 2, 3, 4, 10, 5]
 ```
 
-## New Array Elements After the ```insert``` operation
+## Array Elements After the ```insert``` Operation
 
 ```
 The array after insertion:
@@ -92,13 +104,6 @@ arr[5] = 5
 ## Array ```remove``` Operation
 
 ```python
-def main():
-	arr = [1, 2, 3, 4, 5]
-	k = 4
-	n = 5
-	j = k
-	remove(arr, j, n)
-
 def remove(arr, j, n):
 	while( j < n):
 		# Remove the 4th element
@@ -108,11 +113,24 @@ def remove(arr, j, n):
 	n = n - 1
 	arr = arr[:n]
 
+	return arr
+```
+
+## Example of the ```remove``` Operation
+
+```python
+def main():
+	arr = [1, 2, 3, 4, 5]
+	j = 4
+	n = 5
+	arr = remove(arr, j, n)
+	print arr
+
 if __name__ == "__main__":
     main()
 ```
 
-## New Array Elements After the ```remove``` operation
+## Array Elements After the ```remove``` Operation
 
 ```
 The array after deletion:
@@ -126,14 +144,7 @@ arr[3] = 5
 ## Array ```search``` Operation
 
 ```python
-def main():
-	arr = [1, 2, 3, 4, 5]
-	item = 5
-	n = 5
-	print(search(arr, item, n))
-
 def search(arr, item, n):
-	i = 0
 	j = 0
 	while( j < n):
 		if( arr[j] == item ):
@@ -141,6 +152,16 @@ def search(arr, item, n):
 		j = j + 1
 	# index of the element
 	return j
+```
+
+## Example of the ```search``` Operation
+
+```python
+def main():
+	arr = [1, 2, 3, 4, 5]
+	item = 5
+	n = 5
+	print(search(arr, item, n))
 
 if __name__ == "__main__":
     main()
@@ -163,7 +184,7 @@ The item = 5 has index = 4.
 ## Stacks
 
 - Stacks and queues are *abstract data types* that represent *dynamic collections*,
-where the way an element can be removed from a set is prespecified.
+where the way an element can be removed from a set is prespecified (*LIFO* or *FIFO*).
 
 - In a **stack**, the element to be removed is the one that was most recently inserted into the stack. We name this policy as: *last-in, first-out*, or *LIFO*.
 
@@ -189,7 +210,7 @@ whether the stack is empty.
   x
 ```
 - In which positions of the following stack,
-new elements 17 and 3 are going to be added?
+new elements 17 and 3 are added?
 ```{r echo=FALSE}
   # New elements (5th and 6th) are added to the end of the stack.
   x <- matrix(list(15,6,2,9,17,3,"N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]")))
@@ -206,12 +227,6 @@ which will be the top one?
 ## ```isEmpty``` Operation
 
 ```python
-def main():
-	stack = [None] * 8;
-	maxsize = 8
-	if (isEmpty(stack, maxsize) == 0):
-		print("Empty stack")
-
 def isEmpty(stack, n):
 	res = 0
 	j = 0
@@ -221,6 +236,16 @@ def isEmpty(stack, n):
 			break
 		j = j + 1
 	return res
+```
+
+## Example of the ```isEmpty``` Operation
+
+```python
+def main():
+	stack = [None] * 8;
+	maxsize = 8
+	if (isEmpty(stack, maxsize) == 0):
+		print("Empty stack")
 
 if __name__ == "__main__":
     main()
@@ -229,13 +254,6 @@ if __name__ == "__main__":
 ## ```isTop``` Operation
 
 ```python
-def main():
-	stack = [None] * 8;
-	maxsize = 8
-	stack[0]=1
-	stack[1]=2
-	print(isTop(stack, maxsize))
-
 def isTop(stack, n):
 	res = 0
 	j = 0
@@ -245,12 +263,36 @@ def isTop(stack, n):
 			break
 		j = j + 1
 	return res - 1
+```
+
+## Example of the ```isTop``` Operation
+```python
+def main():
+	stack = [None] * 8;
+	maxsize = 8
+	stack[0]=1
+	stack[1]=2
+	print(isTop(stack, maxsize))
 	
 if __name__ == "__main__":
     main()
 ```
 
 ## ```push``` Operation
+
+```python
+def push(stack, item, n):
+	# index of the top element in the stack
+	top = isTop(stack, n)
+	# ensure that the stack is not full
+	if(top != n - 1):
+		top = top + 1
+		stack[top] = item
+	else:
+		print("The stack is full.")
+```
+
+## Example of the ```push``` Operation
 
 ```python
 def main():
@@ -262,16 +304,6 @@ def main():
 	push(stack, item, maxsize)
 	print(stack)
 
-def push(stack, item, n):
-	# index of the top element in the stack
-	top = isTop(stack, n)
-	# ensure that the stack is not full
-	if(top != n - 1):
-		top = top + 1
-		stack[top] = item
-	else:
-		print("The stack is full.")
-
 if __name__ == "__main__":
     main()
 ```
@@ -279,14 +311,6 @@ if __name__ == "__main__":
 ## ```pop``` Operation
 
 ```python
-def main():
-	stack = [None] * 8;
-	maxsize = 8
-	stack[0]=1
-	stack[1]=2
-	print(pop(stack, maxsize))
-	print(isTop(stack, maxsize))
-
 def pop(stack, n):
 	# ensure that the stack is not empty
 	if(isEmpty(stack, n) != 0):
@@ -296,6 +320,18 @@ def pop(stack, n):
 		return stack
 	else:
 		print("The stack is empty.")
+```
+
+## Example of the ```pop``` Operation
+
+```python
+def main():
+	stack = [None] * 8;
+	maxsize = 8
+	stack[0]=1
+	stack[1]=2
+	print(pop(stack, maxsize))
+	print(isTop(stack, maxsize))
 		
 if __name__ == "__main__":
     main()
@@ -350,7 +386,7 @@ def enqueue(item):
 		print("The queue is full.")
 ```
 
-## Example of ```enqueue``` Operation
+## Example of the ```enqueue``` Operation
 
 ```python
 maxsize = 6
@@ -390,7 +426,7 @@ def dequeue():
 		return item
 ```
 
-## Example of ```dequeue``` Operation
+## Example of the ```dequeue``` Operation
 
 ```python
 maxsize = 6
@@ -424,7 +460,7 @@ def isEmpty():
 		return False
 ```
 
-## Example of ```isEmpty``` Operation
+## Example of the ```isEmpty``` Operation
 
 ```python
 maxsize = 6
@@ -459,6 +495,8 @@ Typically, we can create a list
 by writing the values (items) we want to store
 in a comma-separated list.
 
+In Python, a list is an array.
+
 $1, 2, 3, 4, 5$
 
 ## Linked Lists
@@ -469,11 +507,11 @@ by poiters attached to each element of the list.
 
 - There are two types of linked lists: *doubled* and *singly*.
 
-- Linked lists support *all* the operations of dynamic sets.
+- Linked lists support *all* the operations of dynamic collections.
 
 ## Doubly Linked Lists
 
-- A **doubly linked list** ```L``` represents a dynamic set ```{1, 4, 9, 16}```,
+- A **doubly linked list** ```L``` represents a dynamic collection ```{1, 4, 9, 16}```,
 where the attribute ```L.heap``` points to the head of the list
 and ```L.tail``` points the last element of the list
 (where after this there is no *next* element).
@@ -703,7 +741,7 @@ how can we update the links to the next nodes?
 
 ## The ```previous``` Reference
 
-Since a linked list does not premits
+Since a linked list does not permit
 backwards traversal,
 we use two external references.
 
@@ -781,7 +819,6 @@ class Set(object):
         for elem in data[1:]:
             if elem == result[-1]:
                 continue
-            # XX: The append method has been implement in the previous slide
             result.append(elem)
         self.data = result
 ```
