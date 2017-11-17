@@ -11,17 +11,11 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Sets
+## Dynamic Collections
 
-In mathematics, a **set** is a collection of *distinct* elemets.
+Like all containers, dynamic collections can grow, shrink, or change over time.
 
-![](./figures/set-of-shapes.svg)
-
-## Dynamic Sets
-
-Like all containers, dynamic sets can grow, shrink, or change over time.
-
-- Dynamic sets support basic operations such as:
+- Dynamic collections support basic operations such as:
 *insert* elements to a set, *remove* elements from a set,
 or *search* whether an element belongs to a set.
 
@@ -53,7 +47,7 @@ int array[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 - Each array item is called an *element*.
 
 - The location of each element in an array
-that can be identified using numerical *indices*.
+can be identified using numerical *indices*.
 
 ![](./figures/array.png)
 
@@ -62,14 +56,14 @@ that can be identified using numerical *indices*.
 ```cpp
 #include <stdio.h>
 
-// Insert item = 10 to the location of the 4th element.
+// Insert item = 10 in the location
+// of the 4th element (of the following array).
 int main() {
    int arr[] = {1,2,3,4,5};
    int item = 10, k = 4, n = 5;
    int j = n;
   
    n = n + 1;
-  
    while( j >= k) {
       arr[j+1] = arr[j];
       j = j - 1;
@@ -163,7 +157,7 @@ The item = 5 is at the position 5 (4th element).
 
 ## Stacks
 
-- Stacks and queues are *abstract data types* that represent *dynamic sets*,
+- Stacks and queues are *abstract data types* that represent *dynamic collections*,
 where the way an element can be removed from a set is prespecified.
 
 - In a **stack**, the element to be removed is the one that was most recently inserted into the stack. We name this policy as: *last-in, first-out*, or *LIFO*.
@@ -204,13 +198,19 @@ which will be the top one?
   x
 ```
 
-## ```isEmpty``` Operation
+## Example of a Stack
 
 ```c
+// Given the following array
+// for the demonstration of the operations
 int MAXSIZE = 8;       
 int stack[8];     
 int top = -1;
+```
 
+## ```isEmpty``` Operation
+
+```c
 int isempty() {
 
    if(top == -1)
@@ -240,6 +240,15 @@ void push(int data) {
       printf("Could not insert more data, the stack is full.\n");
    }
 }
+
+int isfull() {
+
+   if(top == MAXSIZE)
+      return 1;
+   else
+      return 0;
+}
+
 ```
 
 ## Pop Operation
@@ -292,16 +301,23 @@ which are going to be the *head* and *tail* of the following queque?
   x <- matrix(list(3,5,"N","N","N","N","[15]",6,9,8,4,17), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
   x
 ```
-
-## ```isEmpty``` Operation
+## Example of a Queue
 
 ```c
+// Given the following array
+// for the demonstration of the operations
+
 #define MAX 6
 
 int intArray[MAX];
 int front = 0;
 int rear = -1;
 int itemCount = 0;
+```
+
+## ```isEmpty``` Operation
+
+```c
 
 bool isempty() {
    if(front < 0 || front > rear) 
@@ -799,6 +815,12 @@ def __getitem__(self,key):
 def __setitem__(self,key,data):
     self.put(key,data)
 ```
+
+## Sets
+
+In mathematics, a **set** is a collection of *distinct* elemets.
+
+![](./figures/set-of-shapes.svg)
 
 ## References
 
