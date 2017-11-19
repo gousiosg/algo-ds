@@ -171,7 +171,7 @@ root.right = a
   -->
 
 ## Binary Search Tree (BST)
-*  Adding a notion of *order* to a Binary Tree structure
+*  Adding a notion of *order* to a Binary Tree structure, the *order invariant*
 *  A tree is ordered the following way:
     + The child node on the **right** is **always** greater than its parent
     + The child node on the **left** is **always** lesser than its parent
@@ -321,27 +321,54 @@ How do we find the **successor node** of $K$?
 ![](./figures/tree_rm_3.svg)
 
 
-## Unbalanced Tree example
+## Analysis of the BST operations
 
-## Does shape matter?
+* `def insert:` limiting factor is the **height of the tree**
+    + Worst case: Compare at every level of the tree to find an appropriate
+      place to insert the value
+* `def search`: same as for `insert`
+    + Worst case: searches to the bottom and no key found!
+* `def remove:` Additional: Search for the successor before removing the element
+    + finding the successor is also the height of the tree, so double the work!
 
-Short Answer: YES!
+From a performance perspective, the common operations requires a search and this
+is bound by the *height of the tree*
 
-- The depth of the tree impacts the time of traversing a tree
-- The order in which we add elements matters, the shape it can take, is shown in
-  the next slide
+## What is the height of the tree likely to be? 
+A: *Depends on how the data values are inserted into the tree*
 
-## Three different types of a tree?
-![](./figures/tree_types.svg)
+* A tree with the same number of nodes on the left subtree and right subtree
+  have a *worst-case* complexity of $\mathcal{O}(\log{}_2n)$
+* This is the maximum number of comparisons that an operation like e.g `insert` 
+  will need to do to find a spot to insert a value. 
+* *height of the tree* $= \log{}_2n$
 
+How does it look like for BSTs that are not balanced? 
 
+## What is the height of the tree likely to be? (2) 
 
+![](./figures/bst_unbalanced.svg){ width=80% }
+
+What is the time complexity for such a tree? *Hint: think in terms of a list
+structure*
+
+## What is the height of the tree likely to be? (2) 
+
+* We can quickly see that the worst case is similar to traverse an entire list 
+  and the complexity is $\mathcal{O}(n)$
+* There are many scenarios where we end up with an unbalanced tree, this makes 
+  the worst case scenario for BST operations to be $\mathcal{O}(n)$
 
 
 
 # Self-balancing binary search tree
 
-## 
+
+## Maintaining a balanced tree
+
+
+* We want to avoid that a BST degenerates to $\mathcal{O}(n)$ time
+
 <!-- A self-balancing binary search tree or height-balanced binary search tree is a
 binary search tree (BST) that attempts to keep its height, or the number of
 levels of nodes beneath the root, as small as possible at all times,
