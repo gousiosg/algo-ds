@@ -83,9 +83,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-# [1, 2, 3, 4, 5]
-# [1, 2, 3, 4, 10, 5]
 ```
 
 ## Array Elements After the ```insert``` Operation
@@ -106,7 +103,6 @@ arr[5] = 5
 ```python
 def remove(arr, j, n):
 	while( j < n):
-		# Remove the 4th element
 		arr[j - 1] = arr[j]
 		j = j + 1
 
@@ -201,7 +197,7 @@ returns that most recently added element.
 - The `empty` operation checks
 whether the stack is empty.
 
-## Representation of Stack Using Arrays
+## Representation of Stacks Using Arrays
 
 - Which is the top element in the stack below?
 ```{r echo=FALSE}
@@ -224,17 +220,19 @@ which will be the top one?
   x
 ```
 
-## ```isEmpty``` Operation
+## Stack ```isEmpty``` Operation
 
 ```python
 def isEmpty(stack, n):
 	res = 0
 	j = 0
 	while( j < n):
-		if( stack[j] == stack[n-1]):
+		if((stack[j] == stack[n-1]) and (stack[j] is None)):
 			res = j
 			break
+
 		j = j + 1
+
 	return res
 ```
 
@@ -251,7 +249,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## ```isTop``` Operation
+## Stack ```isTop``` Operation
 
 ```python
 def isTop(stack, n):
@@ -266,6 +264,7 @@ def isTop(stack, n):
 ```
 
 ## Example of the ```isTop``` Operation
+
 ```python
 def main():
 	stack = [None] * 8;
@@ -278,7 +277,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## ```push``` Operation
+## Stack ```push``` Operation
 
 ```python
 def push(stack, item, n):
@@ -308,7 +307,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## ```pop``` Operation
+## Stack ```pop``` Operation
 
 ```python
 def pop(stack, n):
@@ -373,7 +372,7 @@ which are going to be the *head* and *tail* of the following queque?
   x
 ```
 
-## ```enqueue``` Operation
+## The ```enqueue``` Operation
 
 ```python
 def enqueue(item):
@@ -407,7 +406,7 @@ if __name__ == "__main__":
 # [3, 4, 5, None, None, None] tail: 2
 ```
 
-## ```dequeue``` Operation
+## The ```dequeue``` Operation
 
 ```python
 def dequeue():
@@ -447,7 +446,7 @@ if __name__ == "__main__":
 # 4
 ```
 
-## ```isEmpty``` Operation
+## Queue```isEmpty``` Operation
 
 ```python
 def isEmpty():
@@ -750,8 +749,6 @@ that represents the current location of the traverse,
 and the second reference is the ```previous``` one
 that represents a node *behind* the ```current```.
 
-XX: To add a figure here.
-
 ## The ```remove``` Method
 
 ```python
@@ -828,7 +825,6 @@ class Set(object):
 ```python
 def add(self, elem):
   if elem not in self:
-      # TO-DO: Define this method
       insort_left(self.data, elem)
 ```
 
@@ -837,7 +833,6 @@ def add(self, elem):
 ```python
 def remove(self, elem):
   data = self.data
-  # TO-DO: Define this method
   i = bisect_left(self.data, elem, 0)
   if i<len(data) and data[i] == elem:
       del data[i]
@@ -946,8 +941,6 @@ divides it by the table size.
 - The remainder is the hash value,
 which will indicate the positions
 where the items will be inserted in the hash table.
-
-XX: To add the hash table here.
 
 ## Implementation of Map in Python
 
