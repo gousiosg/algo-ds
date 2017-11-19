@@ -53,7 +53,7 @@ can be identified using numerical *indices*.
 
 ![](./figures/array.png)
 
-## Array ```insert```
+## Array `insert`
 
 ```python
 def insert(arr, item, k):
@@ -81,7 +81,7 @@ def append(arr, item):
   return arr
 ```
 
-## Array ```remove``` 
+## Array `remove` 
 
 ```python
 def remove(arr, item_index):
@@ -133,306 +133,235 @@ def contains(arr, item):
 ## Stacks
 
 - Stacks and queues are *abstract data types* that represent *dynamic collections*,
-where the way an element can be removed from a set is prespecified (*LIFO* or *FIFO*).
+where the way an element can be removed from a set is prespecified
 
-- In a **stack**, the element to be removed is the one that was most recently inserted into the stack. We name this policy as: *last-in, first-out*, or *LIFO*.
+    * **LIFO:** Last-in, First-out (stacks)
+    * **FIFO:** First-in, First-out (queues)
 
-- If a **stack** consists of elements ```S[1..S.top]```, ```S[1]``` is the element at the *bottom* of the stack and ```S[S.top]``` is the element at the *top* of the stack. If ```S.top = 0```, the stack is *empty*.
+- If a **stack** consists of elements ```S[1..S.top]```, ```S[1]``` is the 
+element at the *bottom* of the stack and ```S[S.top]``` is the element at 
+the *top* of the stack. If ```S.top = 0```, the stack is *empty*.
 
 ## Stack Operations
 
 - The `insert` operation on a stack is called as `push`.
-Additionally, the `remove` operation is called as `pop`.
+The `remove` operation is called as `pop`.
 
-- The `top` operation on a stack
-returns that most recently added element.
+- The `top` operation on a stack returns that most recently added element.
 
-- The `empty` operation checks
-whether the stack is empty.
+- The `empty` operation checks whether the stack is empty.
 
-## Representation of Stack Using Arrays
+## Representation of Stacks using arrays
 
-- Which is the top element in the stack below?
-```{r echo=FALSE}
-  # The top element is the 4th one.
-  x <- matrix(list(15,6,2,9,"N","N","N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]")))
-  x
-```
-- In which positions of the following stack,
-new elements 17 and 3 are added?
-```{r echo=FALSE}
-  # New elements (5th and 6th) are added to the end of the stack.
-  x <- matrix(list(15,6,2,9,17,3,"N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]")))
-  x
-```
-- If we remove the 6th element of the following stack,
-which will be the top one?
-```{r echo=FALSE}
-  # When the 6th element is removed, the next top element is the 5th
-  x <- matrix(list(15,6,2,9,17,"[3]","N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]")))
-  x
-```
+Stacks are usually implemented using a backing array and a pointer that
+points to the top of the stack:
 
-## ```isEmpty``` Operation
+. . .
 
 ```python
-def isEmpty(stack, n):
-	res = 0
-	j = 0
-	while( j < n):
-		if( stack[j] == stack[n-1]):
-			res = j
-			break
-		j = j + 1
-	return res
+class Stack():
+    def __init__(self, size = -1):
+        # Stack size, configurable
+        if size > 0:
+            self.size = size
+        else:
+            self.size = 10
+        # Backing array 
+        self.arr = map(lambda x: None, range(self.size))
+        # Top pointer
+        self.top = 0
 ```
 
-## Example of the ```isEmpty``` Operation
+We initialize the Stack calling the constructor
 
 ```python
-def main():
-	stack = [None] * 8;
-	maxsize = 8
-	if (isEmpty(stack, maxsize) == 0):
-		print("Empty stack")
-
-if __name__ == "__main__":
-    main()
+> s = Stack(10)
+> s.arr
+[None, None, None, None, None, None, None, None, None, None]
+> s.top
+0
 ```
 
-## ```isTop``` Operation
+## `push` and `pop`
+
+`push` adds an element to a stack.
 
 ```python
-def isTop(stack, n):
-	res = 0
-	j = 0
-	while( j < n):
-		if(stack[j] is None):
-			res = j
-			break
-		j = j + 1
-	return res - 1
+def push(s, element):
+    if s.top >= len(s.arr):
+        raise Exception # StackOveflow
+    
+    s.arr[s.top] = element
+    s.top = s.top + 1
+    return s
+
+> s = push(s, 10)
+> s.arr
+[10, None, None, None, None, None, None, None, None, None]
+> s.top
+1
 ```
 
-## Example of the ```isTop``` Operation
+. . .
+
+`pop` removes and returns the top element from the stack
+
 ```python
-def main():
-	stack = [None] * 8;
-	maxsize = 8
-	stack[0]=1
-	stack[1]=2
-	print(isTop(stack, maxsize))
-	
-if __name__ == "__main__":
-    main()
+def pop(s):
+    if s.top == 0:
+        raise Exception # No element in stack
+    
+    result = s.arr[s.top - 1]
+    s.top = s.top - 1 
+    return result
+    
+> pop(s)
+10
+> s.arr
+[10, None, None, None, None, None, None, None, None, None]
+> s.top
+0
 ```
 
-## ```push``` Operation
+## Fun with stacks
 
-```python
-def push(stack, item, n):
-	# index of the top element in the stack
-	top = isTop(stack, n)
-	# ensure that the stack is not full
-	if(top != n - 1):
-		top = top + 1
-		stack[top] = item
-	else:
-		print("The stack is full.")
+One common problem when writing code in languages like Lisp is that we
+have too many parentheses to check. To solved this problem, we need to 
+implement a  "balanced parenthesis checker (bpc)".
+
+Some Lisp code:
+
+```lisp
+(setf (fdefinition 'f) #'(lambda (a) (block f b...)))
 ```
 
-## Example of the ```push``` Operation
+Some example runs:
+
+* `bpc("()")` -> `True`
+* `bpc("(())((())")` -> `False`
 
 ```python
-def main():
-	stack = [None] * 8;
-	maxsize = 8
-	stack[0]=1
-	stack[1]=2
-	item = 3
-	push(stack, item, maxsize)
-	print(stack)
-
-if __name__ == "__main__":
-    main()
-```
-
-## ```pop``` Operation
-
-```python
-def pop(stack, n):
-	# ensure that the stack is not empty
-	if(isEmpty(stack, n) != 0):
-		# find the top item
-		top = isTop(stack, n)
-		stack[top] = None
-		return stack
-	else:
-		print("The stack is empty.")
-```
-
-## Example of the ```pop``` Operation
-
-```python
-def main():
-	stack = [None] * 8;
-	maxsize = 8
-	stack[0]=1
-	stack[1]=2
-	print(pop(stack, maxsize))
-	print(isTop(stack, maxsize))
-		
-if __name__ == "__main__":
-    main()
+def bpc(inp):
+  pass
 ```
 
 ## Queues
 
-- In a **queue**, the element to be removed is the one that belongs to the set for the longest time. We name this policy as: *first-in, first-out*, or *FIFO*.
-
-- If a **queue** consists of elements ```Q[1..n]```, ```Q.head``` points to its *head* and ```Q.tail``` points the *next* position where a new element can be added to the queue. When ```Q.head = Q.tail```, it means that the queue is *empty*.
+- In a **queue**, the element to be removed is the oldest one
 
 
-## Queue Operations
+- If a **queue** consists of elements ```Q[1..n]```, ```Q.head``` points to its 
+*head* and ```Q.tail``` points the *next* position where a new element can
+be added to the queue. 
+
+When ```Q.head = Q.tail```, it means that the queue is *empty*.
 
 - The `insert` operation on a queue is called as `enqueue`.
-Additionally, the `remove` operation is called as `dequeue`.
+The `remove` operation is called as `dequeue`.
 
 
 ## Representation of Queues Using Arrays
 
-- Which are the *head* and *tail* of the following queque?
-```{r echo=FALSE}
-  # Q.tail = 7 and Q.head = 12
-  x <- matrix(list("N","N","N","N","N","N",15,6,9,8,4,"N"), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
-  x
-```
-- If we add elements to the positions $3-6$,
-which are going to be the *head* and *tail* of the following queque?
-```{r echo=FALSE}
-  # Q.tail = 3 and Q.head = 7
-  x <- matrix(list(3,5,"N","N","N","N",15,6,9,8,4,17), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
-  x
-```
-- If we remove the $5th$ element,
-which are going to be the *head* and *tail* of the following queque?
-```{r echo=FALSE}
-  # Q.tail = 3 and Q.head = 8
-  x <- matrix(list(3,5,"N","N","N","N","[15]",6,9,8,4,17), nrow = 1, dimnames = list(c("S"), c("[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]","[10]","[11]","[12]")))
-  x
-```
+A queue with a backing array is the simplest queue. The main dissadvantage
+is that it cannot grow dynamically.
 
-## ```enqueue``` Operation
+. . .
 
 ```python
-def enqueue(item):
-	global tail # -1
-	# ensure that the queue is not full
-	if (tail < maxsize - 1):
-		tail = tail + 1
-		arr[tail] = item
-	else:
-		print("The queue is full.")
+class Queue():
+  def __init__(self, size = -1):
+    if size > 0:
+      self.size = size
+    else:
+      self.size = 10
+      # Backing array initialization
+      self.arr = map(lambda x: None, range(self.size))
+      # Queue pointers
+      self.tail = 0
 ```
 
-## Example of the ```enqueue``` Operation
+## Adding items with `enqueue`
 
 ```python
-maxsize = 6
-arr = [None] * maxsize
-head = 0
-tail = -1
-
-def main():
-	enqueue(3)
-	enqueue(4)
-	enqueue(5)
-	print(str(arr) + " tail: " + str(tail))
-		
-if __name__ == "__main__":
-    main()
-    
-# Output:
-# [3, 4, 5, None, None, None] tail: 2
+def enqueue(self, item):
+  if self.tail >= len(self.arr):
+    raise Exception ## Queue full
+          
+  self.arr[self.tail] = item
+  self.tail = self.tail + 1
+  #print "enqueue: [%s] %d" % (', '.join(map(str, self.arr)), self.tail)
 ```
 
-## ```dequeue``` Operation
+The `enqueue` operation adds the item to the tail position and advances the
+tail pointer.
 
 ```python
-def dequeue():
-	global head
-	global tail
-	# ensure that the queue is not empty
-	if (arr[head] == None):
-		print("The queue is empty.")
-	else:
-		item = arr[head]
-		if (head == tail):
-			head = 0
-			tail = -1
-		else:
-			head = head + 1
-		return item
+> q = Queue(10)
+> q.enqueue(4)
+> q.enqueue(6)
+
+enqueue: [4, None, None, None, None, None, None, None, None, None] 1
+enqueue: [4, 6, None, None, None, None, None, None, None, None] 2
 ```
 
-## Example of the ```dequeue``` Operation
+## Removing items with `dequeue`
 
 ```python
-maxsize = 6
-arr = [None] * maxsize
-head = 0
-tail = -1
+def dequeue(self):
+  if self.tail == 0:
+    raise Exception ## Queue empty
 
-def main():
-	enqueue(3)
-	enqueue(4)
-	print dequeue()
-	print dequeue()
-
-if __name__ == "__main__":
-    main()
-    
-# 3
-# 4
+  result = self.arr[self.tail]
+  self.arr = self.arr[1:len(self.arr)] + [None]
+  self.tail = self.tail - 1
+  #print "dequeue: [%s] %d" % (', '.join(map(str, self.arr)), self.tail)
+  return result
 ```
 
-## ```isEmpty``` Operation
+The `dequeue` operation returns the item at the head position.
 
 ```python
-def isEmpty():
-	global head
-	global tail
+> q = Queue(10)
+> q.enqueue(4)
+> q.enqueue(6)
+> q.enqueue(8)
+> print q.dequeue()
+> print q.dequeue()
 
-	if (head < 0 or head > tail):
-		return True
-	else:
-		return False
+enqueue: [4, None, None, None, None, None, None, None, None, None] 1
+enqueue: [4, 6, None, None, None, None, None, None, None, None] 2
+enqueue: [4, 6, 8, None, None, None, None, None, None, None] 3
+dequeue: [6, 8, None, None, None, None, None, None, None, None] 2
+4
+dequeue: [8, None, None, None, None, None, None, None, None, None] 1
+6
 ```
 
-## Example of the ```isEmpty``` Operation
+## Extra queue operations
 
+How many empty spots are left in the queue?
 ```python
-maxsize = 6
-arr = [None] * maxsize
-head = 0
-tail = -1
-
-def main():
-	enqueue(3)
-	enqueue(4)
-	print dequeue()
-	print dequeue()
-	print(str(arr) + " tail: " + str(tail))
-	print(isEmpty())
-	
-if __name__ == "__main__":
-    main()
-    
-# 3
-# 4
-# [3, 4, None, None, None, None] tail: -1
-# True
+def capacity(self):
+    return len(self.arr) - self.tail
 ```
+
+Is the queue empty?
+```python
+  def isempty():
+    return self.tail == 0
+```
+
+Is the queue full?
+```python
+  def isfull():
+    return self.tail == len(self.arr) - 1
+```
+
+## Uses of queues
+
+* To model producer / consumer problems
+    * In multithreading environments we use blocking and sychronized queues 
+* To model graph and tree traversals
 
 ## Lists
 
