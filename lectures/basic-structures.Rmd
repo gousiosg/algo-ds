@@ -49,136 +49,85 @@ arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 - The location of each element, in an array,
 can be identified using numerical *indices*.
 
+- A basic property of an array is its *size*
+
 ![](./figures/array.png)
 
-## Array ```insert``` Operation
+## Array ```insert```
 
 ```python
 def insert(arr, item, k):
-	global n
-	j = n - 1
-	# add one more cell to the array
-	n = n + 1
-	arr = arr + [None]
-
-	while( j >= k):
-	    arr[j+1] = arr[j]
-	    j = j - 1
-
-	arr[k] = item
-
-	return arr
-```
-
-## Example of the ```insert``` Operation
-
-```python
-arr = [1, 2, 3, 4, 5]
-n = 5
-
-def main():
-	print(arr)
-	# insert a new item before the 5th item of arr
-	print(insert(arr, 10, 4))
-
-if __name__ == "__main__":
-    main()
+    if k >= len(arr):
+        raise Exception
+    arr[k] = item
     
-# [1, 2, 3, 4, 5]
-# [1, 2, 3, 4, 10, 5]
+    return arr
 ```
-
-## Array Elements After the ```insert``` Operation
-
-```
-The array after insertion:
-
-arr[0] = 1 
-arr[1] = 2 
-arr[2] = 3 
-arr[3] = 4 
-arr[4] = 10 
-arr[5] = 5
-```
-
-## Array ```remove``` Operation
 
 ```python
-def remove(arr, j, n):
-	while( j < n):
-		# Remove the 4th element
-		arr[j - 1] = arr[j]
-		j = j + 1
-
-	n = n - 1
-	arr = arr[:n]
-
-	return arr
+> insert([1,2,3], 4, 1)
+[1, 4, 3]
 ```
 
-## Example of the ```remove``` Operation
+**Warning**: Arrays in Python are not arrays, but lists internally. This makes
+the implementation of several array operations look weird.
 
 ```python
-def main():
-	arr = [1, 2, 3, 4, 5]
-	j = 4
-	n = 5
-	arr = remove(arr, j, n)
-	print arr
-
-if __name__ == "__main__":
-    main()
+def append(arr, item):
+  # Fishy, just for demo purposes
+  arr = arr + [None]
+  arr[len(arr) - 1] = item
+    
+  return arr
 ```
 
-## Array Elements After the ```remove``` Operation
-
-```
-The array after deletion:
-
-arr[0] = 1 
-arr[1] = 2 
-arr[2] = 3 
-arr[3] = 5
-```
-
-## Array ```search``` Operation
+## Array ```remove``` 
 
 ```python
-def search(arr, item, n):
-	j = 0
-	while( j < n):
-		if( arr[j] == item ):
-			break
-		j = j + 1
-	# index of the element
-	return j
+def remove(arr, item_index):
+  if item_index >= len(arr):
+    raise Exception
+        
+  return arr[0:item_index] + arr[item_index + 1:len(arr)]
 ```
 
-## Example of the ```search``` Operation
+Remove an item by index splits the array in 2, 1 part from the beggining
+of the array till the removal point, second part from the removal point
+till the end of the array.
 
 ```python
-def main():
-	arr = [1, 2, 3, 4, 5]
-	item = 5
-	n = 5
-	print(search(arr, item, n))
+> remove([1,2,3,4,5], 5)
+[1, 2, 4, 5, 10]
 
-if __name__ == "__main__":
-    main()
+> remove([1,2,3,4,5,10], 0)
+[2, 3, 4, 5, 10]
 ```
 
-## Found Item
+## Array `search` and `contains`
 
+`search` returns the first position of `item` in `arr`
+
+```python
+def search(arr, item):
+  for i in range(len(arr)):
+    if arr[i] == item:
+      return i
+  return -1
 ```
-Array elements:
 
-arr[0] = 1 
-arr[1] = 2 
-arr[2] = 3 
-arr[3] = 4 
-arr[4] = 5 
+```python
+> search([1,2,3,4,5], 3)
+2
+```
 
-The item = 5 has index = 4.
+`contains` returns a Boolean if the provided item exists in an array
+
+```python
+def contains(arr, item):
+  for i in arr:
+    if i == item:
+      return True
+  return False
 ```
 
 ## Stacks
