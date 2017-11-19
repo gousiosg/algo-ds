@@ -338,10 +338,11 @@ is bound by the *height of the tree*
 A: *Depends on how the data values are inserted into the tree*
 
 * A tree with the same number of nodes on the left subtree and right subtree
-  have a *worst-case* complexity of $\mathcal{O}(\log{}_2n)$
+  have a *worst-case* complexity of $\mathcal{O}(\log{}_2h)$ where $h$ is the
+  height of the tree
 * This is the maximum number of comparisons that an operation like e.g `insert` 
   will need to do to find a spot to insert a value. 
-* *height of the tree* $= \log{}_2n$
+* *height of the tree* $= \log{}_2h$
 
 How does it look like for BSTs that are not balanced? 
 
@@ -355,9 +356,9 @@ structure*
 ## What is the height of the tree likely to be? (2) 
 
 * We can quickly see that the worst case is similar to traverse an entire list 
-  and the complexity is $\mathcal{O}(n)$
+  and the complexity is $\mathcal{O}(h)$
 * There are many scenarios where we end up with an unbalanced tree, this makes 
-  the worst case scenario for BST operations to be $\mathcal{O}(n)$
+  the worst case scenario for BST operations to be $\mathcal{O}(h)$
 
 
 
@@ -367,151 +368,118 @@ structure*
 ## Maintaining a balanced tree
 
 
-* We want to avoid that a BST degenerates to $\mathcal{O}(n)$ time
+* We want to avoid that a BST degenerates to $\mathcal{O}(h)$ time
+* Needs to keep the height of the tree as small as possible, at worst, the
+  complexity should be  $\mathcal{O}(\log{}_2h)$
+* We need a way to automatically keep the tree balanced
 
-<!-- A self-balancing binary search tree or height-balanced binary search tree is a
-binary search tree (BST) that attempts to keep its height, or the number of
-levels of nodes beneath the root, as small as possible at all times,
-automatically.
+## AVL-tree
 
-- Most operations on a BST take time proportional to the height of the tree, so it
-is desirable to keep the height small.
+* Named after the inventors G.M. Adelson-Velskii and E.M. Landis
+* Introduce a *balance invariant* to a binary search tree
+* For every node $n$ in an AVL-tree, the heights of the left and
+  right subtrees of $n$ can differ at most by 1.
 
-- Self-balancing binary trees solve this problem by performing transformations on
-the tree at key times, in order to reduce the height. Although a certain
-overhead is involved, it is justified in the long run by ensuring fast execution
-of later operations.
+## AVL-tree (2)
 
-- The height must always be at most the ceiling of log2n.
+* The height of the tree should be bound by $\mathcal{O}(\log{}_2n)$ at worst
+  case
+* Let's consider the height of an AVL tree as $h: AVL_h$
+* To satisfy the balance invariant:
+    + The **root** must have a child with height $h-1$ with $AVL_{h-1}$ nodes
+    + The other child must than have a height of $h-2$  with $AVL_{h-2}$ nodes
+* The AVL tree has in total  $AVL_{h-1} + AVL_{h-2} + 1$ nodes (1 being the root
+* itself)  
 
-- Balanced BSTs are not always so precisely balanced, since it can be expensive to
-keep a tree at minimum height at all times; instead, most algorithms keep the
-height within a constant factor of this lower bound. -->
+## AVL-tree (3)
+* The base cases are $h=1,2$, the heights are $AVL_1=1, AVL_2=2$
+* Iteratively, we can construct $AVL_h$ as $AVL_h = AVL_{h-1} + AVL_{h-2} + 1$ as follows
+    + $AVL_{h-1}$ is left sub-tree and $AVL_{h-2}$  is the right sub-tree
+    + $AVL_h = AVL_{h-1} + AVL_{h-2} + 1$ 
+    + $AVL_{h-1} = AVL_{h-2} + AVL_{h-3} + 1$ 
+    + $AVL_{h} = (AVL_{h-2} + AVL_{h-3} + 1)+ AVL_{h-2} + 1$ 
+    + $AVL_{h} > 2AVL_{h-2}$ 
+    + $log AVL_{h} > log 2AVL_{h-2}$ 
+    + $2AVL_{h} > h := h = \mathcal{O}(\log{}_n)$  
 
-## Typical Binary Tree
+## AVL operations
 
-``` python
-class Node:
-   """
-   AVL Tree Node class
-   """
+* We have shown that introduced invariant can maintain the tree balanced at
+  $\mathcal{O}(\log{}_n)$ 
+* We have to develop mechanisms to keep the tree balance at *insert* and
+  *deletion* operations such that the height of the children must not differ by
+  more than 1 for every node
+* To balance an AVL tree, we need two mechanisms: left rotation and right
+  rotations
+* Rebalancing a tree takes $\mathcal{O}(1)$ and involves re-assigning nodes in 
+  the tree to shift around the weights 
 
-   def __init__(self, key):
-      """
-      Node constructor
-      """
-      self.left = None
-      self.right = None
-      self.key = key
 
-   def __str__(self):
-      return "%s" % self.key
-```
+## `Right-rotation(y)`
 
-## AVL Tree
+![](./figures/tree_right.svg)
 
-``` python
-class AVLTree():
-    """
-    Implementation of AVL tree
-    """
-    def __init__(self):
-        self.node = None
-        self.height = -1
-        self.balance = 0
-```
 
-## Insertion
+## `Left-rotation(x)`
 
-```python
-    def insert(self, key):
-        """
-        Insert new key into node
-        """
-        # Create new node
-        n = Node(key)
+![](./figures/tree_left.svg)
 
-        # Initial tree
-        if self.node == None:
-            self.node = n
-            self.node.left = AVLTree()
-            self.node.right = AVLTree()
-        # Insert key to the left subtree
-        elif key < self.node.key:
-            self.node.left.insert(key)
-        # Insert key to the right subtree
-        elif key > self.node.key:
-            self.node.right.insert(key)
+## Insertion 
 
-        # Exit, key already exists in the tree
-            
-        # Rebalance tree if needed
-        self.rebalance()
-```
+There are three cases of insertion we need to consider:
 
-## Traversal
+1. Node $n$ with children of the same height $k$. Inserting in either sub-tree
+   obeys the balance invariant
+2. The right sub-tree of Node $n$ is heaver than the left sub-tree. Inserting
+   into the right sub-tree can lead to an unbalanced AVL tree
+3. The left sub-tree of Node $n$ is heaver than the left right-tree. Inserting
+   into the left sub-tree can lead to an unbalanced AVL tree
 
-```python
-    def inorder_traverse(self):
-        """
-        Inorder traversal of the tree
-            Left subree + root + Right subtree
-        """
-        result = []
+## Insertion (2)
 
-        if not self.node:
-            return result
-        
-        result.extend(self.node.left.inorder_traverse())
-        result.append(self.node.key)
-        result.extend(self.node.right.inorder_traverse())
+![](./figures/tree_weight.svg)
 
-        return result
-```
+## Insertion: Violation on the left
 
-## Deletion
-```python
-    def delete(self, key):
-        if self.node != None:
-            if self.node.key == key:
-                # Key found in leaf node, just erase it
-                if not self.node.left.node and not self.node.right.node:
-                    self.node = None
-                # Node has only one subtree (right), replace root with that one
-                elif not self.node.left.node:                
-                    self.node = self.node.right.node
-                # Node has only one subtree (left), replace root with that one
-                elif not self.node.right.node:
-                    self.node = self.node.left.node
-                else:
-                    # Find  successor as smallest node in right subtree or
-                    #       predecessor as largest node in left subtree
-                    successor = self.node.right.node  
-                    while successor and successor.left.node:
-                        successor = successor.left.node
+![](./figures/tree_left_violation.svg){ width=80% }
 
-                    if successor:
-                        self.node.key = successor.key
+Let's imagine we want to insert a value $\beta$ into the $C$ tree and the left tree
+also has children $A$ and $B$
 
-                        # Delete successor from the replaced node right subree
-                        self.node.right.delete(successor.key)
 
-            elif key < self.node.key:
-                self.node.left.delete(key)
+## Insertion: Violation on the left (2)
 
-            elif key > self.node.key:
-                self.node.right.delete(key)
+![](./figures/tree_avl_case.svg){ width=80% }
 
-            # Rebalance tree
-            self.rebalance()
+Two places we can insert  $\beta$ 
 
-```
 
-## Rebalance
+## First Case: $\beta$ inserted in $A$
 
-``` python
- def rebalance(self):
-```
+![](./figures/tree_rr_example.svg){ width=80% }
+
+This is a simple right rotation
+
+## Second Case: $\beta$ inserted in $B$
+
+![](./figures/tree_rr_example2.svg){ width=80% }
+
+What ever we rotate, wont solve the imbalance
+
+## Second Case: $\beta$ inserted in $B$ (1)
+Make a left-rotation on $x$
+![](./figures/tree_lr_example.svg){ width=80% }
+
+## Second Case: $\beta$ inserted in $B$ (2)
+Make a right-rotation on $y$
+![](./figures/tree_double.svg){ width=80% }
+
+This is called a double right rotation
+
+left rotation and double left rotation is symmetric to this
+
+
+
 
 # B-Trees & B+ trees
 
