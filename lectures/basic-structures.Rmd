@@ -628,8 +628,6 @@ that represents the current location of the traverse,
 and the second reference is the ```previous``` one
 that represents a node *behind* the ```current```.
 
-XX: To add a figure here.
-
 ## The ```remove``` Method
 
 ```python
@@ -706,7 +704,6 @@ class Set(object):
 ```python
 def add(self, elem):
   if elem not in self:
-      # TO-DO: Define this method
       insort_left(self.data, elem)
 ```
 
@@ -715,7 +712,6 @@ def add(self, elem):
 ```python
 def remove(self, elem):
   data = self.data
-  # TO-DO: Define this method
   i = bisect_left(self.data, elem, 0)
   if i<len(data) and data[i] == elem:
       del data[i]
@@ -824,8 +820,6 @@ divides it by the table size.
 - The remainder is the hash value,
 which will indicate the positions
 where the items will be inserted in the hash table.
-
-XX: To add the hash table here.
 
 ## Implementation of Map in Python
 
