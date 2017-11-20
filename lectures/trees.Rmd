@@ -378,7 +378,7 @@ structure*
 * Named after the inventors G.M. Adelson-Velskii and E.M. Landis
 * Introduce a *balance invariant* to a binary search tree
 * For every node $n$ in an AVL-tree, the heights of the left and
-  right subtrees of $n$ can differ at most by 1.
+  right sub-trees of $n$ can differ at most by 1.
 
 ## AVL-tree (2)
 
@@ -460,25 +460,43 @@ Two places we can insert  $\beta$
 
 This is a simple right rotation
 
+## Right Rotation
+
+``` python
+def rotateRight(node, self):
+    newRoot = node.left
+    node.left = newRoot.right
+    newRoot.right = node
+    return newRoot
+```
+
 ## Second Case: $\beta$ inserted in $B$
 
 ![](./figures/tree_rr_example2.svg){ width=80% }
 
-What ever we rotate, wont solve the imbalance
+A simple right or left rotation won't solve the problem
 
 ## Second Case: $\beta$ inserted in $B$ (1)
-Make a left-rotation on $x$
+He have to perform something called a double right rotation
+
+1. Make a left-rotation on $x$
 ![](./figures/tree_lr_example.svg){ width=80% }
 
 ## Second Case: $\beta$ inserted in $B$ (2)
-Make a right-rotation on $y$
+2. Make a right-rotation on $y$
 ![](./figures/tree_double.svg){ width=80% }
 
-This is called a double right rotation
+Performing a left rotation or double left rotation is symmetric
 
-left rotation and double left rotation is symmetric to this
+## Double right rotation
 
 
+``` python
+def rotateRight(node, self):
+    n = rotateRight(node.right)
+    self.rotateLeft(n)
+#TODO: improve the structure
+```
 
 
 # B-Trees & B+ trees
