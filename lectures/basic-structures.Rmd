@@ -677,7 +677,8 @@ class Set(object):
 ```python
 def add(self, elem):
   if elem not in self:
-      insort_left(self.data, elem)
+      # see insert method presented in the arrays
+      selft.insert(self.data, elem)
 ```
 
 ## Remove an Element from a Set
