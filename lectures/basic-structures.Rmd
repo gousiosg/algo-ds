@@ -469,7 +469,7 @@ Each node is allocated in the *heap*.
 
 In order to implement a linked list in Python,
 we need to create a **Node**
-that will be store *data* and a *reference* to the next node.
+that will store *data* and a *reference* to the next node.
 
 ## The Class Node
 
@@ -648,34 +648,6 @@ def remove(self,item):
         previous.setNext(current.getNext())
 ```
 
-## The ```append``` method
-
-```python
-# This function is defined in Linked List class
-# Appends a new node at the end.  This method is
-# defined inside LinkedList class shown above */
-def append(self, new_data):
-
-    # 1. Create a new node
-    # 2. Put in the data
-    # 3. Set next as None
-    new_node = Node(new_data)
-
-    # 4. If the Linked List is empty, then make the
-    #    new node as head
-    if self.head is None:
-        self.head = new_node
-        return
-
-    # 5. Else traverse till the last node
-    last = self.head
-    while (last.next):
-        last = last.next
-
-    # 6. Change the next of last node
-    last.next =  new_node
-```
-
 ## Sets
 
 In mathematics, a **set** is a collection of *distinct* elemets.
@@ -695,7 +667,8 @@ class Set(object):
         for elem in data[1:]:
             if elem == result[-1]:
                 continue
-            result.append(elem)
+            # add as it is previously defined in UnorderedList
+            result.add(elem)
         self.data = result
 ```
 
