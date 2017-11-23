@@ -677,8 +677,8 @@ class Set(object):
 ```python
 def add(self, elem):
   if elem not in self:
-      # see insert method presented in the arrays
-      selft.insert(self.data, elem)
+      # see the insert method presented in the arrays
+      insert(self.data, elem)
 ```
 
 ## Remove an Element from a Set
@@ -686,7 +686,8 @@ def add(self, elem):
 ```python
 def remove(self, elem):
   data = self.data
-  i = bisect_left(self.data, elem, 0)
+  # return the index of the item; see arrays' search method
+  i = search(self, elem)
   if i<len(data) and data[i] == elem:
       del data[i]
 ```
