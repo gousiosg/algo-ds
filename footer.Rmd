@@ -4,17 +4,9 @@
 
 ## Copyright
 ![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
-This work is (c) 2017 - onwards by TU Delft and Georgios Gousios and licensed
-under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
-](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.
-
-```{r, out.width = "250px", echo=FALSE, eval=is_slides_output()}
-knitr::include_graphics("../images/tudelft.png")
-```
-
-```{r, out.width = "150px", echo=FALSE, eval=is_latex_output()}
-knitr::include_graphics("../images/tudelft.png")
-```
+This work is (c) 2017 - onwards by TU Delft, Georgios Gousios and his co-authors
+and licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 
+4.0 International](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.
 
 <!--html_preserve-->
 <script>
