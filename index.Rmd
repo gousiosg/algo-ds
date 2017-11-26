@@ -118,10 +118,10 @@ teacher to arrange a case-specific deadline.
 |:---:|:------:|----------------------|----------|----------------------|
 | 1 | 1 | [Course introduction](course-intro.html), [Recursion](recursion.html) | GG | |
 | 1 | 1 | [Algorithm Analysis](complexity.html)   | GG | |
-| 2 | 1 | [Basic Data Structures](basic-structures.html) (Lists, Stacks, Sets) | MK | Doubly-linked lists ([jypyter](assignment-lists.ipynb), [html](assignment-lists.html)) (28/11/2017) |
-| 2 | 2 | Algorithms for basic data structures | MK | |
-| 3 | 1 | [Trees](trees.html) (Binary trees)  | JH | Red-Black Trees ([jupyter](assignment-rbtrees.ipynb), [html](assignment-lists.html)) (12/12/2017) |
-| 3 | 2 | More Trees (B+ Trees) | JH | |
+| 2 | 1 | [Arrays, Queues and Stacks](basic-structures.html) | MK | Doubly-linked lists ([jypyter](assignment-lists.ipynb), [html](assignment-lists.html)) (28/11/2017) |
+| 2 | 2 | [Lists, Sets](basic-structures.html) | MK | |
+| 3 | 1 | [Trees: basic concepts and binary Trees](trees.html) | JH | Red-Black Trees ([jupyter](assignment-rbtrees.ipynb), [html](assignment-lists.html)) (12/12/2017) |
+| 3 | 2 | [More Trees: AVL and B+ Trees](trees.html) | JH | |
 | 4 | 1 | [Graphs](graphs.html) (Representation and Traversal) | PK | Graph algorithms ([jupyter](assignment-graphs.ipynb), [html](assignment-lists.html)) (9/01/2018)|
 | 4 | 2 | Graph algorithms (Topological sorting, Centrality) | PK ||
 | 5 | 1 | Sorting | JH | Searching ([jupyter](assignment-searching.ipynb), [html](assignment-lists.html)) (15/01/2018)|
