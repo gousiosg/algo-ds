@@ -108,12 +108,13 @@ depth-first methods:
 
 ## Traversal Methods (3)
 
+Visit Nodes in a recursive fashion 
+
 ### Pre-order traversal
-Visit this recursively 
 ```
 root node => left sub-tree => right sub-tree
 ```
-###In-order traversal
+### In-order traversal
 ```
 left sub-tree => root node => right sub-tree
 ```
@@ -147,7 +148,7 @@ class Node:
 root = Node(8) # root node & no children
 a = Node(2)
 a.left = Node(1)
-b.right = Node(6)
+a.right = Node(6)
 root.left = a
 root.right = a
 
@@ -196,6 +197,7 @@ We want to insert a data value $K$
        current** node and start over from step 1.
 
 ## Insert function
+Let's extend  `class Node` with an `insert` method
 ```python
 def insert(self, data):
 
@@ -294,20 +296,31 @@ There are three situations to handle
 We want to remove a node $K$ with $L$ as left tree and $R$ as right tree
 
 1. Perform a search to find node $K$
-2. Find the **successor node** $S$ of $K$
+2. Find the **successor node** or **predecessor node** $S$ of $K$
 3. Replace `K.data` with `S.data`
 
-How do we find the **successor node** of $K$?
+How do we find the **successor/predecessor node** of $K$?
 
 
 ## Successor node
 * The node with most minimum value in the **right sub-tree**
-* Traverse the left child in each branch until there is a node that don't have a left child.
+* Traverse the left child in each branch until there is a node that don't have
+  a left child.
 
 ![](./figures/tree_min.svg){ width=80% }
 
 
-## Removing 40 from the BST Example
+## Predecessor node
+* The node with most maximum value in the **left sub-tree**
+* Traverse the right child in each branch until there is a node that don't have 
+  a right child.
+
+![](./figures/tree_max.svg){ width=80% }
+
+
+
+## Removing 40 from the BST Example 
+Finding the predecessor node
 
 ![](./figures/tree_rm_1.svg)
 
@@ -328,7 +341,7 @@ How do we find the **successor node** of $K$?
       place to insert the value
 * `def search`: same as for `insert`
     + Worst case: searches to the bottom and no key found!
-* `def remove:` Additional: Search for the successor before removing the element
+* `def remove:` Additional: Search for the successor/predecessor before removing the element
     + finding the successor is also the height of the tree, so double the work!
 
 From a performance perspective, the common operations requires a search and this
@@ -337,7 +350,7 @@ is bound by the *height of the tree*
 ## What is the height of the tree likely to be? 
 A: *Depends on how the data values are inserted into the tree*
 
-* A tree with the same number of nodes on the left subtree and right subtree
+* A tree with the same number of nodes on the left sub-tree and right sub-tree
   have a *worst-case* complexity of $\mathcal{O}(\log{}_2h)$ where $h$ is the
   height of the tree
 * This is the maximum number of comparisons that an operation like e.g `insert` 
@@ -359,6 +372,23 @@ structure*
   and the complexity is $\mathcal{O}(h)$
 * There are many scenarios where we end up with an unbalanced tree, this makes 
   the worst case scenario for BST operations to be $\mathcal{O}(h)$
+
+## Why is the height of a complete BST $\log{}_2h$?
+
+The logarithmic value of number of nodes is truncated (e.g floor $\lfloor{x}\rfloor$)
+
+| Height | Nodes | Log calculation |
+|--------|-------|------------------|
+| 0 | 1 | $\log{}_21 = 0$ |
+| 1 | 3 | $\log{}_23 = 1$ |
+| 2 | 7 | $\log{}_27 = 2$ |
+| 3 | 15 | $\log{}_215 = 3$ |
+
+
+## A look at the problem size
+A great example on [StackOverflow](https://stackoverflow.com/questions/2307283/what-does-olog-n-mean-exactly/13093274#13093274)
+
+![](./figures/tree-so.png){ width=80% }
 
 
 
