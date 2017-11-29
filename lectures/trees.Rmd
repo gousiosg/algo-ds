@@ -536,7 +536,11 @@ def rotateRight(node, self):
 
 
 # B-Trees & B+ trees  {data-background="figures/btree-intro.png"}
-
+<!-- 
+based on
+http://www.cs.carleton.edu/faculty/jgoldfea/cs201/spring11/inclass/Tree/BTreefinalNew.pdf
+https://webdocs.cs.ualberta.ca/~holte/T26/ins-b-tree.html
+-->
 ## B-Trees
 
 - Primarily used by relational databases or filesystems
@@ -546,19 +550,61 @@ def rotateRight(node, self):
 * Ideal to work with large blocks of data
 
 
+
 ## Example of a B-tree
 
 ![](./figures/btree-example-wiki.png)
 
+## B-Tree Invariant (1)
+
+A B-tree of order $m$ is an $m-ary$ search tree:
+
+* Data values stored in leaf nodes, non-leaf nodes guide the search process
+* Each **non-leaf** node has:
+    + $\lceil{m/2}\rceil$ and $m$ **children**
+    + with number of keys as *number of children* - 1
+ * Each **leaf** node contains:
+    + between $\lceil{m/2}\rceil$ and $m$ **values**
+    + with no more than $m-1$ keys
 
 
-## Implementation
+## B-Tree Invariant (2)
+* The **root** is either a leaf node or has between 2 and $m$ children
+* The keys at the non-leaf nodes partition the keys of the children
+  (e.g the key guides the search similar to BST)
+* Every path from the root to a leaf is the same distance
 
-There are two types of way to implement a B-Tree
-- Iterative
-- Recursive
+## Building a B-Tree
+ On the blackboard, let's construct a B-tree of order 5 with the following
+ values:
 
-## Some key implementation details
+``` bash
+1,12,8,2,25,5,14,28,17,7,52,16,48,68,3,26,29,53,55,45
+```
+
+## Insertion
+
+For a value $V$:
+
+1. Search to find the leaf node where it should be added
+2. Insert $V$ into the leaf node
+3.  If *number of values* is $=< m-1$ after insertion
+    -   We are done!
+4. If *number of values* is $= m$, we violate the invariant
+5. To resolve this, we split the node into three ranges:
+    * Left: first $\frac{m-1}{2}$ records
+    * middle value:  $1+\frac{m-1}{2}$ 
+    * Right: last $\frac{m-1}{2}$ records
+6. Sequences of Left and Right becomes new nodes; middle value is promoted as a
+   key to the parent and added
+
+Q: What happens if there is no room at the parent node?
+
+## Deletion
+
+* Let's look again at the example
+* The deletion algorithm is similar to a BST
+
 
 
 ## Bibliography
