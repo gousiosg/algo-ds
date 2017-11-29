@@ -601,10 +601,37 @@ For a value $V$:
 Q: What happens if there is no room at the parent node?
 
 ## Deletion
+* Insertion: we have to check that the *node* is not contain too many values
+* Deletion: we have to check that the *node* does not have to less values
+
+For a value $V$, we do the following
+
+1. If value $V$ is in node $x$ and $x$ is a leaf, delete value $V$ 
+2. If value $V$ is in node $x$ and $x$ is **not a leaf**
+    + Find the successor/predecessor value for $V$
+
+
 
 * Let's look again at the example
-* The deletion algorithm is similar to a BST
+* The deletion algorithm is similar to BST
+* Deleting a value in *non-leaf* node, replace by finding the successor or predecessor node
 
+
+1. Going from the root, find leaf *L*
+
+## B+ Trees
+
+* There are many variations of B-Trees, one popular one is B+ Tree
+* Useful structure in file-systems
+* The idea is intuitive:
+    + The non-leaf nodes act as an index with place holder values
+    + The leaf node contains the actual data values that are linked
++ Ideal for range queries as every internal node is sub interval 
+* Understand and animate B+ Trees, a [tool](https://www.cs.usfca.edu/~galles/visualization/BPlusTree.html) developed at UFSCA
+
+## Example of a B+ Tree
+
+![](./figures/bplustree.png)
 
 
 ## Bibliography
