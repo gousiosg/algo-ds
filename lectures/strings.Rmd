@@ -1,0 +1,68 @@
+---
+title: "Strings"
+author: "Georgios Gousios"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
+nocite: |
+  @Hutto99
+---
+
+```{r child="header.Rmd", include=FALSE}
+```
+
+## What is a string?
+
+* **In math**: A _string_ is a finite sequence of symbols that are chosen from a
+set called an _alphabet_.
+
+* **In CS**: A _string_ is a sequence of characters.
+
+What is the alphabet for strings in CS?
+
+## Alphabets or encodings
+
+In computer memory, strings are nothing more that binary data.
+
+## Typical String Encodings
+
+* **1-byte** encodings: EBCDIC and **ASCII**
+* **2-byte** encodings: CJK (for logographic languages), Shift-JIS
+* **n-byte** encodings: Unicode **UTF-8**
+
+## ASCII
+
+ASCII was originally a 7-bit encoding.
+
+![The ASCII character table](./figures/ascii.png)
+
+## Fun with ASCII
+
+ASCII characters are representable as numbers. This means that
+we can do arithmetic on them. 
+
+```c
+#include<stdio.h>
+
+main() {
+    for (int i = 0; i < 128; i++)
+      printf("%c ", i);
+
+    printf("%d\n", c);    
+
+    for (int i = 128; i < 256; i++)
+      printf("%c ", i);
+}
+```
+
+![The ASCII character table](./figures/ascii-printout.png){width=70%}
+
+
+
+## ISO-8859-*
+
+
+
+```{r child="footer.Rmd", include=FALSE}
+```
