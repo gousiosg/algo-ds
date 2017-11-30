@@ -15,12 +15,12 @@ csl: ieee.csl
 ## Why organize data as a tree structure?
 
 - Humans have a natural inclination towards hierarchical thinking and this have
-  had a profound impact on the way we reason, decide and look at *things*
+had a profound impact on the way we reason, decide and look at *things*
 - Examples are social and political structures such as *family tree*,
-  *governance* and *species* 
+*governance* and *species* 
 - Introducing *order* such as *hierarchical order* to data allows computers
-  to make decisions in a much more efficient way then linear data
-  structures
+to make decisions in a much more efficient way then linear data
+structures
 
 
 ## Example: Visiting a distant aunt
@@ -29,12 +29,12 @@ What do we know about this aunt and our family:
 - You only meet her once every three years
 - She is from your **dad's side**
 - There is a huge family gathering next week and you have been asked to find her
-  address.
+address.
 
 
 ## Example: Visiting a distant aunt (1)
 - Equipped with the knowledge from the previous week, we would organize family
-  relatives in the following fashion:
+relatives in the following fashion:
 
 ![](./figures/tree_linear.svg)
 
@@ -48,13 +48,13 @@ family tree!
 
 - Provides the computer additional insights on the relation between data values
 - Allows the computer to examine the relationship between data values and make
-  decisions based on them
+decisions based on them
 - This makes lookup for a data value much faster, we can avoid examine a large
-  chunk of the data set
+chunk of the data set
 - In the example, we knew the aunt was on the dad's side and thus avoided
-  looking into mom's side of relatives!
+looking into mom's side of relatives!
 - A tree is an example of organizing data values according to an **order** (e.g
-  hierarchical order)
+hierarchical order)
 
 <!-- How can we integrate *order* in a data structure? -->
 
@@ -66,9 +66,9 @@ A tree constitute with the following properties:
 
 * A single & special node named **root**, start node on top of tree and does not have a **parent**
 * Succeeding nodes can be either a **child** or **parent**
-    + A **child** node is connected by *at-least* a preceding node
-    + The *preceding* node is known as a **parent** node
-    + A **parent** node has *zero, one or more* children(successor nodes)
++ A **child** node is connected by *at-least* a preceding node
++ The *preceding* node is known as a **parent** node
++ A **parent** node has *zero, one or more* children(successor nodes)
 
 ## Tree terminology (2)
 ![](./figures/tree_def_2.svg)
@@ -130,7 +130,7 @@ left sub-tree => right sub-tree => root node
 - Branching at each node occur either at **left** or **right**
 - A binary tree can be composed of zero, one or two children
 - Useful for Searching: Traversing either **left** or **right** to find the
-  target
+target
 
 ## Example
 
@@ -139,10 +139,10 @@ left sub-tree => right sub-tree => root node
 ## Implementation of the data structure
 ``` python
 class Node:
-    def __init__(self, data):
-        self.left = None
-        self.right = None
-        self.data = data
+def __init__(self, data):
+    self.left = None
+    self.right = None
+    self.data = data
 
 # Examples
 root = Node(8) # root node & no children
@@ -158,24 +158,24 @@ root.right = a
 ```
 
 <!--
-        2
-       / \
-      /   \
-     /     \
-    1       3
-   / \     / \
-  0   7   9   1
- /   / \     / \
+    2
+   / \
+  /   \
+ /     \
+1       3
+/ \     / \
+0   7   9   1
+/   / \     / \
 2   1   0   8   8
-       /
-      7
-  -->
+   /
+  7
+-->
 
 ## Binary Search Tree (BST)
 *  Adding a notion of *order* to a Binary Tree structure, the *order invariant*
 *  A tree is ordered the following way:
-    + The child node on the **right** is **always** greater than its parent
-    + The child node on the **left** is **always** lesser than its parent
++ The child node on the **right** is **always** greater than its parent
++ The child node on the **left** is **always** lesser than its parent
 
 ## Example of a BST  
 
@@ -188,31 +188,31 @@ We want to insert a data value $K$
 
 1. Compare $K$ with the data value $V$ of the current node.
 2. If $K < V$,
-    1. If `V.left is None`, we insert $K$ as left child of $V$.
-    2. If `V.left is not None`, left child of $V$ becomes the **new
-       current** node and start over from step 1.
+1. If `V.left is None`, we insert $K$ as left child of $V$.
+2. If `V.left is not None`, left child of $V$ becomes the **new
+   current** node and start over from step 1.
 3. If $K > V$,
-    1. If `V.right is None`, we insert $K$the right child of $V$.
-    2. If `V.right is not None`, right child of $V$ becomes the **new
-       current** node and start over from step 1.
+1. If `V.right is None`, we insert $K$the right child of $V$.
+2. If `V.right is not None`, right child of $V$ becomes the **new
+   current** node and start over from step 1.
 
 ## Insert function
 Let's extend  `class Node` with an `insert` method
 ```python
 def insert(self, data):
 
-    if data > self.data:
-        if self.right is None:
-            self.right = Node(data)
-        else:
-            #Q: why are we calling insert here?
-            self.right.insert(data)
+if data > self.data:
+    if self.right is None:
+        self.right = Node(data)
     else:
-        if self.left is None:
-            self.left = Node(data)
-        else:
-            #Q: why are we calling insert here?
-            self.left.insert(data)
+        #Q: why are we calling insert here?
+        self.right.insert(data)
+else:
+    if self.left is None:
+        self.left = Node(data)
+    else:
+        #Q: why are we calling insert here?
+        self.left.insert(data)
 ```
 
 
@@ -259,17 +259,17 @@ Base case: Repeat process above until:
 
 ``` python
 def find(root,key):
-     
-    # Base Case: root is null or key is present at root
-    if root.left/right is None or root.val == key:
-        return root
  
-    # Key is greater than root's key
-    if root.val < key:
-        return find(root.right,key)
-   
-    # Key is smaller than root's key
-    return find(root.left,key)
+# Base Case: root is null or key is present at root
+if root.left/right is None or root.val == key:
+    return root
+
+# Key is greater than root's key
+if root.val < key:
+    return find(root.right,key)
+
+# Key is smaller than root's key
+return find(root.left,key)
 ```
 
 ## Example: Lookup value 49 in a BST
@@ -305,7 +305,7 @@ How do we find the **successor/predecessor node** of $K$?
 ## Successor node
 * The node with most minimum value in the **right sub-tree**
 * Traverse the left child in each branch until there is a node that don't have
-  a left child.
+a left child.
 
 ![](./figures/tree_min.svg){ width=80% }
 
@@ -313,7 +313,7 @@ How do we find the **successor/predecessor node** of $K$?
 ## Predecessor node
 * The node with most maximum value in the **left sub-tree**
 * Traverse the right child in each branch until there is a node that don't have 
-  a right child.
+a right child.
 
 ![](./figures/tree_max.svg){ width=80% }
 
@@ -337,12 +337,12 @@ Finding the predecessor node
 ## Analysis of the BST operations
 
 * `def insert:` limiting factor is the **height of the tree**
-    + Worst case: Compare at every level of the tree to find an appropriate
-      place to insert the value
++ Worst case: Compare at every level of the tree to find an appropriate
+  place to insert the value
 * `def search`: same as for `insert`
-    + Worst case: searches to the bottom and no key found!
++ Worst case: searches to the bottom and no key found!
 * `def remove:` Additional: Search for the successor/predecessor before removing the element
-    + finding the successor is also the height of the tree, so double the work!
++ finding the successor is also the height of the tree, so double the work!
 
 From a performance perspective, the common operations requires a search and this
 is bound by the *height of the tree*
@@ -351,10 +351,10 @@ is bound by the *height of the tree*
 A: *Depends on how the data values are inserted into the tree*
 
 * A tree with the same number of nodes on the left sub-tree and right sub-tree
-  have a *worst-case* complexity of $\mathcal{O}(\log{}_2h)$ where $h$ is the
-  height of the tree
+have a *worst-case* complexity of $\mathcal{O}(\log{}_2h)$ where $h$ is the
+height of the tree
 * This is the maximum number of comparisons that an operation like e.g `insert` 
-  will need to do to find a spot to insert a value. 
+will need to do to find a spot to insert a value. 
 * *height of the tree* $= \log{}_2h$
 
 How does it look like for BSTs that are not balanced? 
@@ -369,9 +369,9 @@ structure*
 ## What is the height of the tree likely to be? (2) 
 
 * We can quickly see that the worst case is similar to traverse an entire list 
-  and the complexity is $\mathcal{O}(h)$
+and the complexity is $\mathcal{O}(h)$
 * There are many scenarios where we end up with an unbalanced tree, this makes 
-  the worst case scenario for BST operations to be $\mathcal{O}(h)$
+the worst case scenario for BST operations to be $\mathcal{O}(h)$
 
 ## Why is the height of a complete BST $\log{}_2h$?
 
@@ -400,7 +400,7 @@ A great example on [StackOverflow](https://stackoverflow.com/questions/2307283/w
 
 * We want to avoid that a BST degenerates to $\mathcal{O}(h)$ time
 * Needs to keep the height of the tree as small as possible, at worst, the
-  complexity should be  $\mathcal{O}(\log{}_2h)$
+complexity should be  $\mathcal{O}(\log{}_2h)$
 * We need a way to automatically keep the tree balanced
 
 ## AVL-tree
@@ -408,34 +408,34 @@ A great example on [StackOverflow](https://stackoverflow.com/questions/2307283/w
 * Named after the inventors G.M. Adelson-Velskii and E.M. Landis
 * Introduce a *balance invariant* to a binary search tree
 * For every node $n$ in an AVL-tree, the heights of the left and
-  right sub-trees of $n$ can differ at most by 1.
+right sub-trees of $n$ can differ at most by 1.
 
 ## AVL-tree (2)
 
 * The height of the tree should be bound by $\mathcal{O}(\log{}_2n)$ at worst
-  case
+case
 * Let's consider the height of an AVL tree as $h$ with $N_h$ nodes 
 * To satisfy the balance invariant:
-    + The **root** must have a child with height $h-1$ with $N_{h-1}$ nodes
-    + The other child of the *root* must than have a height of $h-2$ with $N_{h-2}$ nodes
-    + Why $h-2$? Height can differ at most by 1
-    * The AVL tree has in total  $N_{h-1} + N_{h-2} + 1$ nodes (root is $1$)  
++ The **root** must have a child with height $h-1$ with $N_{h-1}$ nodes
++ The other child of the *root* must than have a height of $h-2$ with $N_{h-2}$ nodes
++ Why $h-2$? Height can differ at most by 1
+* The AVL tree has in total  $N_{h-1} + N_{h-2} + 1$ nodes (root is $1$)  
 
 ## Visualize the relation between height and nodes 
 
 ![](./figures/tree-so.png){ width=60% }
 
 
-## AVL-tree (3)
+<!--## AVL-tree (3)
 * The base cases are $h=1,2$, the nodes are $N_1=1, N_2=2$
 * Iteratively, we can construct $N_h$ as $N_h = N_{h-1} + N_{h-2} + 1$ as follows
-    + $N_{h-1}$ is left sub-tree and $N_{h-2}$  is the right sub-tree
-    + $N_h = N_{h-1} + N_{h-2} + 1$ 
-    + $N_{h-1} = N_{h-2} + N_{h-3} + 1$ 
-    + $N_{h} = (N_{h-2} + N_{h-3} + 1)+ N_{h-2} + 1$ 
-    + $N_{h} > 2N_{h-2}$ 
++ $N_{h-1}$ is left sub-tree and $N_{h-2}$  is the right sub-tree
++ $N_h = N_{h-1} + N_{h-2} + 1$ 
++ $N_{h-1} = N_{h-2} + N_{h-3} + 1$ 
++ $N_{h} = (N_{h-2} + N_{h-3} + 1)+ N_{h-2} + 1$ 
++ $N_{h} > 2N_{h-2}$ 
     + $log N_{h} > log 2N_{h-2}$ 
-    + $2N_{h} > h := h = \mathcal{O}(\log{}_n)$  
+    + $2N_{h} > h := h = \mathcal{O}(\log{}_n)$  -->
 
 ## AVL operations
 
@@ -600,7 +600,7 @@ For a value $V$:
 
 Q: What happens if there is no room at the parent node?
 
-## Deletion
+<!--## Deletion
 * Insertion: we have to check that the *node* is not contain too many values
 * Deletion: we have to check that the *node* does not have to less values
 
@@ -617,7 +617,7 @@ For a value $V$, we do the following
 * Deleting a value in *non-leaf* node, replace by finding the successor or predecessor node
 
 
-1. Going from the root, find leaf *L*
+1. Going from the root, find leaf *L* -->
 
 ## B+ Trees
 
