@@ -1,8 +1,10 @@
 ---
-title: "Graphs"
+title: "Introduction to Graphs. Basic Graph Algorithms"
 author: "Pavel Kucherbaev"
 date: "`r format(Sys.time(), '%d %B %Y')`"
-output: revealjs::revealjs_presentation
+output: 
+  revealjs::revealjs_presentation:
+    transition: none
 ---
 
 ```{r setup, include=FALSE}
@@ -55,9 +57,9 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 ```
 
-# Introduction to Graphs
+# Part 1
 
-## Part 1: Outline
+## Introduction to Graphs
 - What is a graph
 - Directions and cycles
 - Graph representation
@@ -125,6 +127,8 @@ ggnet2(network::network(blood$edges[, 1:2], directed=T),
        node.color = "darkred", label.color = "grey80")
 ```
 
+O- can donate blood to anybody. AB+ can donate blood only to themselves.
+
 ## Position of nodes
 ```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 10, fig.height = 4}
 
@@ -150,7 +154,7 @@ multiplot(p1, p2, p3, p4, cols=2)
 
 Does not change semantics of the graph
 
-## Weights
+## Edge weights
 
 (e.g. cost of travel, distance, energy to transition)
 
@@ -172,11 +176,9 @@ ggnet2(net,
 
 In a directional graph cost in one direction could be different than back (e.g. going up hill and downhill).
 
-## Degree
+## Node degree
 
 Number of edges incident on a node. 
-
-degree("1") = 3; degree("3") = 4
 
 ```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
 
@@ -194,9 +196,12 @@ ggnet2(net,
 # arrow.size = 10, arrow.gap = 0.05, 
 ```
 
+degree("1") = 3; degree("3") = 4. What is your node degree on LinkedIn?
+
+
+# Part 2
 
 ## Graph representation
-
 We can define a graph using:
 
 - Edge list
@@ -216,7 +221,7 @@ edge_list = [[0,1],[1,2],[1,3],[2,3]]
 
 ```
 
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 6, fig.height = 3}
 
 m <- matrix(
   c(0, 1, 0, 0,
@@ -251,7 +256,7 @@ adj_list = [[1],[0,2,3],[1,3],[1,2]]
 
 ```
 
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 6, fig.height = 3}
 ggnet2(net, 
        mode = "circle", size = 15, label = T, 
        vjust = 0.5,
@@ -307,9 +312,7 @@ ggnet2(net,
        node.color = "darkred", label.color = "grey80")
 ```
 
-## Adjacency matrix
-
-Non directional graph.
+## Adjacency matrix (non directional)
 
 Cells are symmetrical across the main diagonal.
 
@@ -331,9 +334,9 @@ ggnet2(net,
        node.color = "darkred", label.color = "grey80")
 ```
 
-## Adjacency matrix
+## Adjacency matrix (directional)
 
-Directional graph. 
+Cells can be not symmetrical across the main diagonal.
 
 ```{python, echo = TRUE}
 
@@ -366,9 +369,9 @@ ggnet2(net,
        node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
 ```
 
-## Adjacency matrix
+## Adjacency matrix (directional)
 
-Directional graph with weights. 
+Cells can represent weights.
 
 ```{python, echo = TRUE}
 
@@ -400,118 +403,6 @@ ggnet2(net,
        vjust = 0.5, edge.label = "weights",
        node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
 ```
-
-
-## Part 2: Outline
-- Euler path, Hamiltonian path
-- Types of graphs
-- Centrality (e.g. betweenness, closeness, eigenvector, node)
-
-## Traversal
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
-ggnet2(net, 
-       mode = "circle", size = 15, label = T, 
-       vjust = 0.5,
-       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
-```
-
-
-## Cycle
-
-A closed path in which all the edges are different.
-0 - 1 - 3 - 2 - 0
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
-ggnet2(net, 
-       mode = "circle", size = 15, label = T, 
-       vjust = 0.5,
-       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
-```
-
-Trees can not have cycles. Graphs can have cycles.
-
-## Hamiltonian path
-
-Path that visits each *node* exactly once. (0 - 2 - 3 - 1 - 0)
-
-Hamiltonian cycle is Hamiltonian path which is a cycle.
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
-ggnet2(net, 
-       mode = "circle", size = 15, label = T, 
-       vjust = 0.5,
-       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
-```
-
-
-## Eulerian path
-
-Path that visits each *edge* exactly once. (2 - 3 - 1 - 0 - 2 - 1)
-
-Eulerian cycle is Eulerian path which is a cycle. (Not this case)
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
-ggnet2(net, 
-       mode = "circle", size = 15, label = T, 
-       vjust = 0.5,
-       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
-```
-
-## Types of graphs
-
-- Empty
-- Star 
-- Tree 
-- Ring 
-- Full
-- Bipartite
-
-## Empty Graph
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 4}
-fg <- make_empty_graph(10)
-plot(fg, vertex.size=20, vertex.label=NA)
-```
-
-## Star Graph
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 4}
-st <- make_star(10)
-plot(st, vertex.size=20, vertex.label=NA)
-```
-
-## Tree Graph
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 4}
-tr <- make_tree(20, children = 3, mode = "undirected") 
-plot(tr, vertex.size=20, vertex.label=NA)
-```
-
-## Ring Graph
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 4}
-rn <- make_ring(10)
-plot(rn, vertex.size=20, vertex.label=NA)
-```
-
-## Full Graph
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 4}
-fg <- make_full_graph(10)
-plot(fg, vertex.size=20, vertex.label=NA)
-```
-
-## Bipartite Graph
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 4}
-# Random bipartite graph
-inc <- matrix(sample(0:1, 50, replace = TRUE, prob=c(2,1)), 10, 5)
-g <- graph_from_incidence_matrix(inc)
-plot(g, layout = layout_as_bipartite,vertex.size=20, vertex.label=NA,
-     vertex.color=c("red","orange")[V(g)$type+1])
-```
-
 
 ## Graph in Python
 
@@ -577,12 +468,100 @@ class Graph:
     return res
 ```
 
+# Part 3
 
-# Search Algorithms for Graphs
+## Graph Types, Cycles, Paths
 
-## Part 1
-- Breadth-first search
-- Depth-first search
+- Graph Types
+- Cycles, Euler path, Hamiltonian path
+
+## Types of graphs
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 11, fig.height = 6}
+set.seed(12252016)
+
+par(mfrow = c(2, 3),cex.main=3)
+
+fg <- make_empty_graph(10)
+plot(fg, vertex.size=20, vertex.label=NA, main= "Empty")
+
+st <- make_star(10)
+plot(st, vertex.size=20, vertex.label=NA, main = "Star")
+
+tr <- make_tree(20, children = 3, mode = "undirected") 
+plot(tr, vertex.size=20, vertex.label=NA, main = "Tree")
+
+rn <- make_ring(10)
+plot(rn, vertex.size=20, vertex.label=NA, main = "Ring")
+
+fg <- make_full_graph(10)
+plot(fg, vertex.size=20, vertex.label=NA, main = "Full")
+
+# Random bipartite graph
+inc <- matrix(sample(0:1, 50, replace = TRUE, prob=c(2,1)), 10, 5)
+g <- graph_from_incidence_matrix(inc)
+plot(g, layout = layout_as_bipartite,vertex.size=20, vertex.label=NA,
+     vertex.color=c("red","orange")[V(g)$type+1], main = "Bipartite")
+
+```
+
+## Traversal
+
+Process of visiting (checking and/or updating) each node in a graph. Such traversals are classified by the order in which the vertices are visited.
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+
+## Cycle
+
+A closed path where all edges are different (0 - 1 - 3 - 2 - 0)
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+Trees can not have cycles. Graphs can have cycles.
+
+## Hamiltonian path
+
+Path that visits each *node* exactly once. (0 - 2 - 3 - 1 - 0)
+
+Hamiltonian cycle is Hamiltonian path which is a cycle.
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+
+## Eulerian path
+
+Path that visits each *edge* exactly once. (2 - 3 - 1 - 0 - 2 - 1)
+
+Eulerian cycle is Eulerian path which is a cycle. (Not this case)
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+
+# Part 4
+
+## Search Algorithms
+- Breadth-first search (BFS)
+- Depth-first search (DFS)
 
 Visualization of search algorithms: 
 
@@ -592,7 +571,7 @@ Visualization of search algorithms:
 
 ## Graph to Traverse
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 
 g <- graph.ring(10)
@@ -600,9 +579,19 @@ g <- set.vertex.attribute(g, "color", value = c("white","white","white","white",
 plot(g)
 ```
 
+Start with Node 1 and see how BFS and DFS traverse the graph.
+
+## Breadth-first search (BFS)
+
+Breadth-first search is an algorithm for traversing or searching tree or graph data structures. It starts at some arbitrary node of a graph and explores the neighbor nodes first, before moving to the next level neighbours.
+
+![](figures/bfs.png){ width=40% }
+
+Worst-case performance = O(|V| + |E|)
+
 ## Breadth-first search (BFS) Step 1
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","white","white","white","white","white","white","white","white","white"))
 plot(g)
@@ -610,7 +599,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 2
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","white","white","white","white","white","white","white","white"))
 plot(g)
@@ -618,7 +607,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 3
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","white","white","white","white","white","white","white","gray"))
 plot(g)
@@ -626,7 +615,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 4
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","white","white","white","white","white","white","gray"))
 plot(g)
@@ -634,7 +623,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 5
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","white","white","white","white","white","gray","gray"))
 plot(g)
@@ -642,7 +631,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 6
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","white","white","white","white","gray","gray"))
 plot(g)
@@ -650,7 +639,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 7
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","white","white","white","gray","gray","gray"))
 plot(g)
@@ -658,7 +647,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 8
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","white","white","gray","gray","gray"))
 plot(g)
@@ -666,7 +655,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 9
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","white","gray","gray","gray","gray"))
 plot(g)
@@ -674,7 +663,7 @@ plot(g)
 
 ## Breadth-first search (BFS) Step 10
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","gray","gray","gray","gray","gray"))
 plot(g)
@@ -707,10 +696,19 @@ def bfs(graph, s, target):
   
 ```
 
+## Depth-first search (DFS)
+
+Breadth-first search is an algorithm for traversing graph data structures. One starts selecting some arbitrary node as the root and explores as far as possible along each branch before backtracking.
+
+![](figures/dfs.png){ width=40% }
+
+Worst-case performance O(|V| + |E|)
+
+
 
 ## Depth-first search (DFS) Step 1
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","white","white","white","white","white","white","white","white","white"))
 plot(g)
@@ -718,7 +716,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 2
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","white","white","white","white","white","white","white","white"))
 plot(g)
@@ -726,7 +724,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 3
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","white","white","white","white","white","white","white"))
 plot(g)
@@ -734,7 +732,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 4
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","white","white","white","white","white","white"))
 plot(g)
@@ -742,7 +740,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 5
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","white","white","white","white","white"))
 plot(g)
@@ -750,7 +748,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 6
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","gray","white","white","white","white"))
 plot(g)
@@ -758,7 +756,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 7
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","gray","gray","white","white","white"))
 plot(g)
@@ -766,7 +764,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 8
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","gray","gray","gray","white","white"))
 plot(g)
@@ -774,7 +772,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 9
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","gray","gray","gray","gray","white"))
 plot(g)
@@ -782,7 +780,7 @@ plot(g)
 
 ## Depth-first search (DFS) Step 10
 
-```{r}
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 14, fig.height = 6}
 set.seed(123234)
 g <- set.vertex.attribute(g, "color", value = c("gray","gray","gray","gray","gray","gray","gray","gray","gray","gray"))
 plot(g)
@@ -813,11 +811,6 @@ def dfs_visit(graph, u):
   u.f = time
 
 ```
-
-## Part 2
-- Shortest path. Dijkstra algorithm.
-- All-pairs shortest path.
-- Recap of the material
 
 # References
 

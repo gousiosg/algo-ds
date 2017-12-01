@@ -1,0 +1,655 @@
+---
+title: "Graph Connectedness and Advanced Graph Algorithms"
+author: "Pavel Kucherbaev"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: 
+  revealjs::revealjs_presentation:
+    transition: none
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(GGally)
+library(network)
+library(sna)
+#library(ggplot2)
+#library(visNetwork) 
+library(reticulate)
+#library(geomnet)
+#library(ggnetwork)
+library(igraph)
+
+# http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
+# Part 1
+
+## Connected components
+
+A connected component of an undirected graph is a subgraph in which any two nodes are connected to each other by paths, and which is connected to no additional vertices in the supergraph. 
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+set.seed(123234)
+m <- matrix(
+  c(0, 1, 1, 0,0,0,
+    1, 0, 0, 0,0,0,
+    0, 1, 0, 0,0,0,
+    0, 1, 1, 0,0,0,
+    0, 0, 0, 0,0,1,
+    0, 0, 0, 0,1,0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c(0,1,2,3,4,5)
+colnames(m) = c(0,1,2,3,4,5)
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Graph with 2 components
+
+## Finding connected components
+
+Running a search algorithm (BFS or DFS) with a given start node we find only 1 connected component. 
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+set.seed(123234)
+m <- matrix(
+  c(0, 1, 1, 0,0,0,
+    1, 0, 0, 0,0,0,
+    0, 1, 0, 0,0,0,
+    0, 1, 1, 0,0,0,
+    0, 0, 0, 0,0,1,
+    0, 0, 0, 0,1,0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c(0,1,2,3,4,5)
+colnames(m) = c(0,1,2,3,4,5)
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Looping through nodes which where not visited yet and running a search algorithm for them, can help to find all connected components in linear time O(|V| + |E|).
+
+## Shortest path
+
+Is a problem of finding a path between two nodes, such that the sum of the weights of its constituent edges is minimized.
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c(1,2,3,4,5,6)
+colnames(m) = c(1,2,3,4,5,6)
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T,
+       vjust = 0.5,
+       node.color = c("tomato","darkred","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
+```
+
+* Paths between 1 and 6: 1-5-4-6 and 1-2-3-4-6. 
+* Which is the shortest?
+
+## Shortest path
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c(1,2,3,4,5,6)
+colnames(m) = c(1,2,3,4,5,6)
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","darkred","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+* What is the shortest path now?
+* How can we programmatically calculate the shortest path between any 2 nodes for any graph?
+
+## Dijkstra Algorithm
+
+S - start node. T - target node. D(y) - distance from S to another node Y.
+
+1. Assign to every node _n_, D(_n_) = INF, D(S) = 0
+2. Assign C (Current node) as start node. Mark all other nodes unvisited. V = set of unvisited nodes.
+3. Get neighbors of C and calculate distances. Compare distance with previously calculated. Assign the smallest.
+4. After all neighbotrs considered, mark the current node as visited and remove it from the unvisited set.
+5. If T marked as visited, or if Y was never reached (not connected), then stop the algorithm.
+6. Otherwise, select the unvisited node that is marked with the smallest tentative distance, pick it as C. Back to 3.
+
+
+## Dijkstra Visualization Step 1
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","INF","INF","INF","INF","INF")
+colnames(m) = c("0","INF","INF","INF","INF","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","darkred","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+*Green* - current node, *Red* - unvisited node, *Blue* - target node. Assign distance to the start node as 0, and INF to all others. Assign the start node as the current node.
+
+## Dijkstra Visualization Step 2
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","INF","INF","INF","4","INF")
+colnames(m) = c("0","INF","INF","INF","4","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","darkred","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Updating the distance to neighbors of the current node.
+
+
+## Dijkstra Visualization Step 3
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","INF","INF","4","INF")
+colnames(m) = c("0","1","INF","INF","4","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","darkred","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Updating the distance to neighbors of the current node.
+
+## Dijkstra Visualization Step 4
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","INF","INF","4","INF")
+colnames(m) = c("0","1","INF","INF","4","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","darkgreen","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Make the second node as current node. Mark the first node is visited.
+
+## Dijkstra Visualization Step 5
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","INF","INF","2","INF")
+colnames(m) = c("0","1","INF","INF","2","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","darkgreen","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Updating the distance to neighbors of the current node.
+
+## Dijkstra Visualization Step 6
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","INF","2","INF")
+colnames(m) = c("0","1","2","INF","2","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","darkgreen","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Updating the distance to neighbors of the current node.
+
+## Dijkstra Visualization Step 7
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","INF","2","INF")
+colnames(m) = c("0","1","2","INF","2","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","darkred","darkred","darkgreen","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Assign node 7 as the current node.
+
+## Dijkstra Visualization Step 8
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","8","2","INF")
+colnames(m) = c("0","1","2","8","2","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","darkred","darkred","darkgreen","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Updating the distance to neighbors of the current node.
+
+## Dijkstra Visualization Step 9
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","8","2","INF")
+colnames(m) = c("0","1","2","8","2","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","darkgreen","darkred","tomato","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Assign node 3 as the current node.
+
+## Dijkstra Visualization Step 10
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","3","2","INF")
+colnames(m) = c("0","1","2","3","2","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","darkgreen","darkred","tomato","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Updating the distance to neighbors of the current node.
+
+## Dijkstra Visualization Step 11
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","3","2","INF")
+colnames(m) = c("0","1","2","3","2","INF")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","tomato","darkgreen","tomato","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Assign node 5 as the current node.
+
+## Dijkstra Visualization Step 12
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","3","2","4")
+colnames(m) = c("0","1","2","3","2","4")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","tomato","darkgreen","tomato","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Updating the distance to neighbors of the current node.
+
+## Dijkstra Visualization Step 13
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","3","2","4")
+colnames(m) = c("0","1","2","3","2","4")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","tomato","tomato","tomato","darkgreen"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+Mark the current node as visited.
+
+## Dijkstra Visualization Finish
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 4, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 6, 1,
+    4, 1, 0, 6, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("0","1","2","3","2","4")
+colnames(m) = c("0","1","2","3","2","4")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","tomato","tomato","tomato","tomato"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
+```
+
+The algorithm finished.
+
+## Know your heroes
+
+![](figures/Dijkstra.jpg){ width=20% }
+
+**Edsger W. Dijkstra** - Dutch computer scientist  
+
+_11/05/1930 - 06/08/2002_
+
+* B.S., M.S. Leiden University
+* Ph.D., University of Amsterdam
+* Turing Award
+
+## Closeness centrality
+
+In a connected graph, closeness centrality (or closeness) of a node is a measure of centrality in a network, calculated as the sum of the length of the shortest paths between the node and all other nodes in the graph. Thus the more central a node is, the closer it is to all other nodes.
+
+## Centrality (e.g. betweenness, closeness, eigenvector, node)
+
+
+# Part 2 
+
+## Shortest path. Dijkstra algorithm.
+## All-pairs shortest path.
+## Page rank
+
+
+## Page rank
+
+http://dpk.io/pagerank
+
+```{python}
+def pagerank(graph, damping=0.85, epsilon=1.0e-8):
+    inlink_map = {}
+    outlink_counts = {}
+    
+    def new_node(node):
+        if node not in inlink_map: inlink_map[node] = set()
+        if node not in outlink_counts: outlink_counts[node] = 0
+    
+    for tail_node, head_node in graph:
+        new_node(tail_node)
+        new_node(head_node)
+        if tail_node == head_node: continue
+        
+        if tail_node not in inlink_map[head_node]:
+            inlink_map[head_node].add(tail_node)
+            outlink_counts[tail_node] += 1
+    
+    all_nodes = set(inlink_map.keys())
+    for node, outlink_count in outlink_counts.items():
+        if outlink_count == 0:
+            outlink_counts[node] = len(all_nodes)
+            for l_node in all_nodes: inlink_map[l_node].add(node)
+    
+    initial_value = 1 / len(all_nodes)
+    ranks = {}
+    for node in inlink_map.keys(): ranks[node] = initial_value
+    
+    new_ranks = {}
+    delta = 1.0
+    n_iterations = 0
+    while delta > epsilon:
+        new_ranks = {}
+        for node, inlinks in inlink_map.items():
+            new_ranks[node] = ((1 - damping) / len(all_nodes)) + (damping * sum(ranks[inlink] / outlink_counts[inlink] for inlink in inlinks))
+        delta = sum(abs(new_ranks[node] - ranks[node]) for node in new_ranks.keys())
+        ranks, new_ranks = new_ranks, ranks
+        n_iterations += 1
+    
+    return ranks, n_iterations
+```
+
+
+# References
+
+## Sources used to prepare this lecture
+
+- https://classroom.udacity.com/courses/cs215/
+- https://classroom.udacity.com/courses/ud513/
+- the book Introduction to algorithms
+- https://briatte.github.io/ggnet/
+- http://kateto.net/network-visualization
+- https://www.udacity.com/wiki/creating-network-graphs-with-python
+- http://www.kateto.net/wp-content/uploads/2016/01/NetSciX_2016_Workshop.pdf
+- https://rstudio-pubs-static.s3.amazonaws.com/74248_3bd99f966ed94a91b36d39d8f21e3dc3.html
+
+
