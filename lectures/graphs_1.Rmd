@@ -814,6 +814,7 @@ def dfs_visit(graph, u):
 
 # References
 
+
 ## Sources used to prepare this lecture
 
 - https://classroom.udacity.com/courses/cs215/
@@ -826,3 +827,21 @@ def dfs_visit(graph, u):
 - https://rstudio-pubs-static.s3.amazonaws.com/74248_3bd99f966ed94a91b36d39d8f21e3dc3.html
 
 
+## Copyright
+![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
+This work is (c) 2017 - onwards by TU Delft and Pavel Kucherbaev
+and licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 
+4.0 International](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+
+<!--html_preserve-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-2510585-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!--/html_preserve-->

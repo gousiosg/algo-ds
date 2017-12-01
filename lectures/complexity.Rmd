@@ -212,7 +212,7 @@ If the time to execute for input size $n = 1$ is 1 sec, then for input size $n =
 * An $O(n)$ algorithm will take 1000 secs
 * An $O(n^2)$ algorithm will take 277 hours
 * An $O(n^3)$ algorithm will take 32 years
-* An $O(e^x)$ algorithm will take billions of years!
+* An $O(e^n)$ algorithm will take billions of years!
 
 ## Examples with big-O 
 
@@ -417,7 +417,7 @@ def fib(x):
   else: return fib(x - 2) + fib(x - 1)
 ```
 
-`fib`s compexity function depends on the size of `x`
+`fib`s compexity function depends on the size of `x`. Given a large enough $c$
 
 \[
 \begin{aligned}
@@ -425,8 +425,8 @@ T(n) &= T(n-1) + T(n-2) + C\\
      &= T(n-2) + T(n-3) + T(n-3) + T(n-4)\\
      &= T(n-3) + T(n-4) + T(n-4) + T(n-5) + T(n-4) + T(n-5) + T(n-5) + T(n-6)\\
      & \dots \\
-     &= 2 \times T(n-2) + \dots + 2^n \times T(n- len(x) - 2)\\
-     &< 2^n \times T(n - len(x) - 2)
+     &= 2 \times T(n-2) + \dots + 2^n \times T(n - len(x) - 2)\\
+     &< c \times 2^n \times T(n - len(x) - 2)
 \end{aligned}
 \]
 

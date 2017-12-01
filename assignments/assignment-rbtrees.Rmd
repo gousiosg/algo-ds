@@ -13,11 +13,8 @@ a normal binary tree is an extra bit that stores the parity  (the _color_) of
 each node. This bit can be either be 0 (_black_) or 1 (_red_). An example of a
 red-black tree is shown in Figure 1 (Hardcoded) 
 
-```{r child="header.Rmd", include=FALSE}
-```
+![A Red-Black tree](https://lh6.googleusercontent.com/boigIAkbGxSn6BHzZcuC1vUJxzZm5vSyU32_E_9PNe8pUj7loJmUjbyBLLNuj3k5FqrlAhaB7EcLFtruJgIm=w1071-h929-rw)
 
-
-![A Red-Black tree](rb-tree.png)
 
 The following invariant must be satisfied every time an operation is
 being made on node of a Red-Black tree:
@@ -32,12 +29,11 @@ black nodes
 The node of a Red-Black tree can be described by the following data type
 
 ```python
+from enum import Enum
+
 class RBNode:
-
+    
     def __init__(self, color, key, left, right, parent):
-        if color not in Enum.__dict__:
-            raise AttributeError("Color %s not supported" % color)
-
         self.left = left
         self.right = right
         self.parent = parent
@@ -45,7 +41,11 @@ class RBNode:
         self.color = color
 
     def __str__(self):
-        return str("(%s)%s" % (self._color, self._key))
+        return str("(%s)%s" % (self.color, self.key))
+    
+class NodeColors(Enum):
+    BLACK = 0;
+    RED = 1;
 ```
 
 The data structure of the tree is nothing more than a collection of nodes with
@@ -54,12 +54,10 @@ a provided value
 
 ```python
 class RBTree:
-    root = RBNode(NodeColors.BLACK, None)
-    nil = RBNode(NodeColors.BLACK, None)
-    leaf = nil
 
     def __init__(self, key):
-        self.root.key = key
+        self.nil = RBNode(NodeColors.BLACK, None, None, None, None)
+        self.root = RBNode(NodeColors.BLACK, key, self.nil, self.nil, self.nil)
 ```
 
 Your task for this assignment is to construct algorithms that
@@ -82,6 +80,8 @@ for the new node by searching through the tree. In the following snippet,
 `z` is the value we would like to insert. However, the snippet has a
 mistake. 
 
+**T1 (10 points)**: Spot and fix the mistake in the `search` method
+
 ```python
 def search(self, z):
     y = self.nil
@@ -91,11 +91,9 @@ def search(self, z):
         if z.key < x.key:
             x = x.left
         else:
-            x = y.right
+            y = x.right
     return y
 ```
-
-**T1 (10 points)**: Spot and fix the mistake in the `search` method
 
 Using the (hopefully correct by now!) `search` method, we can locate the node 
 to insert our new node as a child. This happens by creating the node and
@@ -105,14 +103,19 @@ the starting color is always `RED`.
 **T2 (20 points)**: Write code to construct and link a new node.
 
 ```python
-
+def insert(tree, z):
+    pass
 ```
+```python
+#Test you implementation here
+```
+
 
 After inserting the node, the tree potentially needs to be rebalanced.
 An example of why this is so can be seen in the following plot. What
 we see here is that the insertion of node 4 violates invariant number 4.
 
-![Violating Red-Black tree invariants on insert. Node 5 has a red node as child.](rb-invariant-violation.jpg)
+![Violating Red-Black tree invariants on insert. Node 5 has a red node as child.](https://lh5.googleusercontent.com/UoNIT5VGiLQn_KxARKuGTv7TOu0mUaMrgblnPcEhdYPW93ZIVOvcdruYJvH5qmfGQUm1DzdcroPufEDVixxE=w1071-h929-rw)
 
 
 The rebalancing operation can be quite complicated; the pseudocode below
@@ -140,7 +143,7 @@ while z.parent.color == RED
             z.parent.parent.color <- RED
             right_rotate(T, z.parent.parent)
     else
-      y <- z.parent.parent.right
+      y <- z.parent.parent.left
        if y.color == RED
             z.parent.color <- BLACK
             y.color <- BLACK
@@ -156,18 +159,15 @@ while z.parent.color == RED
 T.root.color <- BLACK    
 ```
 
-**T3 (30 points)**: Implement the rebalancing pseudocode in Python
-```python
-
-```
-
 You might be wondering with `left_rotate` and `right_rotate` are. They are
 functions that represent common operations on trees. To understand how they work
 have a look at the plot below.
 
-![Rotating a Red-Black tree](rb-tree-rotation.png)
+![Rotating a Red-Black tree](https://lh6.googleusercontent.com/H7CR8eV87FBpDCkzkbDSmCweaF8Q-J13Y2ZtjXbLrKtF2uqbv8HQadH7JkCWccO3LROIo3kZBC0LyHtuB2XO=w1071-h929)
 
 Below you can find the Python code for the left_rotate method.
+
+_Note_: The node you give to the rotate methods is always the parent node of the 2 nodes that are rotating
 
 ```python
 def left_rotate(self, x):
@@ -188,6 +188,22 @@ def left_rotate(self, x):
 ```
 
 **T4 (20 points)**: Implement the code for `right_rotate`
+```python
+def right_rotate(tree, x):
+    pass
+```
+```python
+#Test your implementation here
+```
+
+**T3 (30 points)**: Implement the rebalancing pseudocode in Python
+```python
+def balance(tree, z):
+    pass
+```
+```python
+#Test your implementation here
+```
 
 ## Validating the Red-Black tree invariants
 
@@ -197,7 +213,10 @@ exhaustively search whether the five invariants described above are maintained.
 ```python
 def check_rb_tree(tree):
     "@return: True, only if tree satisfies all the Red-Black tree invariants"
-    return False
+    pass
+```
+```python
+#Test all of the five invariants here
 ```
 
 ## Proving performance properties
