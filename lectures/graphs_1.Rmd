@@ -416,7 +416,7 @@ class Graph:
     def __str__(self):
         M = self.getMatrix()
         S = '\n'.join([''.join(['{:4}'.format(item) for item in row]) for row in M])
-        return S
+        return "\n"+S+"\n"
     
     def nodes(self):
         return list(self.graph_dict.keys())
@@ -430,6 +430,21 @@ class Graph:
         nodeA_connections.update({node_idB:weight})
         self.graph_dict.update({node_idA:nodeA_connections})
         return self
+
+    def deleteEdge(self, node_idA, node_idB):
+        del self.graph_dict[node_idA][node_idB]
+
+    def removeEdge(self, node_idA, node_idB):
+        self.deleteEdge(node_idA, node_idB)
+        if (not self.directed):
+            self.deleteEdge(node_idB, node_idA)
+
+    def removeNode(self, node_id):
+        connections = self.graph_dict[node_id]
+        for node_adj in set(connections):
+            self.deleteEdge(node_id,node_adj)
+            self.deleteEdge(node_adj,node_id)
+        del self.graph_dict[node_id]
 
     def addEdge(self, node_idA, node_idB, weight = 1):
         self.createEdge(node_idA, node_idB, weight)
@@ -467,6 +482,14 @@ print(graph)
 #   1   0   0
 #   1   0   0
 ```
+
+## Hands on
+
+Let's code.
+
+
+[code gist](https://gist.github.com/pavelk2/1e4ba2bcafddcb7c23b33d055e68641b)
+
 
 # **PART III**
 
@@ -588,7 +611,25 @@ ggnet2(net,
 
 ## Search problem
 
+- Searching how two nodes in a graph are connected is a typical problem.
+- It has a wide range of applications.
 
+## Finding path in a maze
+
+![](figures/maze.png)
+
+Such maze could be presented as a grid graph, with no connections, in places with walls.
+
+## Finding path on a map
+
+![](figures/delft.png)
+Points of interest are nodes. And roads are edges connecting points of interests.
+
+## Finding people who can introduce you on Linkedin
+
+![](figures/obama.png)
+
+People are nodes. And edges are connections between them.
 
 ## Search Algorithms
 - Breadth-first search (BFS)
@@ -995,20 +1036,61 @@ $$
 $$
 
 
-## BFS - Python
+## BFS - Python (initialization)
+
+```{python, echo = TRUE}
+def initialize(graph, start = None):
+    nodes_prop = {}
+
+    for node in graph.keys():
+        nodes_prop[node] = {
+            "color": "white",
+            "distance": float('inf'),
+            "parent":None
+        }
+
+    nodes_prop[start] = {
+        "color":"gray",
+        "distance": 0,
+        "parent": None,
+    }
+
+    Q = [start]
+
+    return nodes_prop, Q
+```
+
+## BFS - Python (algorithm)
 
 ```{python, echo = TRUE}
 def bfs(graph, start):
-    visited = []
-    queue = [start]
-
+    nodes, queue = initialize(graph, start)
     while queue:
-        vertex = queue.pop(0)
-        if vertex not in visited:
-            visited.append(vertex)
-            queue.extend(set(graph[vertex]) - set(visited))
-    return visited
+        u = queue.pop(0)
+        for v in graph[u]:
+            if nodes[v]["color"] == "white":
+                nodes[v] = {
+                    "color":"gray",
+                    "distance": nodes[u]["distance"] + 1,
+                    "parent": u
+                }
+                queue.append(v)
+        nodes[u]["color"] = "black"
+    return nodes
 ```
+
+## BFS - Python (get path)
+
+```{python, echo = TRUE}
+def getPath(nodes, targetNode):
+    current = targetNode
+    path = []
+    while nodes[current]["parent"]:
+        path.append(nodes[current]["parent"])
+        current = nodes[current]["parent"]
+    return path
+```
+
 
 ## Depth-first search (DFS)
 
@@ -1487,46 +1569,76 @@ Node 1 becomes visited. Algorithm finished.
 
 $$ 
 \begin{aligned}
-&Initialize(G,s)\\
-&\qquad for \space each \space node \space u \in G.V - \{s\}\\
+&DFS(G,s)\\
+&\qquad for \space each \space node \space u \in G.V\\
 &\qquad \qquad u.color = WHITE\\
-&\qquad \qquad u.d = \infty\\ 
 &\qquad \qquad u.\pi = NIL\\
-&\qquad s.color = GRAY \\
-&\qquad s.d = 0\\
-&\qquad s.\pi = NIL\\
-&\qquad Q = \emptyset\\
-&\qquad Push(Q,s)\\
+&\qquad time = 0 \\
+&\qquad for \space each \space node \space u \in G.V\\
+&\qquad \qquad if \space u.color == WHITE\\
+&\qquad \qquad \qquad DFSVisit(G,u)
 \end{aligned}
 $$
 
 ## Depth-first search algorithm
 $$ 
 \begin{aligned}
-&DFS(G,s)\\
-&\qquad Initialize(G,s)\\
-&\qquad while \space Q \neq \emptyset\\
-&\qquad \qquad u = Pop(Q) \\
-&\qquad \qquad for \space each \space v \in G.Adj[u] \\
-&\qquad \qquad \qquad if \space v.color == WHITE\\
-&\qquad \qquad \qquad \qquad v.color = GRAY\\
-&\qquad \qquad \qquad \qquad v.d = u.d + 1\\
-&\qquad \qquad \qquad \qquad v.\pi = u\\
-&\qquad \qquad \qquad \qquad Push(Q,v)\\
-&\qquad \qquad u.color = BLACK\\
+&DFSVisit(G,u)\\
+&\qquad time = time + 1 \\ 
+&\qquad u.d = time \\ 
+&\qquad u.color = GRAY \\
+&\qquad for \space each \space v \in G.Adj[u]\\
+&\qquad \qquad if \space v.color == WHITE\\
+&\qquad \qquad \qquad v.\pi = u \\ 
+&\qquad \qquad \qquad DFSVisit(G,v) \\
+&\qquad u.color = BLACK \\
+&\qquad time = time + 1 \\
+&\qquad u.f = time \\
 \end{aligned}
 $$
 
-## Depth-first search (DFS)
+## DFS - Python (initialization)
 
 ```{python, echo = TRUE}
-def dfs(graph, current, visited = []):
-    visited.append(current)
-    for vertex in graph[current]:
-        if vertex not in visited:
-            dfs(graph, vertex, visited)
-    return visited
+def dfs(graph):
+    nodes_prop = {}
+    for u in graph.keys():
+        nodes_prop[u] = {
+            "color":"white",
+            "parent": None
+        }
+    global time
+    time = 0
+    for u in graph.keys():
+        if nodes_prop[u]["color"] == "white":
+            nodes_prop = dfs_visit(graph, nodes_prop, u)
+    return nodes_prop
 ```
+
+## DFS - Python (algorithm)
+
+```{python, echo = TRUE}
+def dfs_visit(graph, nodes_prop, u):
+    global time
+    time = time + 1
+    nodes_prop[u]["distance"] = time
+    nodes_prop[u]["color"] = "gray"
+    for v in graph[u]:
+        if nodes_prop[v]["color"] == "white":
+            nodes_prop[v]["parent"] = u
+            nodes_prop = dfs_visit(graph, nodes_prop, v)
+    nodes_prop[u]["color"] = "black"
+    time = time + 1
+    nodes_prop[u]["finish"] = time
+    return nodes_prop
+```
+
+## Hands on
+
+Let's code.
+
+[code gist](https://gist.github.com/pavelk2/e6b95f6a67f16fced0fceb470087a80c)
+
 
 # **REFERENCES**
 
