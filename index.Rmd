@@ -23,7 +23,7 @@ as output. [@Cormen09]
 
 Data Structure:
 
-: A particular way of storing and organising data in memory so that it can be 
+: A particular way of storing and organising data in memory so that it can be
 used efficiently.
 
 Algorithms and data structures are fundamental notions in computer science.
@@ -38,7 +38,7 @@ def hello():
 hello()
 ```
 
-The course examines the implementation of basic data structures, such as arrays, 
+The course examines the implementation of basic data structures, such as arrays,
 lists, stacks, sets, trees and graphs along with algorithms for efficiently
 creating, storing, searching and traversing them. It also touches upon
 more advanced topics such as genetic algorithms and dynamic programming.
@@ -78,7 +78,6 @@ per assignment.
   questions, but don't expect them to provide you with solutions to the
   exercises.
 
-
 ## Assignments
 
 You can find the course assignments linked through this page.
@@ -113,7 +112,6 @@ teacher to arrange a case-specific deadline.
 
 ## Contents
 
-
 |Week |Lecture | Topic                | Lecturer | Assignment (Deadline)|
 |:---:|:------:|----------------------|----------|----------------------|
 | 1 | 1 | [Course introduction](course-intro.html), [Recursion](recursion.html) | GG | |
@@ -122,7 +120,7 @@ teacher to arrange a case-specific deadline.
 | 2 | 2 | [Lists, Sets](basic-structures.html) | MK | |
 | 3 | 1 | [Trees: basic concepts and binary Trees](trees.html) | JH | Red-Black Trees ([jupyter](assignment-rbtrees.ipynb), [html](assignment-rbtrees.html)) (12/12/2017) |
 | 3 | 2 | [More Trees: AVL and B+ Trees](trees.html) | JH | |
-| 4 | 1 | [Graphs](graphs.html) (Representation and Traversal) | PK | Graph algorithms ([jupyter](assignment-graphs.ipynb), [html](assignment-graphs.html)) (9/01/2018)|
+| 4 | 1 | [Graphs](graphs_1.html) (Representation and Traversal) | PK | Graph algorithms ([jupyter](assignment-graphs.ipynb), [html](assignment-graphs.html)) (9/01/2018)|
 | 4 | 2 | Graph algorithms (Topological sorting, Centrality) | PK ||
 | 5 | 1 | Sorting | JH | Searching ([jupyter](assignment-searching.ipynb), [html](assignment-lists.html)) (15/01/2018)|
 | 5 | 2 | Searching | JH ||
@@ -144,7 +142,7 @@ teacher to arrange a case-specific deadline.
 In order to pass the course, you must obtain a passing grade (6+) to all the
 assessment criteria specified below:
 
-* Assignments (40%): Grade calculated as mean grade for all assignments. 
+* Assignments (40%): Grade calculated as mean grade for all assignments.
 All individual assignments must have a passing grade.
 * Written Exam (60%):
 

@@ -1,0 +1,1677 @@
+---
+title: |
+  | **INTRODUCTION TO GRAPHS**
+  | **BASIC GRAPH ALGORITHMS**
+author: |
+  | Pavel Kucherbaev
+  | Postdoc in WIS
+  | 
+  | kucherbaev.com
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: 
+  revealjs::revealjs_presentation:
+    transition: none
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(GGally)
+library(network)
+library(sna)
+#library(ggplot2)
+#library(visNetwork) 
+library(reticulate)
+#library(geomnet)
+#library(ggnetwork)
+library(igraph)
+
+# http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/
+multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
+  library(grid)
+
+  # Make a list from the ... arguments and plotlist
+  plots <- c(list(...), plotlist)
+
+  numPlots = length(plots)
+
+  # If layout is NULL, then use 'cols' to determine layout
+  if (is.null(layout)) {
+    # Make the panel
+    # ncol: Number of columns of plots
+    # nrow: Number of rows needed, calculated from # of cols
+    layout <- matrix(seq(1, cols * ceiling(numPlots/cols)),
+                    ncol = cols, nrow = ceiling(numPlots/cols))
+  }
+
+ if (numPlots==1) {
+    print(plots[[1]])
+
+  } else {
+    # Set up the page
+    grid.newpage()
+    pushViewport(viewport(layout = grid.layout(nrow(layout), ncol(layout))))
+
+    # Make each plot, in the correct location
+    for (i in 1:numPlots) {
+      # Get the i,j matrix positions of the regions that contain this subplot
+      matchidx <- as.data.frame(which(layout == i, arr.ind = TRUE))
+
+      print(plots[[i]], vp = viewport(layout.pos.row = matchidx$row,
+                                      layout.pos.col = matchidx$col))
+    }
+  }
+}
+```
+
+# **PART I**
+
+## Introduction to Graphs
+- What is a graph
+- Nodes, Edges, Directions, Weghts
+
+## Not about
+
+### Charts and Grafs
+![](figures/graphs_chart.png){ width=20% } ![](figures/graphs_dracula.jpg){ width=30% }
+
+## Nodes represent objects
+
+(e.g. people, cities, countries, computers).
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+# make data accessible
+data(blood, package = "geomnet")
+
+set.seed(12252016)
+ggnet2(network::network(blood$edges[, 1:2], directed=F), 
+       mode = "circle", size = 15, label = F, 
+       arrow.size = 10, arrow.gap = 0.05, vjust = 0.5,
+       edge.color = "white", node.color = "darkred", label.color = "grey80")
+# https://cran.r-project.org/web/packages/ggCompNet/vignettes/examples-from-paper.html
+```
+
+Nodes can be called vertices as well.
+
+
+## Edges represent relationships
+
+(e.g. friendship, connectedness)
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+set.seed(12252016)
+ggnet2(network::network(blood$edges[, 1:2], directed=F), 
+       mode = "circle", size = 15, label = F, 
+       arrow.size = 10, arrow.gap = 0.05, vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+```
+
+Graphs can be called networks as well.
+
+## Direction of relationships
+
+(e.g. A follows B, A is a student of B)
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+set.seed(12252016)
+ggnet2(network::network(blood$edges[, 1:2], directed=T), 
+       mode = "circle", size = 15, label = F, 
+       arrow.size = 10, arrow.gap = 0.05, vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+```
+
+Does it remind you something?
+
+## Blood donation
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+set.seed(12252016)
+ggnet2(network::network(blood$edges[, 1:2], directed=T), 
+       mode = "circle", size = 15, label = T, 
+       arrow.size = 10, arrow.gap = 0.05, vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+```
+
+O- can donate blood to anybody. AB+ can donate blood only to themselves.
+
+## Position of nodes
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 10, fig.height = 4}
+
+set.seed(12252016)
+p1 <- ggnet2(network::network(blood$edges[, 1:2], directed=T), 
+       mode = "circle", size = 7, label.size = 3, label = T, 
+       arrow.size = 5, arrow.gap = 0.05, vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+p2 <- ggnet2(network::network(blood$edges[, 1:2], directed=T), 
+       mode = "fruchtermanreingold", size = 7, label.size = 3,label = T, 
+       arrow.size = 5, arrow.gap = 0.05, vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+p3 <- ggnet2(network::network(blood$edges[, 1:2], directed=T), 
+       mode = "circrand", size = 7, label.size = 3,label = T, 
+       arrow.size = 5, arrow.gap = 0.05, vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+p4 <- ggnet2(network::network(blood$edges[, 1:2], directed=T), 
+       mode = "kamadakawai", size = 7, label.size = 3,label = T, 
+       arrow.size = 5, arrow.gap = 0.05, vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+multiplot(p1, p2, p3, p4, cols=2)
+```
+
+Does not change semantics of the graph
+
+## Edge weights
+
+(e.g. cost of travel, distance, energy to transition)
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+
+set.seed(123234)
+m <- matrix(rnorm(25,2,2),5,5)
+m <- round(m)
+diag(m) <- 0
+m[lower.tri(m)] <- 0
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label = "weights", edge.label.color = "black")
+# arrow.size = 10, arrow.gap = 0.05, 
+```
+
+In a directional graph cost in one direction could be different than back (e.g. going up hill and downhill).
+
+## Node degree
+
+Number of edges incident on a node. 
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+
+set.seed(123234)
+m <- matrix(rnorm(25,2,2),5,5)
+m <- round(m)
+diag(m) <- 0
+m[lower.tri(m)] <- 0
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label = "weights", edge.label.color = "black")
+# arrow.size = 10, arrow.gap = 0.05, 
+```
+
+degree("1") = 3; degree("3") = 4. What is your node degree on LinkedIn?
+
+
+# **PART II**
+
+## Graph representation
+
+- Edge list
+- Adjacency list
+- Adjacency matrix
+- Graphs in Python
+
+## Edge list
+
+[Edge1, Edge2, Edge3, Edge4]
+
+Edge1 = [Node1, Node2]
+
+```{python, echo = TRUE}
+
+edge_list = [[0,1],[1,2],[1,3],[2,3]]
+
+```
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 6, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0,
+    1, 0, 1, 1,
+    0, 1, 0, 1,
+    0, 1, 1, 0),
+  nrow = 4, ncol = 4
+)
+rownames(m) = c(0,1,2,3)
+colnames(m) = c(0,1,2,3)
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+```
+
+
+## Adjacency list
+
+[Node1Conns, Node2Conns, Node3Conns, Node4Conns]
+
+Node1Conns = [Node2, Node3]
+
+```{python, echo = TRUE}
+
+adj_list = [[1],[0,2,3],[1,3],[1,2]]
+
+```
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 6, fig.height = 3}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+```
+
+
+## Adjacency list
+
+More efficient storage options for sparse graphs
+
+```{python, echo = TRUE}
+
+adj_list = [[1],[0,2,3],[1,3],[1,2],[],[],[],[],[],[],[],[],[],[]]
+
+
+adj_dict = {
+  "v0": ["v1"],
+  "v1": ["v0","v2","v3"],
+  "v2": ["v1","v3"],
+  "v3": ["v1","v2"]
+}
+
+
+adj_dict_weights = {
+  "v0": {"v1":1},
+  "v1": {"v0":1,"v2":1,"v3":1},
+  "v2": {"v1":1,"v3":1},
+  "v3": {"v1":1,"v2":1}
+}
+```
+
+
+## Adjacency matrix
+
+Column names = Nodes, Row names = Nodes, Cells = Edges
+
+```{python, echo = TRUE}
+
+adj_matrix = [
+[0, 1, 0, 0],
+[1, 0, 1, 1],
+[0, 1, 0, 1],
+[0, 1, 1, 0],
+]
+
+```
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+```
+
+## Adjacency matrix (non directional)
+
+Cells are symmetrical across the main diagonal.
+
+```{python, echo = TRUE}
+
+adj_matrix = [
+[0, 1, 0, 0],
+[1, 0, 1, 1],
+[0, 1, 0, 1],
+[0, 1, 1, 0],
+]
+
+```
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80")
+```
+
+## Adjacency matrix (directional)
+
+Cells can be not symmetrical across the main diagonal.
+
+```{python, echo = TRUE}
+
+adj_matrix = [
+[0, 1, 0, 0],
+[1, 0, 1, 1],
+[1, 0, 0, 1],
+[0, 0, 0, 0],
+]
+
+```
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+m <- matrix(
+  c(0, 1, 1, 0,
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 1, 1, 0),
+  nrow = 4, ncol = 4
+)
+rownames(m) = c(0,1,2,3)
+colnames(m) = c(0,1,2,3)
+
+net <- network(m, directed=T, names.eval = "weights", ignore.eval = FALSE)
+
+
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
+```
+
+## Adjacency matrix (directional)
+
+Cells can represent weights.
+
+```{python, echo = TRUE}
+
+adj_matrix = [
+[0, 1, 0, 0],
+[1, 0, 3, 1],
+[2, 0, 0, 1],
+[0, 0, 0, 0],
+]
+
+```
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+m <- matrix(
+  c(0, 1, 2, 0,
+    1, 0, 0, 0,
+    0, 3, 0, 0,
+    0, 1, 1, 0),
+  nrow = 4, ncol = 4
+)
+rownames(m) = c(0,1,2,3)
+colnames(m) = c(0,1,2,3)
+
+net <- network(m, directed=T, names.eval = "weights", ignore.eval = FALSE)
+
+
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5, edge.label = "weights",
+       node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
+```
+
+## Graph in Python
+
+```{python, message=FALSE,echo = TRUE}
+class Graph:
+    def __init__(self, graph_dict = {}, directed = False):
+        self.graph_dict = graph_dict
+        self.directed = directed
+    
+    def __str__(self):
+        M = self.getMatrix()
+        S = '\n'.join([''.join(['{:4}'.format(item) for item in row]) for row in M])
+        return "\n"+S+"\n"
+    
+    def nodes(self):
+        return list(self.graph_dict.keys())
+    
+    def addNode(self, node_id):
+        self.graph_dict[node_id] = {}
+        return self
+    
+    def createEdge(self, node_idA, node_idB, weight = 1):
+        nodeA_connections = self.graph_dict.get(node_idA)
+        nodeA_connections.update({node_idB:weight})
+        self.graph_dict.update({node_idA:nodeA_connections})
+        return self
+
+    def deleteEdge(self, node_idA, node_idB):
+        del self.graph_dict[node_idA][node_idB]
+
+    def removeEdge(self, node_idA, node_idB):
+        self.deleteEdge(node_idA, node_idB)
+        if (not self.directed):
+            self.deleteEdge(node_idB, node_idA)
+
+    def removeNode(self, node_id):
+        connections = self.graph_dict[node_id]
+        for node_adj in set(connections):
+            self.deleteEdge(node_id,node_adj)
+            self.deleteEdge(node_adj,node_id)
+        del self.graph_dict[node_id]
+
+    def addEdge(self, node_idA, node_idB, weight = 1):
+        self.createEdge(node_idA, node_idB, weight)
+        if (not self.directed):
+            self.createEdge(node_idB, node_idA, weight)
+        return self
+
+    def getEdgeWeight(self, node_idA, node_idB):
+        return self.graph_dict.get(node_idA).get(node_idB,0) 
+
+    def getMatrix(self):
+        matrix = [[self.getEdgeWeight(i,j) for j in self.nodes()] for i in self.nodes()] 
+        return matrix
+```
+
+## Graph in Python
+
+```{python, eval = FALSE, echo = T}
+graph = Graph()
+
+graph.addNode("a")
+graph.addNode("b")
+graph.addNode("c")
+
+print(graph)
+#   0   0   0
+#   0   0   0
+#   0   0   0
+
+graph.addEdge("a","b")
+graph.addEdge("a","c")
+
+print(graph)
+#   0   1   1
+#   1   0   0
+#   1   0   0
+```
+
+## Hands on
+
+Let's code.
+
+
+[code gist](https://gist.github.com/pavelk2/1e4ba2bcafddcb7c23b33d055e68641b)
+
+
+# **PART III**
+
+## Graph Types, Cycles, Paths
+
+- Graph Types
+- Cycles, Euler path, Hamiltonian path
+
+## Types of graphs
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 11, fig.height = 6}
+set.seed(12252016)
+
+par(mfrow = c(2, 3),cex.main=3)
+
+fg <- make_empty_graph(10)
+plot(fg, vertex.size=20, vertex.label=NA, main= "Empty")
+
+st <- make_star(10)
+plot(st, vertex.size=20, vertex.label=NA, main = "Star")
+
+tr <- make_tree(20, children = 3, mode = "undirected") 
+plot(tr, vertex.size=20, vertex.label=NA, main = "Tree")
+
+rn <- make_ring(10)
+plot(rn, vertex.size=20, vertex.label=NA, main = "Ring")
+
+fg <- make_full_graph(10)
+plot(fg, vertex.size=20, vertex.label=NA, main = "Full")
+
+# Random bipartite graph
+inc <- matrix(sample(0:1, 50, replace = TRUE, prob=c(2,1)), 10, 5)
+g <- graph_from_incidence_matrix(inc)
+plot(g, layout = layout_as_bipartite,vertex.size=20, vertex.label=NA,
+     vertex.color=c("red","orange")[V(g)$type+1], main = "Bipartite")
+
+```
+
+## Traversal
+
+Process of visiting (checking and/or updating) each node in a graph. Such traversals are classified by the order in which the vertices are visited.
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+
+## Cycle
+
+A closed path where all edges are different (0 - 1 - 3 - 2 - 0)
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+Trees can not have cycles. Graphs can have cycles.
+
+## Hamiltonian path
+
+Path that visits each *node* exactly once. (0 - 2 - 3 - 1 - 0)
+
+Hamiltonian cycle is Hamiltonian path which is a cycle.
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+## Hamiltonian path
+
+Example: a tourist visiting all attractions in the city and coming back to the train station where he started the trip.
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+
+
+## Eulerian path
+
+Path that visits each *edge* exactly once. (2 - 3 - 1 - 0 - 2 - 1)
+
+Eulerian cycle is Eulerian path which is a cycle. (Not this case)
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+## Eulerian path
+
+Path that visits each *edge* exactly once. (2 - 3 - 1 - 0 - 2 - 1)
+
+Example: a tourist going through all iconic attractions, without going over the same road again.
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
+ggnet2(net, 
+       mode = "circle", size = 15, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", edge.label.color = "black")
+```
+
+
+
+# **PART IV**
+
+
+## Search problem
+
+- Searching how two nodes in a graph are connected is a typical problem.
+- It has a wide range of applications.
+
+## Finding path in a maze
+
+![](figures/maze.png)
+
+Such maze could be presented as a grid graph, with no connections, in places with walls.
+
+## Finding path on a map
+
+![](figures/delft.png)
+Points of interest are nodes. And roads are edges connecting points of interests.
+
+## Finding people who can introduce you on Linkedin
+
+![](figures/obama.png)
+
+People are nodes. And edges are connections between them.
+
+## Search Algorithms
+- Breadth-first search (BFS)
+- Depth-first search (DFS)
+
+Visualization of search algorithms: 
+
+- https://visualgo.net/en/dfsbfs
+- https://www.cs.usfca.edu/~galles/visualization/BFS.html
+
+
+## Graph to Traverse
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("tomato","tomato","tomato","tomato","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+
+Start with Node 1 and see how BFS and DFS traverse the graph.
+
+## Breadth-first search (BFS)
+
+Breadth-first search is an algorithm for traversing or searching tree or graph data structures. It starts at some arbitrary node of a graph and explores the neighbor nodes first, before moving to the next level neighbours.
+
+![](figures/bfs.png){ width=40% }
+
+Worst-case performance = O(|V| + |E|)
+
+## Breadth-first search (BFS) Step 1
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","tomato","tomato","tomato","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+All nodes are not visited (tomato color). The node 1 is current. 
+
+## Breadth-first search (BFS) Step 2
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","darkgray","tomato","tomato","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+We discover the neighbors of Node 1: Node 2,...
+
+## Breadth-first search (BFS) Step 3
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","darkgray","tomato","tomato","darkgray","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+We discover the neighbors of Node 1: Node 2, and Node 5.
+
+## Breadth-first search (BFS) Step 4
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","darkgreen","tomato","tomato","darkgray","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+As we discovered all neighbors of Node 1, we mark Node 1 as visited (black) and go to make Node 2 as current.
+
+## Breadth-first search (BFS) Step 5
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","darkgreen","darkgray","tomato","darkgray","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+We discover the nodes of Node 2, which is only 3, as all others are already discovered or visited.
+
+## Breadth-first search (BFS) Step 6
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","black","darkgray","tomato","darkgreen","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+We mark Node 2 as visited, and make Node 5 as the current node.
+
+## Breadth-first search (BFS) Step 7
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","black","darkgray","darkgray","darkgreen","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+The single not discovered neighbor of Node 5 is Node 4.
+
+## Breadth-first search (BFS) Step 8
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","black","darkgreen","darkgray","black","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+We mark Node 5 as visited and make Node 3 as the current node.
+
+## Breadth-first search (BFS) Step 9
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","black","black","darkgreen","black","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+There are no more nodes to discover, so we mark Node 3 as visited and make Node 4 as the current one.
+
+## Breadth-first search (BFS) Step 10
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","black","black","darkgreen","black","darkgray"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+With Node 4 we discover Node 6.
+
+## Breadth-first search (BFS) Step 11
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","black","black","black","black","darkgreen"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+We mark Node 4 as visited and make Node 6 as the current one.
+
+## Breadth-first search (BFS) Step 12
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","black","black","black","black","black"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 6 does not have any more nodes to discover. We mark Node 6 as visited. No more nodes to visit. The algorithm is acomplished.
+
+## Breadth-first search initialization
+
+$$ 
+\begin{aligned}
+&Initialize(G,s)\\
+&\qquad for \space each \space node \space u \in G.V - \{s\}\\
+&\qquad \qquad u.color = WHITE\\
+&\qquad \qquad u.d = \infty\\ 
+&\qquad \qquad u.\pi = NIL\\
+&\qquad s.color = GRAY \\
+&\qquad s.d = 0\\
+&\qquad s.\pi = NIL\\
+&\qquad Q = \emptyset\\
+&\qquad Enqueue(Q,s)\\
+\end{aligned}
+$$
+
+## Breadth-first search algorithm
+$$ 
+\begin{aligned}
+&BFS(G,s)\\
+&\qquad Initialize(G,s)\\
+&\qquad while \space Q \neq \emptyset\\
+&\qquad \qquad u = Dequeue(Q) \\
+&\qquad \qquad for \space each \space v \in G.Adj[u] \\
+&\qquad \qquad \qquad if \space v.color == WHITE\\
+&\qquad \qquad \qquad \qquad v.color = GRAY\\
+&\qquad \qquad \qquad \qquad v.d = u.d + 1\\
+&\qquad \qquad \qquad \qquad v.\pi = u\\
+&\qquad \qquad \qquad \qquad Enqueue(Q,v)\\
+&\qquad \qquad u.color = BLACK\\
+\end{aligned}
+$$
+
+
+## BFS - Python (initialization)
+
+```{python, echo = TRUE}
+def initialize(graph, start = None):
+    nodes_prop = {}
+
+    for node in graph.keys():
+        nodes_prop[node] = {
+            "color": "white",
+            "distance": float('inf'),
+            "parent":None
+        }
+
+    nodes_prop[start] = {
+        "color":"gray",
+        "distance": 0,
+        "parent": None,
+    }
+
+    Q = [start]
+
+    return nodes_prop, Q
+```
+
+## BFS - Python (algorithm)
+
+```{python, echo = TRUE}
+def bfs(graph, start):
+    nodes, queue = initialize(graph, start)
+    while queue:
+        u = queue.pop(0)
+        for v in graph[u]:
+            if nodes[v]["color"] == "white":
+                nodes[v] = {
+                    "color":"gray",
+                    "distance": nodes[u]["distance"] + 1,
+                    "parent": u
+                }
+                queue.append(v)
+        nodes[u]["color"] = "black"
+    return nodes
+```
+
+## BFS - Python (get path)
+
+```{python, echo = TRUE}
+def getPath(nodes, targetNode):
+    current = targetNode
+    path = []
+    while nodes[current]["parent"]:
+        path.append(nodes[current]["parent"])
+        current = nodes[current]["parent"]
+    return path
+```
+
+
+## Depth-first search (DFS)
+
+Breadth-first search is an algorithm for traversing graph data structures. One starts selecting some arbitrary node as the root and explores as far as possible along each branch before backtracking.
+
+![](figures/dfs.png){ width=40% }
+
+Worst-case performance O(|V| + |E|)
+
+
+
+## Depth-first search (BFS) Step 1
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","tomato","tomato","tomato","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 1 is current (darkgreen). All other nodes are never visited (tomato color).
+
+## Depth-first search (BFS) Step 2
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","darkgray","tomato","tomato","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 1 is current (darkgreen). We discover node 2.
+
+## Depth-first search (BFS) Step 3
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgreen","tomato","tomato","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 2 is current (darkgreen).
+
+## Depth-first search (BFS) Step 4
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgreen","darkgray","tomato","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 2 is current (darkgreen). We discover Node 3.
+
+## Depth-first search (BFS) Step 5
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgreen","tomato","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 3 is current (darkgreen).
+
+
+## Depth-first search (BFS) Step 6
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgreen","darkgray","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 3 is current (darkgreen). We discover Node 4.
+
+## Depth-first search (BFS) Step 7
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgray","darkgreen","tomato","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 4 is current (darkgreen). 
+
+## Depth-first search (BFS) Step 8
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgray","darkgreen","darkgray","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 4 is current (darkgreen). We discover Node 5.
+
+## Depth-first search (BFS) Step 9
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgray","darkgray","darkgreen","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 5 is current (darkgreen). No nodes to discover.
+
+
+## Depth-first search (BFS) Step 10
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgray","darkgreen","black","tomato"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 5 becomes visited. We go back to the node 4.
+
+## Depth-first search (BFS) Step 11
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgray","darkgreen","black","darkgray"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+We go back to the node 4 and discover node 6.
+
+## Depth-first search (BFS) Step 12
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgray","darkgray","black","darkgreen"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 6 becomes current. No nodes to discover there.
+
+## Depth-first search (BFS) Step 13
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgray","darkgreen","black","black"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 6 becomes visited. Node 4 becomes current.
+
+## Depth-first search (BFS) Step 14
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgray","darkgreen","black","black","black"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 4 becomes visited. Node 3 becomes current.
+
+## Depth-first search (BFS) Step 15
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgray","darkgreen","black","black","black","black"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 3 becomes visited. Node 2 becomes current.
+
+## Depth-first search (BFS) Step 16
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkgreen","black","black","black","black","black"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 2 becomes visited. Node 1 becomes current.
+
+## Depth-first search (BFS) Step 17
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 1, 0, 0, 1, 0,
+    1, 0, 1, 0, 1, 0,
+    0, 1, 0, 1, 0, 0,
+    0, 0, 1, 0, 1, 1,
+    1, 1, 0, 1, 0, 0,
+    0, 0, 0, 1, 0, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c("1","2","3","4","5","6")
+colnames(m) = c("1","2","3","4","5","6")
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "fruchtermanreingold", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("black","black","black","black","black","black"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Node 1 becomes visited. Algorithm finished.
+
+
+
+## Depth-first search initialization
+
+$$ 
+\begin{aligned}
+&DFS(G,s)\\
+&\qquad for \space each \space node \space u \in G.V\\
+&\qquad \qquad u.color = WHITE\\
+&\qquad \qquad u.\pi = NIL\\
+&\qquad time = 0 \\
+&\qquad for \space each \space node \space u \in G.V\\
+&\qquad \qquad if \space u.color == WHITE\\
+&\qquad \qquad \qquad DFSVisit(G,u)
+\end{aligned}
+$$
+
+## Depth-first search algorithm
+$$ 
+\begin{aligned}
+&DFSVisit(G,u)\\
+&\qquad time = time + 1 \\ 
+&\qquad u.d = time \\ 
+&\qquad u.color = GRAY \\
+&\qquad for \space each \space v \in G.Adj[u]\\
+&\qquad \qquad if \space v.color == WHITE\\
+&\qquad \qquad \qquad v.\pi = u \\ 
+&\qquad \qquad \qquad DFSVisit(G,v) \\
+&\qquad u.color = BLACK \\
+&\qquad time = time + 1 \\
+&\qquad u.f = time \\
+\end{aligned}
+$$
+
+## DFS - Python (initialization)
+
+```{python, echo = TRUE}
+def dfs(graph):
+    nodes_prop = {}
+    for u in graph.keys():
+        nodes_prop[u] = {
+            "color":"white",
+            "parent": None
+        }
+    global time
+    time = 0
+    for u in graph.keys():
+        if nodes_prop[u]["color"] == "white":
+            nodes_prop = dfs_visit(graph, nodes_prop, u)
+    return nodes_prop
+```
+
+## DFS - Python (algorithm)
+
+```{python, echo = TRUE}
+def dfs_visit(graph, nodes_prop, u):
+    global time
+    time = time + 1
+    nodes_prop[u]["distance"] = time
+    nodes_prop[u]["color"] = "gray"
+    for v in graph[u]:
+        if nodes_prop[v]["color"] == "white":
+            nodes_prop[v]["parent"] = u
+            nodes_prop = dfs_visit(graph, nodes_prop, v)
+    nodes_prop[u]["color"] = "black"
+    time = time + 1
+    nodes_prop[u]["finish"] = time
+    return nodes_prop
+```
+
+## Hands on
+
+Let's code.
+
+[code gist](https://gist.github.com/pavelk2/e6b95f6a67f16fced0fceb470087a80c)
+
+
+# **REFERENCES**
+
+
+## Sources used to prepare this lecture
+
+- https://classroom.udacity.com/courses/cs215/
+- https://classroom.udacity.com/courses/ud513/
+- the book Introduction to algorithms
+- http://cs.stanford.edu/people/abisee/gs.pdf 
+- https://briatte.github.io/ggnet/
+- http://kateto.net/network-visualization
+- https://www.udacity.com/wiki/creating-network-graphs-with-python
+- http://www.kateto.net/wp-content/uploads/2016/01/NetSciX_2016_Workshop.pdf
+- https://rstudio-pubs-static.s3.amazonaws.com/74248_3bd99f966ed94a91b36d39d8f21e3dc3.html
+- https://gist.github.com/daveweber/99ea4da41f42ac92cdbf
+
+
+## Copyright
+![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
+This work is (c) 2017 - onwards by TU Delft and Pavel Kucherbaev
+and licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 
+4.0 International](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+
+<!--html_preserve-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-2510585-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!--/html_preserve-->
