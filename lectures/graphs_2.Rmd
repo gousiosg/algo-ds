@@ -1,6 +1,12 @@
 ---
-title: "Graph Connectedness and Advanced Graph Algorithms"
-author: "Pavel Kucherbaev"
+title: |
+  | **Connected Components**
+  | **Advanced Graph Algorithms**
+author: |
+  | Pavel Kucherbaev
+  | Postdoc in WIS
+  | 
+  | kucherbaev.com
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: 
   revealjs::revealjs_presentation:
@@ -57,94 +63,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 ```
 
-# Part 1 - Connected Components and Shortest Paths
-
-## Connected components
-
-A connected component of an undirected graph is a subgraph in which any two nodes are connected to each other by paths, and which is connected to no additional vertices in the supergraph. 
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
-set.seed(123234)
-m <- matrix(
-  c(0, 1, 1, 0,0,0,
-    1, 0, 0, 0,0,0,
-    0, 1, 0, 0,0,0,
-    0, 1, 1, 0,0,0,
-    0, 0, 0, 0,0,1,
-    0, 0, 0, 0,1,0),
-  nrow = 6, ncol = 6
-)
-rownames(m) = c(0,1,2,3,4,5)
-colnames(m) = c(0,1,2,3,4,5)
-
-net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
-
-
-ggnet2(net, 
-       mode = "circle", size = 10, label = T, 
-       vjust = 0.5,
-       node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
-```
-
-Graph with 2 components
-
-## Finding connected components
-
-Running a search algorithm (BFS or DFS) with a given start node we find only 1 connected component. 
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
-set.seed(123234)
-m <- matrix(
-  c(0, 1, 1, 0,0,0,
-    1, 0, 0, 0,0,0,
-    0, 1, 0, 0,0,0,
-    0, 1, 1, 0,0,0,
-    0, 0, 0, 0,0,1,
-    0, 0, 0, 0,1,0),
-  nrow = 6, ncol = 6
-)
-rownames(m) = c(0,1,2,3,4,5)
-colnames(m) = c(0,1,2,3,4,5)
-
-net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
-
-
-ggnet2(net, 
-       mode = "circle", size = 10, label = T, 
-       vjust = 0.5,
-       node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
-```
-
-Looping through nodes which where not visited yet and running a search algorithm for them, can help to find all connected components in linear time O(|V| + |E|).
-
-## Minimum Spanning Trees (MST)
-
-A minimum spanning tree is a subset of the edges of a connected, edge-weighed undirected graph that connects all nodes together, without cycles and with the minimum possible total edge weight.
-
-```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
-
-m <- matrix(
-  c(0, 1, 0, 0, 4, 0,
-    1, 0, 1, 0, 1, 0,
-    0, 1, 0, 1, 0, 0,
-    0, 0, 1, 0, 6, 1,
-    4, 1, 0, 6, 0, 0,
-    0, 0, 0, 1, 0, 0),
-  nrow = 6, ncol = 6
-)
-rownames(m) = c(1,2,3,4,5,6)
-colnames(m) = c(1,2,3,4,5,6)
-
-net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
-
-set.seed(43)
-ggnet2(net, 
-       mode = "fruchtermanreingold", size = 10, label = T, 
-       vjust = 0.5,
-       node.color = c("tomato","darkred","darkred","darkred","darkred","steelblue"), label.color = "grey80", arrow.size = 10, edge.label = "weights", arrow.gap = 0.05)
-```
-
-Where is such tree useful?
+# **Part I - Shortest Path**
 
 ## Shortest path
 
@@ -204,29 +123,17 @@ ggnet2(net,
 * What is the shortest path now?
 * How can we programmatically calculate the shortest path between any 2 nodes for any graph?
 
-## Dijkstra Algorithm (verbose)
-
-S - start node. T - target node. D(y) - distance from S to another node Y.
-
-1. Assign to every node _n_, D(_n_) = INF, D(S) = 0
-2. Assign C (Current node) as start node. Mark all other nodes unvisited. V = set of unvisited nodes.
-3. Get neighbors of C and calculate distances. Compare distance with previously calculated. Assign the smallest.
-4. After all neighbotrs considered, mark the current node as visited and remove it from the unvisited set.
-5. If T marked as visited, or if Y was never reached (not connected), then stop the algorithm.
-6. Otherwise, select the unvisited node that is marked with the smallest tentative distance, pick it as C. Back to 3.
-
 
 ## Dijkstra - Initialization 
 
 
-
 $$ 
 \begin{aligned} 
-&Initialize-Single-Source(G,s)\\
-&\qquad foreach\thinspace vertex \thinspace v \in G.V \\
+&InitializeSingleSource(G,s)\\
+&\qquad for \space each \space vertex \space v \in G.V \\
 &\qquad \qquad v.d = \infty \\
 &\qquad \qquad v.\pi = NIL \\
-&\qquad \qquad d = 0 \\
+&\qquad s.d = 0 \\
 \end{aligned}
 $$
 
@@ -236,8 +143,8 @@ $$
 $$ 
 \begin{aligned}
 &Relax(u,v,w)\\
-&\qquad if \thinspace v.d > u.d + w(u,v)\\
-&\qquad \qquad v.d = u.d + w(u.v)\\
+&\qquad if \space v.d > u.d + w(u,v)\\
+&\qquad \qquad v.d = u.d + w(u,v)\\
 &\qquad \qquad v.\pi = u \\
 \end{aligned}
 $$
@@ -247,22 +154,16 @@ $$
 $$ 
 \begin{aligned}
 &Dijkstra(G,w,s)\\
-&\qquad Initialize-Single-Source(G,s)\\
+&\qquad InitializeSingleSource(G,s)\\
 &\qquad S = \emptyset\\
 &\qquad Q = G.V \\
-&\qquad while \thinspace Q \neq \emptyset\\
-&\qquad \qquad u = Extract-Min(Q) \\
-&\qquad \qquad S = S \cup \{U\} \\ 
-&\qquad \qquad for \thinspace each \thinspace v \in G.Adj[u]\\
+&\qquad while \space Q \neq \emptyset\\
+&\qquad \qquad u = ExtractMin(Q) \\
+&\qquad \qquad S = S \cup \{u\} \\ 
+&\qquad \qquad for \space each \space v \in G.Adj[u]\\
 &\qquad \qquad \qquad Relax(u,v,w)\\
 \end{aligned}
 $$
-
-
-
-
-
-
 
 ## Dijkstra Visualization Step 1
 
@@ -645,58 +546,66 @@ The algorithm finished.
 
 See other visualizations here: https://www.cs.usfca.edu/~galles/visualization/Dijkstra.html
 
-## Dijkstra in Python 
-
-Graph class
+## Dijkstra in Python (algorithm)
 
 ```{python, echo = TRUE}
-class Graph:
-  def __init__(self):
-    self.nodes = set()
-    self.edges = defaultdict(list)
-    self.distances = {}
-
-  def add_node(self, value):
-    self.nodes.add(value)
-
-  def add_edge(self, from_node, to_node, distance):
-    self.edges[from_node].append(to_node)
-    self.edges[to_node].append(from_node)
-    self.distances[(from_node, to_node)] = distance
+def dijkstra(graph, start):
+    props = {
+        start:{
+            "distance": 0,
+            "parent": None,
+            "visited": False
+        }
+    }
+    while len(filterListDictionaries(props,"visited", False).keys())>0:
+        u = closestNotVisitedNode(props)
+        for v in set(graph[u]) - set(filterListDictionaries(props,"visited", True)):
+            if v not in props:
+                props[v] = {
+                        "distance": float("inf"),
+                        "parent": None,
+                        "visited": False
+                }
+            props = relax(props,u,v,graph[u][v])
+        props[u]["visited"] = True
+    return props
 ```
 
-## Dijkstra in Python 
 
-Dijkstra function
+## Dijkstra in Python (helper functions)
+
 ```{python, echo = TRUE}
-def dijkstra(graph, initial):
-  visited = {initial: 0}
-  path = {}
+def filterListDictionaries(l, f, value):
+    return {k: v for k, v in l.iteritems() if v[f] == value}
 
-  nodes = set(graph.nodes)
+def closestNotVisitedNode(nodes_prop):
+    not_visited = filterListDictionaries(nodes_prop,"visited", False)
+    lam = lambda x: not_visited[x]["distance"]
+    return min(not_visited, key = lam)
 
-  while nodes: 
-    min_node = None
-    for node in nodes:
-      if node in visited:
-        if min_node is None:
-          min_node = node
-        elif visited[node] < visited[min_node]:
-          min_node = node
+def relax(nodes_prop, u, v, w):
+    if nodes_prop[v]["distance"] > nodes_prop[u]["distance"] + w:
+        nodes_prop[v]["distance"] = nodes_prop[u]["distance"] + w
+        nodes_prop[v]["parent"] = u
+    return nodes_prop
+```
 
-    if min_node is None:
-      break
+## Dijkstra in Python to find target
 
-    nodes.remove(min_node)
-    current_weight = visited[min_node]
-
-    for edge in graph.edges[min_node]:
-      weight = current_weight + graph.distances[(min_node, edge)]
-      if edge not in visited or weight < visited[edge]:
-        visited[edge] = weight
-        path[edge] = min_node
-
-  return visited, path
+```{python, echo = TRUE}
+def dijkstra_pair(graph, start, end):
+    props = dijkstra(graph, start)
+    if end in props:
+        return getPath(props, end)
+    return None
+  
+def getPath(nodes, targetNode):
+    current = targetNode
+    path = []
+    while nodes[current]["parent"]:
+        path.append(nodes[current]["parent"])
+        current = nodes[current]["parent"]
+    return path
 ```
 
 ## Know your heroes
@@ -728,18 +637,240 @@ _11/05/1930 - 06/08/2002_
 
 ## All-pairs shortest path.
 
-# Part 2 - Centrality
+- Searching in big graphs is computationally expensive
+- It is good to search all shortest paths in advance, 
+to later only retrieve them when needed.
 
-## Closeness centrality
+**How would you calculate shortest paths for all pairs?**
 
-In a connected graph, closeness centrality (or closeness) of a node is a measure of centrality in a network, calculated as the sum of the length of the shortest paths between the node and all other nodes in the graph. Thus the more central a node is, the closer it is to all other nodes.
+# **Part II - Challenges to solve using graphs**
 
-## Centrality (e.g. betweenness, closeness, eigenvector, node)
+## Challenge #1
+
+How to identify communities in social media?
+
+![](figures/communities.jpg){ width=30%}
+
+## Connected components
+
+A connected component of an undirected graph is a subgraph in which any two nodes are connected to each other by paths, and which is connected to no additional vertices in the supergraph. 
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+set.seed(123234)
+m <- matrix(
+  c(0, 1, 1, 0,0,0,
+    1, 0, 0, 0,0,0,
+    0, 1, 0, 0,0,0,
+    0, 1, 1, 0,0,0,
+    0, 0, 0, 0,0,1,
+    0, 0, 0, 0,1,0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c(0,1,2,3,4,5)
+colnames(m) = c(0,1,2,3,4,5)
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Graph with 2 components
+
+## Finding connected components
+
+Running a search algorithm (BFS or DFS) with a given start node we find only 1 connected component. 
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+set.seed(123234)
+m <- matrix(
+  c(0, 1, 1, 0, 0, 0,
+    1, 0, 0, 0, 0, 0,
+    0, 1, 0, 0, 0, 0,
+    0, 1, 1, 0, 0, 0,
+    0, 0, 0, 0, 0, 1,
+    0, 0, 0, 0, 1, 0),
+  nrow = 6, ncol = 6
+)
+rownames(m) = c(0,1,2,3,4,5)
+colnames(m) = c(0,1,2,3,4,5)
+
+net <- network(m, directed=F, names.eval = "weights", ignore.eval = FALSE)
+
+
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = "darkred", label.color = "grey80", arrow.size = 10, arrow.gap = 0.05)
+```
+
+Looping through nodes which where not visited yet and running a search algorithm for them, can help to find all connected components in linear time O(|V| + |E|).
+
+
+## Strongly Connected Components
+
+A directed graph is called strongly connected if there is a path in each direction between each pair of vertices of the graph. 
+
+![](figures/strongly_connected.png)
+
+https://en.wikipedia.org/wiki/Strongly_connected_component
+
+
+## Finding Strongly Connected Components
+
+For a directed graph
+
+$$ 
+\begin{aligned}
+&StronglyConnectedComponents(G)\\
+&\qquad call \space DFS(G) \space to \space compute \space finishing \space times \space v.f \space for \space each \space vertex \space v\\
+&\qquad compute \space G^T\\
+&\qquad call \space DFS(G), \space but\space in\space the\space main\space loop\space of\space DFS,\space consider\space the\space vertices\space in\space order\space of\space decreasing\space u.f\space (as\space computed\space in\space line\space 1)\\
+&\qquad output\space the\space vertices\space of\space each\space tree\space in\space the\space depth-first\space forest\space formed\space\space in\space line\space 3\space as\space a\space separate\space strongly\space connected\space component\\
+\end{aligned}
+$$
+
+
+## Challenge #2
+
+How to schedule lectures some of which depend on others?
+
+![](figures/timetable.png)
+
+## Topological sort
+
+For a directed acyclic graph (DAG)
+
+$$ 
+\begin{aligned}
+&TopologicalSort(G)\\
+&\qquad call \space DFS(G) \space to \space compute \space finishing \space times \space v.f \space for \space each \space vertex \space v\\
+&\qquad as \space each \space vertex \space is \space finished, \space insert \space it \space onto \space the \space front \space of \space a \space linked \space list\\
+&\qquad return \space the \space linked \space list \space of \space vertices\\
+\end{aligned}
+$$
+
+## Challenge #3
+
+Telecom company tries to lay cable in a neighborhood. How to decide where to bury the cable to make sure all the houses are connected?
+
+![](figures/cable_trailer.jpg)
+
+
+
+
+## Minimum Spanning Trees (MST)
+
+A subset of the edges of a connected, edge-weighed undirected graph that connects all nodes together, without cycles and with the minimum total edge weight.
+
+![](figures/spanning_trees.jpg)
+
+[image source](https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/tutorial/)
+
+## MST (Kruskal's algorithm)
+
+![](figures/kruskal.jpg){ width=45% }
+
+
+
+[image source](https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/tutorial/)
+
+## Challenge #4
+
+How to rank webpages and build a search engine?
+
+![](figures/google.jpg)
+
 
 ## Page rank
 
+[algorithm slides](https://web.stanford.edu/class/cs54n/handouts/24-GooglePageRankAlgorithm.pdf)
 
-## Page rank
+[algorithm example](https://lizrush.gitbooks.io/algorithms-for-webdevs-ebook/content/chapters/page-rank.html)
+
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 0, 0, 0,
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 1, 1, 0),
+  nrow = 4, ncol = 4
+)
+rownames(m) = c("D1","D2","D3","D4")
+colnames(m) = c("D1","D2","D3","D4")
+
+net <- network(m, directed=T, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "circle", size = 10, label = T, 
+       vjust = 0.5,
+       node.color = c("darkred","darkred","darkred","darkred"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+## Page rank algorithm
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 0, 0, 0,
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 1, 1, 0),
+  nrow = 4, ncol = 4
+)
+rownames(m) = c("0.25","0.25","0.25","0.25")
+colnames(m) = c("0.25","0.25","0.25","0.25")
+
+net <- network(m, directed=T, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "circle", size = 13, label = T, 
+       vjust = 0.5,
+       node.color = c("darkred","darkred","darkred","darkred"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+- Assign to all nodes 1/N weight (0.25)
+- While PageRank not stable:
+-   for node in nodes:
+-     PR(node) = sum(PR(node.neigbor)/DegreeOut(node.neighbor))
+
+
+## Page rank algorithm
+
+```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 5, fig.height = 3}
+
+m <- matrix(
+  c(0, 0, 0, 0,
+    1, 0, 0, 0,
+    0, 1, 0, 0,
+    0, 1, 1, 0),
+  nrow = 4, ncol = 4
+)
+rownames(m) = c("0.08","0.33","0.21","0.37")
+colnames(m) = c("0.08","0.33","0.21","0.37")
+
+net <- network(m, directed=T, names.eval = "weights", ignore.eval = FALSE)
+
+set.seed(43)
+ggnet2(net, 
+       mode = "circle", size = 13, label = T, 
+       vjust = 0.5,
+       node.color = c("darkred","darkred","darkred","darkred"), label.color = "white", arrow.size = 10, arrow.gap = 0.05)
+```
+
+- Assign to all nodes 1/N weight (0.25)
+- While PageRank not stable:
+-   for node in nodes:
+-     PR(node) = sum(PR(node.neigbor)/DegreeOut(node.neighbor))
+
+## Page rank algorithm in Python
 
 http://dpk.io/pagerank
 
@@ -785,6 +916,15 @@ def pagerank(graph, damping=0.85, epsilon=1.0e-8):
     return ranks, n_iterations
 ```
 
+# Part III - Centrality, Betweeness
+
+## Closeness centrality
+
+In a connected graph, closeness centrality (or closeness) of a node is a measure of centrality in a network, calculated as the sum of the length of the shortest paths between the node and all other nodes in the graph. Thus the more central a node is, the closer it is to all other nodes.
+
+## Centrality (e.g. betweenness, closeness, eigenvector, node)
+
+
 
 # References
 
@@ -798,5 +938,6 @@ def pagerank(graph, damping=0.85, epsilon=1.0e-8):
 - https://www.udacity.com/wiki/creating-network-graphs-with-python
 - http://www.kateto.net/wp-content/uploads/2016/01/NetSciX_2016_Workshop.pdf
 - https://rstudio-pubs-static.s3.amazonaws.com/74248_3bd99f966ed94a91b36d39d8f21e3dc3.html
+- https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/tutorial/
 
 
