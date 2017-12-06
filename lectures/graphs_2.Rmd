@@ -1,6 +1,5 @@
 ---
 title: |
-  | **Connected Components**
   | **Advanced Graph Algorithms**
 author: |
   | Pavel Kucherbaev
@@ -643,6 +642,21 @@ to later only retrieve them when needed.
 
 **How would you calculate shortest paths for all pairs?**
 
+## Betweenness centrality
+
+In graph theory, betweenness centrality is a measure of centrality in a graph based on shortest paths.
+
+$$
+g(v) = \sum{\frac{\sigma_{st}(v)}{\sigma_{st}}}
+$$
+
+![](figures/centrality.png){ width=25% }
+
+[image source](https://en.wikipedia.org/wiki/Betweenness_centrality)
+
+
+
+
 # **Part II - Challenges to solve using graphs**
 
 ## Challenge #1
@@ -721,17 +735,13 @@ https://en.wikipedia.org/wiki/Strongly_connected_component
 
 ## Finding Strongly Connected Components
 
-For a directed graph
+For a directed graph:
 
-$$ 
-\begin{aligned}
-&StronglyConnectedComponents(G)\\
-&\qquad call \space DFS(G) \space to \space compute \space finishing \space times \space v.f \space for \space each \space vertex \space v\\
-&\qquad compute \space G^T\\
-&\qquad call \space DFS(G), \space but\space in\space the\space main\space loop\space of\space DFS,\space consider\space the\space vertices\space in\space order\space of\space decreasing\space u.f\space (as\space computed\space in\space line\space 1)\\
-&\qquad output\space the\space vertices\space of\space each\space tree\space in\space the\space depth-first\space forest\space formed\space\space in\space line\space 3\space as\space a\space separate\space strongly\space connected\space component\\
-\end{aligned}
-$$
+- call $DFS(G)$ to compute finishing times $v.f$ for each node
+- compute $G^T$
+- call $DFS(G)$, but in the main loop of $DFS$ consider the nodes in order of decreasing $u.f$
+- output the vertices of each tree in the depth-first forest formed in prev line as a separate strongly connected component
+
 
 
 ## Challenge #2
@@ -740,18 +750,14 @@ How to schedule lectures some of which depend on others?
 
 ![](figures/timetable.png)
 
-## Topological sort
+## Topological sort (for DAG)
 
-For a directed acyclic graph (DAG)
 
-$$ 
-\begin{aligned}
-&TopologicalSort(G)\\
-&\qquad call \space DFS(G) \space to \space compute \space finishing \space times \space v.f \space for \space each \space vertex \space v\\
-&\qquad as \space each \space vertex \space is \space finished, \space insert \space it \space onto \space the \space front \space of \space a \space linked \space list\\
-&\qquad return \space the \space linked \space list \space of \space vertices\\
-\end{aligned}
-$$
+- call $DFS(G)$ to compute finishing times $v.f$ for each node
+- as each node is finished, insert it onto the front of a linked list
+- return the list of nodes
+
+![](figures/topological_sort.png){ width=60% }
 
 ## Challenge #3
 
@@ -916,23 +922,32 @@ def pagerank(graph, damping=0.85, epsilon=1.0e-8):
     return ranks, n_iterations
 ```
 
-# Part III - Centrality, Betweeness
-
-## Closeness centrality
-
-In a connected graph, closeness centrality (or closeness) of a node is a measure of centrality in a network, calculated as the sum of the length of the shortest paths between the node and all other nodes in the graph. Thus the more central a node is, the closer it is to all other nodes.
-
-## Centrality (e.g. betweenness, closeness, eigenvector, node)
 
 
+# **Other resources**
 
-# References
+## Online course  (Very basic)
+
+![](figures/udacity.png){ width=70% }
+
+[Course Intro to Algorithms](https://classroom.udacity.com/courses/cs215)
+
+## Tutorial (Basic)
+
+![](figures/interactivepython.png){ width=70% }
+
+[Graph algorithms in Python](http://interactivepython.org/runestone/static/pythonds/Graphs/toctree.html)
+
+## Book (Advanced)
+
+![](figures/cormen.png){ width=40% }
+
+[Introduction to Algorithms](https://tudelft.on.worldcat.org/search?queryString=Introduction+to+Algorithms#/oclc/676697295)
 
 ## Sources used to prepare this lecture
 
 - https://classroom.udacity.com/courses/cs215/
 - https://classroom.udacity.com/courses/ud513/
-- the book Introduction to algorithms
 - https://briatte.github.io/ggnet/
 - http://kateto.net/network-visualization
 - https://www.udacity.com/wiki/creating-network-graphs-with-python
