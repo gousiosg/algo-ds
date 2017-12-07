@@ -496,7 +496,7 @@ Let's code.
 ## Graph Types, Cycles, Paths
 
 - Graph Types
-- Cycles, Euler path, Hamiltonian path
+- Traversal, Cycle
 
 ## Types of graphs
 ```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 11, fig.height = 6}
@@ -529,7 +529,7 @@ plot(g, layout = layout_as_bipartite,vertex.size=20, vertex.label=NA,
 
 ## Traversal
 
-Process of visiting (checking and/or updating) each node in a graph. Such traversals are classified by the order in which the vertices are visited.
+Process of visiting (checking and/or updating) each node in a graph.
 
 ```{r,  message=FALSE, warning=FALSE, cache=FALSE, fig.width = 7, fig.height = 4}
 ggnet2(net, 
@@ -614,13 +614,13 @@ ggnet2(net,
 - Searching how two nodes in a graph are connected is a typical problem.
 - It has a wide range of applications.
 
-## Finding path in a maze
+## Finding a path in a maze
 
 ![](figures/maze.png)
 
 Such maze could be presented as a grid graph, with no connections, in places with walls.
 
-## Finding path on a map
+## Finding a path on a map
 
 ![](figures/delft.png)
 Points of interest are nodes. And roads are edges connecting points of interests.
@@ -637,8 +637,6 @@ People are nodes. And edges are connections between them.
 
 Visualization of search algorithms: 
 
-- https://visualgo.net/en/dfsbfs
-- https://www.cs.usfca.edu/~galles/visualization/BFS.html
 
 
 ## Graph to Traverse
@@ -1000,6 +998,10 @@ ggnet2(net,
 ```
 
 Node 6 does not have any more nodes to discover. We mark Node 6 as visited. No more nodes to visit. The algorithm is acomplished.
+
+## Online visualization
+
+- https://visualgo.net/en/dfsbfs
 
 ## Breadth-first search initialization
 
@@ -1563,7 +1565,9 @@ ggnet2(net,
 
 Node 1 becomes visited. Algorithm finished.
 
+## Online visualization
 
+- https://visualgo.net/en/dfsbfs
 
 ## Depth-first search initialization
 
@@ -1655,6 +1659,8 @@ Let's code.
 - http://www.kateto.net/wp-content/uploads/2016/01/NetSciX_2016_Workshop.pdf
 - https://rstudio-pubs-static.s3.amazonaws.com/74248_3bd99f966ed94a91b36d39d8f21e3dc3.html
 - https://gist.github.com/daveweber/99ea4da41f42ac92cdbf
+- https://visualgo.net/en/dfsbfs
+- https://www.cs.usfca.edu/~galles/visualization/BFS.html
 
 
 ## Copyright
