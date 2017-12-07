@@ -13,215 +13,13 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Searching in a List
 
-To implement the ```search``` method,
-we develop the following strategy.
-We visit each node of the list and we check
-whether this node has stored the data
-that we are looking for.
-We conduct this process
-until we find the appropriate node.
+# Sorting
 
-```python
-def search(self,item):
-    current = self.head
-    found = False
-    while current != None and not found:
-        if current.getData() == item:
-            found = True
-        else:
-            current = current.getNext()
-
-    return found
-```
-
-## Search for an Element
-
-```python
->>> mylist.search(17)
-True
-```
-
-Here, the traversal needs to move up to the
-node that contains the element ```17```.
-
-![](./figures/search-ll.png)
-
-## Remove an Element
-
-To implement the remove method,
-we need to perform two passes.
-
-- First, we *traverse* the list until
-we find the element to be removed.
-This step is similar with the traversal
-we conduct for the ```search``` method.
-
-- Second, we *update* the nodes that
-contain the references to the elements.
-If we remove the node,
-how can we update the links to the next nodes? 
-
-## The ```previous``` Reference
-
-Since a linked list does not premits
-backwards traversal,
-we use two external references.
-
-The first reference is the ```current``` one
-that represents the current location of the traverse,
-and the second reference is the ```previous``` one
-that represents a node *behind* the ```current```.
-
-XX: To add a figure here.
-
-## The ```remove``` Method
-
-```python
-def remove(self,item):
-    current = self.head
-    previous = None
-    found = False
-    while not found:
-        if current.getData() == item:
-            found = True
-        else:
-            previous = current
-            current = current.getNext()
-
-    if previous == None:
-        self.head = current.getNext()
-    else:
-        previous.setNext(current.getNext())
-```
-
-## Searching and Sorting Algorithms
-
+## 
 - Explain and implement sequential search and binary search.
-
-- Explain and implement selection sort, bubble sort, merge sort, quick sort, insertion sort, and shell sort.
-
-## Searching
-
-A search returns ```true``` if the element is found in a collection, and
-```false``` when it does not reside in that collection.
-
-In Python, we can use the ```in``` operator
-to search whether an element is a member of a particular collection of items.
-
-But, how is this operation actually implemented?
-
-```python
->>> 15 in [3,5,2,4,1]
-False
->>> 3 in [3,5,2,4,1]
-True
->>>
-```
-
-## Sequential Search
-
-When elements are stored in a collection,
-such as a list, where there are relative to each other,
-we say that these elements have a linear or sequential relationship.
-Since the values of lists are indexed,
-it is possible to order the items and process them in a sequence.
-
-```python
-def sequentialSearch(alist, item):
-    pos = 0
-    found = False
-    while pos < len(alist) and not found:
-        if alist[pos] == item:
-            found = True
-        else:
-            pos = pos+1
-	
-    return found
-```
-
-## Complexity of Sequential Search
-
-To find the **complexity** of a sequential search algorithm,
-we need to count the number of the comparisons we need to perform
-until we find the element we are looking for in a collection.
-
-If we make the assumption that the elements of a list are in a **random order**
-the probability to find an element in a particular position,
-is the same as if it was allocated in any other position in the list.
-
-Whereas if the elements are in an **ascending order**,
-we still need to make ```n``` comparisons to find a particular element,
-but our search will be faster if the element is not, finally, in the list.
-
-## Comparisons in Random Assignment
-
-If an element does not belong in a randomly ordered list, ```L = {2, 6, 1, ... n}```,
-we will need to conduct ```n``` comparisons for a sequential search.
-
-On the contrary, if an element does belong in the above list,
-we will conduct eather ```1``` comparison (best case scenario),
-or ```n``` coparisons (worst case scenario) to find the right element.
-
-Therefore, the complexity of the sequential search algorithm is ```O(n)```.
-
-## Comparisons in Ordered List
-
-If an element does not belong in a ordered list, ```L = {1, 2, 3, ... n}```,
-we will need to conduct either ```1``` comparison (best case scenario)
-or ```n``` comparisons (worst case scenario) for a sequential search.
-What if we search for the element ```30``` in the following list?
-
-If an element does belong in the above list,
-we will conduct eather ```1``` comparison (best case scenario),
-or ```n``` coparisons (worst case scenario) to find the right element.
-
-Therefore, the complexity of the sequential search algorithm is again ```O(n)```.
-
-![](./figures/ordered-ll.png)
-
-## Binary Search
-
-We can split the list in the middle and appling the searching process
-in its both halfs.
-For instance, consider to find the element ```54```
-by using the so-called *divide and conquer* strategy.
-
-![](./figures/binary.png)
-
-## Implementation of Binary Search Algorithm
-
-```python
-	def binarySearch(alist, item):
-	    first = 0
-	    last = len(alist)-1
-	    found = False
-	    while first<=last and not found:
-	        midpoint = (first + last)//2
-	        if alist[midpoint] == item:
-	            found = True
-	        else:
-	            if item < alist[midpoint]:
-	                last = midpoint-1
-	            else:
-	                first = midpoint+1
-	    return found
-```
-
-## Complexity of Binary Search
-
-To estimate the complexity of a binary search algorithm,
-we should take into account that each comparison eliminates
-about half of the remaining elements.
-
-If we have an *ordered* list of ```n``` elements,
-around $n/2$ elements will be left after the first comparison.
-After the second comparison, there will be around $n/4$, and so on.
-
-The following table helps to understand how many time we need to split a list.
-
-XX: the table to be added here.
+- Explain and implement selection sort, bubble sort, merge sort, quick sort,
+  insertion sort, and shell sort.
 
 ## Sorting
 
@@ -415,6 +213,132 @@ sorting a list of $0$ items and a list of $n−1$ items.
 
 Then sorting a list of $n−1$ divides into a list of size $0$ and a list of size $n−2$, and so on.
 The result is an $O(n^2)$ sort with all of the overhead that recursion requires.
+
+
+
+
+# Searching
+
+## Search in a simple array
+
+A search returns `true` if the element is found in a collection, and
+`false` when it does not reside in that collection.
+
+In Python, we can use the `in` operator
+to search whether an element is a member of a particular collection of items.
+
+But, how is this operation actually implemented?
+
+```python
+>>> 15 in [3,5,2,4,1]
+False
+>>> 3 in [3,5,2,4,1]
+True
+>>>
+```
+
+## Sequential Search
+
+When elements are stored in a collection,
+such as a list, where there are relative to each other,
+we say that these elements have a linear or sequential relationship.
+Since the values of lists are indexed,
+it is possible to order the items and process them in a sequence.
+
+```python
+def sequentialSearch(alist, item):
+    pos = 0
+    found = False
+    while pos < len(alist) and not found:
+        if alist[pos] == item:
+            found = True
+        else:
+            pos = pos+1
+	
+    return found
+```
+
+## Complexity of Sequential Search
+
+To find the **complexity** of a sequential search algorithm,
+we need to count the number of the comparisons we need to perform
+until we find the element we are looking for in a collection.
+
+If we make the assumption that the elements of a list are in a **random order**
+the probability to find an element in a particular position,
+is the same as if it was allocated in any other position in the list.
+
+Whereas if the elements are in an **ascending order**,
+we still need to make `n` comparisons to find a particular element,
+but our search will be faster if the element is not, finally, in the list.
+
+## Comparisons in Random Assignment
+
+If an element does not belong in a randomly ordered list, `L = {2, 6, 1, ... n}`,
+we will need to conduct `n` comparisons for a sequential search.
+
+On the contrary, if an element does belong in the above list,
+we will conduct either `1` comparison (best case scenario),
+or `n` comparisons (worst case scenario) to find the right element.
+
+Therefore, the complexity of the sequential search algorithm is `O(n)`.
+
+## Comparisons in Ordered List
+
+If an element does not belong in a ordered list, `L = {1, 2, 3, ... n}`,
+we will need to conduct either `1` comparison (best case scenario)
+or `n` comparisons (worst case scenario) for a sequential search.
+What if we search for the element `30` in the following list?
+
+If an element does belong in the above list,
+we will conduct either `1` comparison (best case scenario),
+or `n` comparisons (worst case scenario) to find the right element.
+
+Therefore, the complexity of the sequential search algorithm is again `O(n)`.
+
+![](./figures/ordered-ll.png)
+
+## Binary Search
+
+We can split the list in the middle and applying the searching process in its
+both halfs. For instance, consider to find the element `54` by using the
+so-called *divide and conquer* strategy.
+
+![](./figures/binary.png)
+
+## Implementation of Binary Search Algorithm
+
+```python
+	def binarySearch(alist, item):
+	    first = 0
+	    last = len(alist)-1
+	    found = False
+	    while first<=last and not found:
+	        midpoint = (first + last)//2
+	        if alist[midpoint] == item:
+	            found = True
+	        else:
+	            if item < alist[midpoint]:
+	                last = midpoint-1
+	            else:
+	                first = midpoint+1
+	    return found
+```
+
+## Complexity of Binary Search
+
+To estimate the complexity of a binary search algorithm,
+we should take into account that each comparison eliminates
+about half of the remaining elements.
+
+If we have an *ordered* list of `n` elements,
+around $n/2$ elements will be left after the first comparison.
+After the second comparison, there will be around $n/4$, and so on.
+
+The following table helps to understand how many time we need to split a list.
+
+XX: the table to be added here.
+
 
 ## Bibliography
 
