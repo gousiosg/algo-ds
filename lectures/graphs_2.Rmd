@@ -649,12 +649,20 @@ In graph theory, betweenness centrality is a measure of centrality in a graph ba
 $$
 g(v) = \sum{\frac{\sigma_{st}(v)}{\sigma_{st}}}
 $$
+where $\sigma_{st}$ is the total number of shortest paths from node s to not t and $\sigma_{st}(v)$ is the number of those paths that pass through $v$. [image source](https://en.wikipedia.org/wiki/Betweenness_centrality)
 
 ![](figures/centrality.png){ width=25% }
 
-[image source](https://en.wikipedia.org/wiki/Betweenness_centrality)
 
 
+## Closeness centrality
+
+In a connected graph, the normalized closeness centrality (or closeness) of a node is the average length of the shortest path between the node and all other nodes in the graph. 
+
+$$
+C(x) = \frac{1}{\sum_yd(y,x)}
+$$
+where $d(y,x)$ is the distance between vertices $x$ and $y$.
 
 
 # **Part II - Challenges to solve using graphs**
