@@ -13,51 +13,78 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+## Searching and Sorting Algorithms
+
+### *Sorting*
+
+* Discuss & implement:
+    + Selection sort, Bubble sort, Merge sort
+    + Quick sort, Shell sort  
+* Comparison of the time complexity for each of these algorithms
+
+### *Searching*
+
+* Discuss & implement Sequential Search & Binary Search
+* Comparison of the time complexity for each of these algorithms
+* Introduction of search index  
 
 # Sorting
 
-## 
-- Explain and implement sequential search and binary search.
-- Explain and implement selection sort, bubble sort, merge sort, quick sort,
-  insertion sort, and shell sort.
+## Introduction
 
-## Sorting
+* Sorting is the process of assigning the elements of a collection (e.g. list)
+in **a particular order** (e.g. put words in an alphabetical order).
 
-Sorting is the process of assigning the elements of a collection (e.g. list)
-in a particular order (e.g. put words in an alphabetical order).
-
-A typical *systematic way* to sort the elements of a collection
+* A simplistic *systematic way* to sort the elements of a collection
 is, *first*, to compare two values from the collection
 seeing which is the smaller (or greater).
 
-And, *second*, if the two values are not in the correct order,
-based on their *comparison*,
-we need to *exchange* them.
+* And, *second*, if the two values are not in the correct order,
+based on their *comparison*, we need to *exchange* them.
 
-This *exchange* is expensive and,
-therefore, the totall *number* of the needed exchanges
-will indicate the *efficiency* of a sorting algorithm.
+* This *exchange* is expensive and, therefore, the total *number* of the needed
+exchanges will indicate the *efficiency* of a sorting algorithm.
 
-## Bubble Sort
+
+## Bubbles Sort
+
+* One of the most simplest sorting algorithms
+
+* Given a list of size $N$:
+    + Compare the first and second element:
+``` python
+if first < second:
+   pass
+else:
+   swap(first, second)
+```
+    + Compare second and third element:
+```python
+      repeat above
+```
+    * Continue for $N$ times (e.g to end of array)  
+
+## Bubble Sort: Example
 
 ![](./figures/bubble-sort.png)
 
 ## Bubble Sort Implementation
 
 ```python
-def bubbleSort(alist):
-    for passnum in range(len(alist)-1,0,-1):
-        for i in range(passnum):
-            if alist[i]>alist[i+1]:
-                temp = alist[i]
-                alist[i] = alist[i+1]
-                alist[i+1] = temp
+def bubble_sort(A):
+    n = len(A) - 1
+    for j in range(n, 0, -1):
+        for i in range(j):
+            if A[i] > A[i+1]:
+                A[i], A[i+1] = A[i+1], A[i]
+            n = n - 1
+    return A
 ```
 
 ```python
 alist = [54,26,93,17,77,31,44,55,20]
-bubbleSort(alist)
-print(alist)
+bubble_sort(alist)
+print alist
 ```
 
 ```python
@@ -65,6 +92,26 @@ print(alist)
 ```
 
 ## Bubble Sort Complexity
+
+![](./figures/sort_bs_1.svg)
+
+## Bubble Sort Complexity (1)
+
+![](./figures/sort_bs_2.svg)
+
+## Bubble Sort Complexity (2)
+
+![](./figures/sort_bs_3.svg){width=70%}
+
+Comparisons:
+
+$n-1 + n-2 + ... + 2 + 1 = n(n-1)/2$
+
+
+This makes it $O(n^2)$
+
+
+## Bubble Sort Complexity (3)
 
 Regardless of how the items are arranged in the initial list,
 $n−1$ passes will be made to sort a list of size $n$.
@@ -75,6 +122,13 @@ we will need to perform no exchanges.
 
 However, in the *worst* case, every comparison will cause an exchange.
 Therefore, the complexity of the algorithm is $O(n^2)$.
+
+## Bubble Sort Complexity: Any useful?
+
+* isn't the most efficient sorting algorithm 
+* we could do some optimizations:
+    + not comparing numbers that are in their final position 
+    + stop sorting if the list is already sorted
 
 ## Selection Sort
 
@@ -164,7 +218,7 @@ This would be the case for an already sorted list.
 
 ## Shell Sort
 
-This alrgorithm starts by sorting pairs of elements far apart from each other,
+This algorithm starts by sorting pairs of elements far apart from each other,
 then progressively reducing the gap between elements to be compared.
 
 It is a generalization of the bubble and insertion sort algorithms.
@@ -213,9 +267,6 @@ sorting a list of $0$ items and a list of $n−1$ items.
 
 Then sorting a list of $n−1$ divides into a list of size $0$ and a list of size $n−2$, and so on.
 The result is an $O(n^2)$ sort with all of the overhead that recursion requires.
-
-
-
 
 # Searching
 
