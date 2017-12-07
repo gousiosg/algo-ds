@@ -265,34 +265,15 @@ $\sum _{ i=1 }^{ n }{ (n-i-1)= \\ \sum _{ i=1 }^{ n }{ n } - \sum _{ i=1 }^{ i }
 } + \sum _{ i=1 }^{ n }{ 1 } = \\ n^2 - n\frac{n+1}{2} + n = \frac{n^2}{2} +
 \frac{n}{2} = O(n^2)}$
 
+## Faster Sorting
 
-## Shell Sort
-
-This algorithm starts by sorting pairs of elements far apart from each other,
-then progressively reducing the gap between elements to be compared.
-
-It is a generalization of the bubble and insertion sort algorithms.
-
-XX: to be continued
-
-## Merge Sort
-
-Merge sort is a recursive algorithm that continually splits a list in the middle.
-
-After two halves are sorted,
-then the **merge** operation is performed.
-
-![](./figures/split.png)
-
-## Merge
-
-![](./figures/merge.png)
-
-## Complexity of Merge Sort
-
-A merge sort is an $O(n log n)$ algorithm.
-
-Can you explain why?
+* The previous methods focus on exchanging elements with neighbouring elements
+* For faster sorting, we could increase the distance and not limit to exchanging 
+  with neighbouring elements 
+* There are two algorithms for faster sorting:
+    + Quicksort: selection of a *pivot* value, 
+    + Mergesort: split until we have array of length 1, and merge pair of values
+      until we have one list
 
 ## Quick Sort
 
@@ -304,9 +285,42 @@ The actual position where the pivot value belongs in the final sorted list,
 commonly called the split point,
 will be used to divide the list for subsequent calls to the quick sort.
 
+## Quick Sort: Step-by-step
+1. Select a *pivot*
+    + simplest: select first element
+    + another: select the middle value of three randomly selected values
+    + another: the middle value of the list
+2. Add a pointer on the first element and the last element
+3. Move the *first* element pointer to a value that is $>$ pivot
+4. Move the *last* element pointer to a value that is $\le$ pivot
+5. Swap theses values and continue recursively with sort *element* $\le$ pivot and
+   *element* $>$ pivot
+ 
 ## How does it works?
 
 ![](./figures/quick-sort.png)
+
+## Implementation
+
+```python
+def qs(lst, left, right):
+    if right - left > 1:
+        mid = (left + right + 1) // 2
+        lst[left], lst[mid] = lst[mid], lst[left]
+        pivot = lst[left]
+        le = left + 1
+        ri = right
+        while le <= ri:
+            while le <= right and lst[le] < pivot:
+                le += 1
+            while ri > left and lst[ri] >= pivot:
+                ri -= 1
+            if le < ri:
+                lst[le], lst[ri] = lst[ri], lst[le]
+        lst[ri], lst[left] = lst[left], lst[ri]
+        qs(lst, left, ri-1)
+        qs(lst, ri+1, right
+```
 
 ## Quick Sort Complexity
 
@@ -316,7 +330,66 @@ In this case, sorting a list of $n$ items divides into
 sorting a list of $0$ items and a list of $n−1$ items.
 
 Then sorting a list of $n−1$ divides into a list of size $0$ and a list of size $n−2$, and so on.
-The result is an $O(n^2)$ sort with all of the overhead that recursion requires.
+The result is an $O(n^2)$ sort with all of the overhead that recursion requires
+
+## Merge Sort
+
+Merge sort is useful for large lists or files. The idea is the following:
+
+1. Compare the first element in each list and take the smallest value until one
+   of the lists are done
+2. Continue on non-empty lists
+
+## Merge Sort: Split
+
+![](./figures/split.png)
+
+## Merge: Merge
+
+![](./figures/merge.png)
+
+## Merge Sort: Implementation
+
+``` python
+def merge(left, right):
+    result = []
+    while len(left) > 0 and len(right) > 0:
+        if left[0] <= right[0]:
+            result.append(left.pop(0))
+        else:
+            result.append(right.pop(0))
+    if len(left) > 0:
+        result += left
+    else:
+        result += right
+    return result
+```
+
+## Merge Sort: Implementation (2)
+``` python
+def mergesort(lst):
+    if len(lst) > 1:
+        mid = len(lst) // 2
+        left = mergesort(lst[:mid])
+        right = mergesort(lst[mid:])
+        return merge(left, right)
+    return lst
+```
+
+## Complexity of Merge Sort
+
+A merge sort is an $O(n log n)$ algorithm.
+
+Can you explain why?
+
+## Summary: Merge & Quick
+
+* The shown algorithms are not optimized
+    + Merge sort could have used index instead of creating arrays
+    + Quick sort: use a stack instead of recursion
+* While both are  $O(n log n)$, what is a very distinct complexity aspect to
+  consider?
+
 
 # Searching
 
