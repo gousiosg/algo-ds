@@ -58,11 +58,185 @@ main() {
 
 ![The ASCII character table](./figures/ascii-printout.png){width=70%}
 
-
-
 ## ISO-8859-*
 
+To accomodate different languages with characters in non-Latin scripts, or
+special characters (e.g. ø, ß, ç) in Latin-based languages,
+ASCII was extended with an 8th bit.
 
+This allowed operating systems in most of the world (non-logographic languages) to use
+the American string representation as a basis and only customize encodings when
+the extra characters where required.
+
+**Q:** What problems did this create?
+
+. . .
+
+A file encoded in ISO-8859-7 (Greek) could not be read 
+correctly in a computer configured with ISO-8859-1 (Latin-1).
+
+![Encodings](figures/encodings.png)
+
+
+## Unicode
+
+The world has around 7k languages and 3.8k writing systems. Unicode is an
+effort to specify 1 string/data encoding scheme for everything.
+The latest version contains a repertoire of 136,755 characters covering 
+139 modern and historic scripts, as well as multiple symbol sets (e.g. music,
+math, emoji). 
+
+Unicode defines a lookup table between a unique character ID and a character
+name / description
+
+* 01E8 Ǩ LATIN CAPITAL LETTER K WITH CARON
+* 0E57 ๗ THAI DIGIT SEVEN
+* 1F638 😸 GRINNING CAT FACE WITH SMILING EYES
+
+## UTF-8
+
+To represent Unicode symbols as binary data, we need to encode binary data using
+a format. We can thus use either _fixed length_ or _variable length_ encodings.
+The most common format for Unicode files is UTF-8, developed by 
+[Ken Tompson](https://en.wikipedia.org/wiki/Ken_Thompson) 
+and [Rob Pike](https://en.wikipedia.org/wiki/Rob_Pike). 
+ 
+In UTF-8, the most common characters are encoded with less bits than more
+rare ones.
+
+* First 128 characters need 1 byte
+ 
+ 
+## Classes of problems on strings
+
+Most problems with strings have to do with search a string or a list of
+strings/patterns in another string.
+
+* **String search:** Given a string, find the first/all occurences of it in another string
+* **Regular expressions:** Given a _pattern_, find all its occurences in a string
+* **Approximate matching:** How similar are two strings?
+* **Edit script:** What is the minimal set of additions/deletions to go from one string to another?
+
+
+## The string search problem
+
+Given a text $T$ and a pattern $P$, find all occurrences of $P$ within $T$.
+
+$T = AGCATGCTGCAGTCATGCTTAGGCTA$
+$P = GCT$
+
+**Q:** How many times does $P$ occur in $T$
+
+. . .
+
+The answer 3. But how did you search for it?
+
+## Naive string search
+Say that we are searching for $P=$`ABC` in string $T=$`ABABABACCABC`.
+
+```
+  ABABABACCABC
+1 ABX               (first two characters match, last does not)
+2  X                (first character doesn't match)
+3   ABX             (first two characters match, last does not)
+4    X              (first character doesn't match)
+5     ABX           (first two characters match, last does not)
+6      X            (first character doesn't match)
+7       AX          (first character matches, second doesn't)
+8        X          (first character doesn't match)
+9         X         (first character doesn't match)
+10         ABC      (match found)
+```
+
+The brute force approach is $O(mn)$, whe $m = len(T)$ and $n = len(P)$.
+
+A step 2, we are restarting the search at a character we _know_ it won't match.
+We should instead start from step 4.
+
+## How can we be more efficient?
+
+_Idea:_ How about we build a lookup table of the lengths of _prefixes_ in $P$
+that are also _suffixes_? Then, we can use that to jump ahead in our search 
+if we get a mismatch!
+
+|pattern          | a | b | a | b | a | c |
+|-----------------|---|---|---|---|---|---|
+| j               | 0 | 1 | 2 | 3 | 4 | 5 |
+|Prefix: $P[0:j]$ | a | ab| aba | abab | ababa | ababac | 
+|Prefix - Suffix  | $\emptyset$ | $\emptyset$ | a | ab | aba | $\emptyset$
+|$p[i]$           | 0 | 0 | 1 | 2 | 3 | 0 |
+
+Using this table, if we are search for `ABABA` in `ABABCABBAC`, we can
+jump ahead to $T$ position $cur + i - jump[i] + 1$, where $i$ is the index of 
+the character in $P$ that failed to match, _i.e._ restart at `C`
+
+
+
+
+## Calculating the jump table
+
+```python
+def jump_table(pattern):
+  result = [None]
+
+  for i in range(0, len(pattern)):
+    j = i
+
+    while True:
+      if j == 0:
+        result.append(0)
+          break
+
+      if pattern[result[j]] == pattern[i]:
+        result.append(result[j] + 1)
+          break
+      j = result[j]
+  return result
+```
+ 
+## The Knuth-Morris-Pratt algorithm
+
+```python
+def kmp(P, T):
+    jump = jump_table(P)
+
+    index = 0
+    match = 0
+
+    while index + match < len(T):
+        if T[index + match] == P[match]:
+            match = match + 1
+
+            if match == len(P):
+                return index
+        else:
+            if match == 0:
+                index = index + 1
+            else:
+                index = index + match - jump[match]
+                match = jump[match]
+
+    return None
+```
+
+## Regi
+
+## Levenstein distance
+
+$$
+\qquad\operatorname{lev}_{a,b}(i,j) = \begin{cases}
+  \max(i,j) & \text{ if} \min(i,j)=0, \\
+  \min \begin{cases}
+          \operatorname{lev}_{a,b}(i-1,j) + 1 \\
+          \operatorname{lev}_{a,b}(i,j-1) + 1 \\
+          \operatorname{lev}_{a,b}(i-1,j-1) + 1_{(a_i \neq b_j)}
+       \end{cases} & \text{ otherwise.}
+\end{cases}
+$$
+
+## References
+
+* (Knuth-Morris-Pratt algorithm)[https://gist.github.com/Nicksil/5646003], by Nicksil
 
 ```{r child="footer.Rmd", include=FALSE}
 ```

@@ -19,8 +19,9 @@ every day, such as routing in Google Maps or recommending friends on Facebook.
 of analytical tools, such as graphs. In this assignment, you will implement
 basic social network analysis algorithms on a graph extracted from GitHub.
 
-You can find the graph data [at this link](github.graph). The data looks like
-this (CSV format):
+You can find the graph data
+[at this link](https://drive.google.com/file/d/0B9Rx0uhucsroT1dzYjlfVU9nWUU/view?usp=sharing).
+The data looks like this (CSV format):
 
 ```
 follower,followed
