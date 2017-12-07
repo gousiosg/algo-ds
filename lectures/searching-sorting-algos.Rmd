@@ -71,14 +71,11 @@ else:
 ## Bubble Sort Implementation
 
 ```python
-def bubble_sort(A):
-    n = len(A) - 1
-    for j in range(n, 0, -1):
-        for i in range(j):
-            if A[i] > A[i+1]:
-                A[i], A[i+1] = A[i+1], A[i]
-            n = n - 1
-    return A
+def bubble_sort(lista):
+    for i in range(len(lista), 1, -1):
+        for j in range(i-1):
+            if lista[j] > lista[j+1]:
+                lista[j], lista[j+1] = lista[j+1], lista[j]
 ```
 
 ```python
@@ -130,27 +127,53 @@ Therefore, the complexity of the algorithm is $O(n^2)$.
     + not comparing numbers that are in their final position 
     + stop sorting if the list is already sorted
 
+## Bubble Sort: improvement
+``` python
+def bubble_sort(lista):
+    for i in range(len(lista), 1, -1):
+    ready = True
+    for j in range(i-1):
+        if lista[j] > lista[j+1]:
+            lista[j], lista[j+1] = lista[j+1], lista[j]
+            ready = False
+    if ready: break
+```
+
+
 ## Selection Sort
 
 The selection sort makes *one* exchange for every pass in the list.
 The algorithm finds the greater element in the list
 and then places it in the proper location (from the end of the list).
 
+
+## Selection Sort (1)
+Given a list of $N$ values that needs to be sorted:
+
+1. Search the list for the lowest value ($N-1$ comparisons)
+2. Move the value to the first position of the list
+3. Search for the next lowest value ($N-2$ comparisons)
+4. Move that value to second position in the list
+5. and onwards...
+
+In total, requires $N(N-1)/2$ comparisons and $N-1$ exchanges depending on how
+sorted the list it. The complexity is $O(n^2)$
+
+
+## Selection Sort (2)
+
 ![](./figures/selection-sort.png)
 
 ## Selection Sort Implementation
 
 ```python
-def selectionSort(alist):
-   for fillslot in range(len(alist)-1,0,-1):
-       positionOfMax=0
-       for location in range(1,fillslot+1):
-           if alist[location]>alist[positionOfMax]:
-               positionOfMax = location
-
-       temp = alist[fillslot]
-       alist[fillslot] = alist[positionOfMax]
-       alist[positionOfMax] = temp
+def selectionSort(lista):
+    for i in range(len(lista)-1):
+        m = i
+        for j in range(i + 1, len(lista)):
+            if lista[j] < lista[m]:
+                m = j
+        lista[i], lista[m] = lista[m], lista[i]
 ```
 
 ```python
@@ -173,27 +196,40 @@ the selection sort typically executes faster than the bubble sort.
 
 ## Insertion Sort
 
-The insertion sort algorith maintains
-a sorted sublist in the lowest positions of a list.
-Each new item is "inserted" sorted
-to the sublist.
+Consider array $N$ as one *sorted* sub-array $N_{sort}$ and one *unsorted*
+sub-array $N_{unsort}$:
 
+`if`  $N_{unsort}$ `is not empty:`
+
+Take a value from  $N_{unsort}$ 
+
+Move it to  $N_{sort}$ and sort
+
+
+## Insertion Sort
+
+### Before
+![](./figures/Insertionsort-before.png)
+
+### After
+
+![](./figures/Insertionsort-after.png)
+
+
+## Insertion Sort: Example
 ![](./figures/insertion-sort.png)
 
 ## Insertion Sort Implementation
 
 ```python
-def insertionSort(alist):
-   for index in range(1,len(alist)):
-
-     currentvalue = alist[index]
-     position = index
-
-     while position>0 and alist[position-1]>currentvalue:
-         alist[position]=alist[position-1]
-         position = position-1
-
-     alist[position]=currentvalue
+def insertionSort(lista):
+    for i in range(len(lista)):
+        j = i-1
+        key = lista[i]
+        while (lista[j] > key) and (j >= 0):
+            lista[j+1] = lista[j]
+            j -= 1
+        lista[j+1] = key
 ```
 
 ```python
@@ -215,6 +251,20 @@ This is $O(n^2)$.
 However, in the best case,
 only one comparison needs to be done on each pass.
 This would be the case for an already sorted list.
+
+## Summary: Bubble, Insertion & Selection
+
+* All three methods consists of at-least two loops for comparison and transfer
+* of elements
+* For each element with index $1 \leq i \leq n$
+    + For each element  $i \leq j \leq n$
+        + `work on the array`
+
+
+$\sum _{ i=1 }^{ n }{ (n-i-1)= \\ \sum _{ i=1 }^{ n }{ n } - \sum _{ i=1 }^{ i }{ n
+} + \sum _{ i=1 }^{ n }{ 1 } = \\ n^2 - n\frac{n+1}{2} + n = \frac{n^2}{2} +
+\frac{n}{2} = O(n^2)}$
+
 
 ## Shell Sort
 
