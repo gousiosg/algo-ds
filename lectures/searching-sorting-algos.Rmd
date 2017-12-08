@@ -1,0 +1,538 @@
+---
+title: "Searching and Sorting Algorithms"
+author: |
+  | Joseph Hejderup
+  | Maria Kechagia
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
+  ioslides_presentation: default
+  slidy_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Searching and Sorting Algorithms
+
+### *Sorting*
+
+* Discuss & implement:
+    + Selection sort, Bubble sort, Merge sort
+    + Quick sort, Shell sort  
+* Comparison of the time complexity for each of these algorithms
+
+### *Searching*
+
+* Discuss & implement Sequential Search & Binary Search
+* Comparison of the time complexity for each of these algorithms
+* Introduction of search index  
+
+# Sorting
+
+## Introduction
+
+* Sorting is the process of assigning the elements of a collection (e.g. list)
+in **a particular order** (e.g. put words in an alphabetical order).
+
+* A simplistic *systematic way* to sort the elements of a collection
+is, *first*, to compare two values from the collection
+seeing which is the smaller (or greater).
+
+* And, *second*, if the two values are not in the correct order,
+based on their *comparison*, we need to *exchange* them.
+
+* This *exchange* is expensive and, therefore, the total *number* of the needed
+exchanges will indicate the *efficiency* of a sorting algorithm.
+
+
+## Bubbles Sort
+
+* One of the most simplest sorting algorithms
+
+* Given a list of size $N$:
+    + Compare the first and second element:
+``` python
+if first < second:
+   pass
+else:
+   swap(first, second)
+```
+    + Compare second and third element:
+```python
+      repeat above
+```
+    * Continue for $N$ times (e.g to end of array)  
+
+## Bubble Sort: Example
+
+![](./figures/bubble-sort.png)
+
+## Bubble Sort Implementation
+
+```python
+def bubble_sort(lista):
+    for i in range(len(lista), 1, -1):
+        for j in range(i-1):
+            if lista[j] > lista[j+1]:
+                lista[j], lista[j+1] = lista[j+1], lista[j]
+```
+
+```python
+alist = [54,26,93,17,77,31,44,55,20]
+bubble_sort(alist)
+print alist
+```
+
+```python
+[17, 20, 26, 31, 44, 54, 55, 77, 93]
+```
+
+## Bubble Sort Complexity
+
+![](./figures/sort_bs_1.svg)
+
+## Bubble Sort Complexity (1)
+
+![](./figures/sort_bs_2.svg)
+
+## Bubble Sort Complexity (2)
+
+![](./figures/sort_bs_3.svg){width=70%}
+
+Comparisons:
+
+$n-1 + n-2 + ... + 2 + 1 = n(n-1)/2$
+
+
+This makes it $O(n^2)$
+
+
+## Bubble Sort Complexity (3)
+
+Regardless of how the items are arranged in the initial list,
+$n−1$ passes will be made to sort a list of size $n$.
+
+In the *best* case scenario,
+if the list is already ordered,
+we will need to perform no exchanges.
+
+However, in the *worst* case, every comparison will cause an exchange.
+Therefore, the complexity of the algorithm is $O(n^2)$.
+
+## Bubble Sort Complexity: Any useful?
+
+* isn't the most efficient sorting algorithm 
+* we could do some optimizations:
+    + not comparing numbers that are in their final position 
+    + stop sorting if the list is already sorted
+
+## Bubble Sort: improvement
+``` python
+def bubble_sort(lista):
+    for i in range(len(lista), 1, -1):
+    ready = True
+    for j in range(i-1):
+        if lista[j] > lista[j+1]:
+            lista[j], lista[j+1] = lista[j+1], lista[j]
+            ready = False
+    if ready: break
+```
+
+
+## Selection Sort
+
+The selection sort makes *one* exchange for every pass in the list.
+The algorithm finds the greater element in the list
+and then places it in the proper location (from the end of the list).
+
+
+## Selection Sort (1)
+Given a list of $N$ values that needs to be sorted:
+
+1. Search the list for the lowest value ($N-1$ comparisons)
+2. Move the value to the first position of the list
+3. Search for the next lowest value ($N-2$ comparisons)
+4. Move that value to second position in the list
+5. and onwards...
+
+In total, requires $N(N-1)/2$ comparisons and $N-1$ exchanges depending on how
+sorted the list it. The complexity is $O(n^2)$
+
+
+## Selection Sort (2)
+
+![](./figures/selection-sort.png)
+
+## Selection Sort Implementation
+
+```python
+def selectionSort(lista):
+    for i in range(len(lista)-1):
+        m = i
+        for j in range(i + 1, len(lista)):
+            if lista[j] < lista[m]:
+                m = j
+        lista[i], lista[m] = lista[m], lista[i]
+```
+
+```python
+alist = [54,26,93,17,77,31,44,55,20]
+selectionSort(alist)
+print(alist)
+```
+
+```python
+[17, 20, 26, 31, 44, 54, 55, 77, 93]
+```
+
+## Selection Sort Complexity
+
+The selection sort makes the same number of comparisons
+as the bubble sort and is therefore also $O(n^2)$.
+
+However, due to the reduction in the number of exchanges,
+the selection sort typically executes faster than the bubble sort.
+
+## Insertion Sort
+
+Consider array $N$ as one *sorted* sub-array $N_{sort}$ and one *unsorted*
+sub-array $N_{unsort}$:
+
+`if`  $N_{unsort}$ `is not empty:`
+
+Take a value from  $N_{unsort}$ 
+
+Move it to  $N_{sort}$ and sort
+
+
+## Insertion Sort
+
+### Before
+![](./figures/Insertionsort-before.png)
+
+### After
+
+![](./figures/Insertionsort-after.png)
+
+
+## Insertion Sort: Example
+![](./figures/insertion-sort.png)
+
+## Insertion Sort Implementation
+
+```python
+def insertionSort(lista):
+    for i in range(len(lista)):
+        j = i-1
+        key = lista[i]
+        while (lista[j] > key) and (j >= 0):
+            lista[j+1] = lista[j]
+            j -= 1
+        lista[j+1] = key
+```
+
+```python
+alist = [54,26,93,17,77,31,44,55,20]
+insertionSort(alist)
+print(alist)
+```
+
+```python
+[17, 20, 26, 31, 44, 54, 55, 77, 93]
+```
+
+## Insertion Sort Complexity
+
+The maximum number of comparisons for an insertion sort
+is the sum of the first $n−1$ integers.
+This is $O(n^2)$.
+
+However, in the best case,
+only one comparison needs to be done on each pass.
+This would be the case for an already sorted list.
+
+## Summary: Bubble, Insertion & Selection
+
+* All three methods consists of at-least two loops for comparison and transfer
+* of elements
+* For each element with index $1 \leq i \leq n$
+    + For each element  $i \leq j \leq n$
+        + `work on the array`
+
+
+$\sum _{ i=1 }^{ n }{ (n-i-1)= \\ \sum _{ i=1 }^{ n }{ n } - \sum _{ i=1 }^{ i }{ n
+} + \sum _{ i=1 }^{ n }{ 1 } = \\ n^2 - n\frac{n+1}{2} + n = \frac{n^2}{2} +
+\frac{n}{2} = O(n^2)}$
+
+## Faster Sorting
+
+* The previous methods focus on exchanging elements with neighbouring elements
+* For faster sorting, we could increase the distance and not limit to exchanging 
+  with neighbouring elements 
+* There are two algorithms for faster sorting:
+    + Quicksort: selection of a *pivot* value, 
+    + Mergesort: split until we have array of length 1, and merge pair of values
+      until we have one list
+
+## Quick Sort
+
+A quick sort first selects a value,
+which is called the *pivot* value.
+
+The role of the pivot value is to assist with splitting the list.
+The actual position where the pivot value belongs in the final sorted list,
+commonly called the split point,
+will be used to divide the list for subsequent calls to the quick sort.
+
+## Quick Sort: Step-by-step
+1. Select a *pivot*
+    + simplest: select first element
+    + another: select the middle value of three randomly selected values
+    + another: the middle value of the list
+2. Add a pointer on the first element and the last element
+3. Move the *first* element pointer to a value that is $>$ pivot
+4. Move the *last* element pointer to a value that is $\le$ pivot
+5. Swap theses values and continue recursively with sort *element* $\le$ pivot and
+   *element* $>$ pivot
+ 
+## How does it works?
+
+![](./figures/quick-sort.png)
+
+## Implementation
+
+```python
+def qs(lst, left, right):
+    if right - left > 1:
+        mid = (left + right + 1) // 2
+        lst[left], lst[mid] = lst[mid], lst[left]
+        pivot = lst[left]
+        le = left + 1
+        ri = right
+        while le <= ri:
+            while le <= right and lst[le] < pivot:
+                le += 1
+            while ri > left and lst[ri] >= pivot:
+                ri -= 1
+            if le < ri:
+                lst[le], lst[ri] = lst[ri], lst[le]
+        lst[ri], lst[left] = lst[left], lst[ri]
+        qs(lst, left, ri-1)
+        qs(lst, ri+1, right
+```
+
+## Quick Sort Complexity
+
+In the worst case, the split points may not be in the middle and
+can be very skewed to the left or the right.
+In this case, sorting a list of $n$ items divides into
+sorting a list of $0$ items and a list of $n−1$ items.
+
+Then sorting a list of $n−1$ divides into a list of size $0$ and a list of size $n−2$, and so on.
+The result is an $O(n^2)$ sort with all of the overhead that recursion requires
+
+## Merge Sort
+
+Merge sort is useful for large lists or files. The idea is the following:
+
+1. Compare the first element in each list and take the smallest value until one
+   of the lists are done
+2. Continue on non-empty lists
+
+## Merge Sort: Split
+
+![](./figures/split.png)
+
+## Merge: Merge
+
+![](./figures/merge.png)
+
+## Merge Sort: Implementation
+
+``` python
+def merge(left, right):
+    result = []
+    while len(left) > 0 and len(right) > 0:
+        if left[0] <= right[0]:
+            result.append(left.pop(0))
+        else:
+            result.append(right.pop(0))
+    if len(left) > 0:
+        result += left
+    else:
+        result += right
+    return result
+```
+
+## Merge Sort: Implementation (2)
+``` python
+def mergesort(lst):
+    if len(lst) > 1:
+        mid = len(lst) // 2
+        left = mergesort(lst[:mid])
+        right = mergesort(lst[mid:])
+        return merge(left, right)
+    return lst
+```
+
+## Complexity of Merge Sort
+
+A merge sort is an $O(n log n)$ algorithm.
+
+Can you explain why?
+
+## Summary: Merge & Quick
+
+* The shown algorithms are not optimized
+    + Merge sort could have used index instead of creating arrays
+    + Quick sort: use a stack instead of recursion
+* While both are  $O(n log n)$, what is a very distinct complexity aspect to
+  consider?
+
+
+# Searching
+
+## Search in a simple array
+
+A search returns `true` if the element is found in a collection, and
+`false` when it does not reside in that collection.
+
+In Python, we can use the `in` operator
+to search whether an element is a member of a particular collection of items.
+
+But, how is this operation actually implemented?
+
+```python
+>>> 15 in [3,5,2,4,1]
+False
+>>> 3 in [3,5,2,4,1]
+True
+>>>
+```
+
+## Sequential Search
+
+When elements are stored in a collection,
+such as a list, where there are relative to each other,
+we say that these elements have a linear or sequential relationship.
+Since the values of lists are indexed,
+it is possible to order the items and process them in a sequence.
+
+```python
+def sequentialSearch(alist, item):
+    pos = 0
+    found = False
+    while pos < len(alist) and not found:
+        if alist[pos] == item:
+            found = True
+        else:
+            pos = pos+1
+	
+    return found
+```
+
+## Complexity of Sequential Search
+
+To find the **complexity** of a sequential search algorithm,
+we need to count the number of the comparisons we need to perform
+until we find the element we are looking for in a collection.
+
+If we make the assumption that the elements of a list are in a **random order**
+the probability to find an element in a particular position,
+is the same as if it was allocated in any other position in the list.
+
+Whereas if the elements are in an **ascending order**,
+we still need to make `n` comparisons to find a particular element,
+but our search will be faster if the element is not, finally, in the list.
+
+## Comparisons in Random Assignment
+
+If an element does not belong in a randomly ordered list, `L = {2, 6, 1, ... n}`,
+we will need to conduct `n` comparisons for a sequential search.
+
+On the contrary, if an element does belong in the above list,
+we will conduct either `1` comparison (best case scenario),
+or `n` comparisons (worst case scenario) to find the right element.
+
+Therefore, the complexity of the sequential search algorithm is `O(n)`.
+
+## Comparisons in Ordered List
+
+If an element does not belong in a ordered list, `L = {1, 2, 3, ... n}`,
+we will need to conduct either `1` comparison (best case scenario)
+or `n` comparisons (worst case scenario) for a sequential search.
+What if we search for the element `30` in the following list?
+
+If an element does belong in the above list,
+we will conduct either `1` comparison (best case scenario),
+or `n` comparisons (worst case scenario) to find the right element.
+
+Therefore, the complexity of the sequential search algorithm is again `O(n)`.
+
+![](./figures/ordered-ll.png)
+
+## Binary Search
+
+We can split the list in the middle and applying the searching process in its
+both halfs. For instance, consider to find the element `54` by using the
+so-called *divide and conquer* strategy.
+
+![](./figures/binary.png)
+
+## Implementation of Binary Search Algorithm
+
+```python
+	def binarySearch(alist, item):
+	    first = 0
+	    last = len(alist)-1
+	    found = False
+	    while first<=last and not found:
+	        midpoint = (first + last)//2
+	        if alist[midpoint] == item:
+	            found = True
+	        else:
+	            if item < alist[midpoint]:
+	                last = midpoint-1
+	            else:
+	                first = midpoint+1
+	    return found
+```
+
+## Complexity of Binary Search
+
+To estimate the complexity of a binary search algorithm,
+we should take into account that each comparison eliminates
+about half of the remaining elements.
+
+If we have an *ordered* list of `n` elements,
+around $n/2$ elements will be left after the first comparison.
+After the second comparison, there will be around $n/4$, and so on.
+
+The following table helps to understand how many time we need to split a list.
+
+XX: the table to be added here.
+
+
+## Bibliography
+
+- Problem Solving with Algorithms and Data Structures using Python, by Brad Miller and David Ranum, Luther College.
+
+## Copyright
+![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
+This work is (c) 2017 - onwards by TU Delft and Maria Kechagia, Joseph Hejderup
+and licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 
+4.0 International](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+
+<!--html_preserve-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-2510585-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!--/html_preserve-->
