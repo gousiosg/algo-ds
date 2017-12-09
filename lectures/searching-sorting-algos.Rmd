@@ -184,13 +184,14 @@ Last, the space complexity is $O(1)$ (e.g constant amount of memory)
 
 ## Selection Sort: Overview
 
-Given a list $C[]$ with $n$ elements
+*key idea:* Search and swap algorithm
 
-1. Find the minimum value
-2. Swap $C[0]$ with $C[x]$ where $x$ is the index of the min element
-3. Traverse to the next element, $C[1]$
-4. Repeat step 1 and 2 until the end of the list
+1. Find smallest element 
+2. Swap it with the first element in the list
+3. Repeat the steps above with the second, third positions in the list until it
+   is sorted
 
+<!-- add small example -->
 ## Selection Sort: Example
 
 Sort the following list $C = [-1,5,3,9,12,4,8]$
@@ -198,7 +199,7 @@ Sort the following list $C = [-1,5,3,9,12,4,8]$
 ![](./figures/selection-sort-example.svg)
 
 
-## Selection Sort Implementation
+## Selection Sort: Implementation
 
 ```python
 def selectionSort(list):
@@ -214,7 +215,7 @@ def selectionSort(list):
 
 ```
 
-## Selection Sort Complexity
+## Selection Sort: Complexity
 
 The selection sort makes the same number of comparisons
 as the bubble sort and is therefore also $O(n^2)$. This is due to the linear
@@ -226,74 +227,80 @@ the selection sort typically executes faster than the bubble sort.
 
 ## Insertion Sort
 
-Consider array $N$ as one *sorted* sub-array $N_{sort}$ and one *unsorted*
-sub-array $N_{unsort}$:
+A simple sorting algorithm that works in similar fashion to sorting cards
+with our hands
 
-`if`  $N_{unsort}$ `is not empty:`
-
-Take a value from  $N_{unsort}$ 
-
-Move it to  $N_{sort}$ and sort
-
-
-## Insertion Sort
-
-### Before
-![](./figures/Insertionsort-before.png)
-
-### After
-
-![](./figures/Insertionsort-after.png)
+* The design is of an incremental algorithm; it constructs the sorted list one 
+  number at a time. 
+* Compared to the previous algorithms; during the $i^{th}$ iteration, the first 
+  $i - 1$ elements (named $S$) are sorted and the $i^{th}$ element is inserted
+  in $S$ by first making a linear search on $S$ and placing it in the right
+  position. 
+* Useful for sorting smaller lists
 
 
 ## Insertion Sort: Example
-![](./figures/insertion-sort.png)
 
-## Insertion Sort Implementation
+![](./figures/insert_sort_1.svg)
+
+
+## Insertion Sort: Example (2)
+
+![](./figures/insert_sort_2.svg)
+
+
+## Insertion Sort: Exercise
+
+$A = [−1,4,7,2,3,8,−5]$
+
+
+## Insertion Sort: Implementation
 
 ```python
-def insertionSort(lista):
-    for i in range(len(lista)):
+def insertionSort(list):
+    # Traverse through 1 to n
+    for i in range(1, len(list)):
+ 
+        key = list[i]
+ 
+        # Move elements of list[0..i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
         j = i-1
-        key = lista[i]
-        while (lista[j] > key) and (j >= 0):
-            lista[j+1] = lista[j]
-            j -= 1
-        lista[j+1] = key
+        while j >=0 and key < list[j] :
+                list[j+1] = list[j]
+                j -= 1
+        list[j+1] = key
+    return list
 ```
 
-```python
-alist = [54,26,93,17,77,31,44,55,20]
-insertionSort(alist)
-print(alist)
-```
+## Insertion Sort: Complexity
 
-```python
-[17, 20, 26, 31, 44, 54, 55, 77, 93]
-```
+**Best case scenario:**
+The list is sorted in ascending order, the $i^{th}$ element is only compared to $i^{th} - 1$ (e.g
+ $j$), this amounts to $n$ comparisons and thus $O(n)$
 
-## Insertion Sort Complexity
+$\sum _{ i=1 }^{ N-1}{N-1} = O(N)$
 
-The maximum number of comparisons for an insertion sort
-is the sum of the first $n−1$ integers.
-This is $O(n^2)$.
+.   .   .
 
-However, in the best case,
-only one comparison needs to be done on each pass.
-This would be the case for an already sorted list.
-
-## Summary: Bubble, Insertion & Selection
-
-* All three methods consists of at-least two loops for comparison and transfer
-* of elements
-* For each element with index $1 \leq i \leq n$
-    + For each element  $i \leq j \leq n$
-        + `work on the array`
+**Worst case scenario:**
+The list is sorted inverse, the  $i^{th}$ needs to be shifted to the first
+position
 
 
-$\sum _{ i=1 }^{ n }{ (n-i-1)= \\ \sum _{ i=1 }^{ n }{ n } - \sum _{ i=1 }^{ i }{ n
-} + \sum _{ i=1 }^{ n }{ 1 } = \\ n^2 - n\frac{n+1}{2} + n = \frac{n^2}{2} +
-\frac{n}{2} = O(n^2)}$
+$\sum _{ i=1 }^{ N-1}{i} = 1 + 2 + 3 + \cdot + (N-1) + \frac{(N-1)N}{2} =
+O(N^2)$
+
+
+.   .   .
+
+**Average case scenario:**
+The list is half-way in order
+
+$\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
+\frac{(N-1)N}{4} = O(N^2)$
+
 
 ## Faster Sorting
 
