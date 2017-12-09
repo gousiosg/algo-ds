@@ -1,5 +1,5 @@
 ---
-title: "Searching and Sorting Algorithms"
+title: "Sorting and Searching Algorithms"
 author: |
   | Joseph Hejderup
   | Maria Kechagia
@@ -12,21 +12,6 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
-
-## Searching and Sorting Algorithms
-
-### *Sorting*
-
-* Discuss & implement:
-    + Selection sort, Bubble sort, Merge sort
-    + Quick sort, Shell sort  
-* Comparison of the time complexity for each of these algorithms
-
-### *Searching*
-
-* Discuss & implement Sequential Search & Binary Search
-* Comparison of the time complexity for each of these algorithms
-* Introduction of search index  
 
 # Sorting
 
@@ -46,23 +31,35 @@ based on their *comparison*, we need to *exchange* them.
 exchanges will indicate the *efficiency* of a sorting algorithm.
 
 
-## Bubbles Sort
+## The Sorting Problem
 
-* One of the most simplest sorting algorithms
 
-* Given a list of size $N$:
-    + Compare the first and second element:
-``` python
-if first < second:
-   pass
-else:
-   swap(first, second)
-```
-    + Compare second and third element:
-```python
-      repeat above
-```
-    * Continue for $N$ times (e.g to end of array)  
+* **Input:** Sequence of *n* values $c_1,c_2,c_3,...,c_n$
+* **Output:** Reordered (permutation) $c'_1,c'_2,c'_3,...,c'_n$ of the input 
+  sequence with the order  $c'_1 \leq c'_2 \leq  c'_3 ... \leq c'_n$ 
+
+Example:
+
+* **Input:** $6,4,3,1,2,5$
+* **Output:** $1,2,3,4,5,6$
+
+
+## The Sorting Problem
+
+![](./figures/sort-example.svg){width=60%}
+
+
+<center>You have to arrange the sticks in descending order, how would you
+process this? </center>
+
+## Bubble Sort
+
+* One of the most simplest sort algorithms
+* 
+
+
+
+
 
 ## Bubble Sort: Example
 
