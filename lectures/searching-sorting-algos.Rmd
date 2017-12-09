@@ -54,87 +54,122 @@ process this? </center>
 
 ## Bubble Sort
 
-* One of the most simplest sort algorithms
-* 
+A simple sort algorithm where list elements "bubbles" to the position in the
+list where it belongs (e.g holding the *order* invariant)
 
+* How does it work?
+    * Compares each pair of elements in a list
+    + Swap the order of the pair of elements, if they are in the wrong order
+    + Repeatedly traverse the list and swap pair of elements until the entire
+      list is ordered
 
+## Bubble Sort: Overview
 
+Given a list $C[]$ with $n$ elements
 
+1. Compare $C[0]$ with $C[1]$
+    + if $C[0] > C[1]$, swap the elements
+    + if $C[0] < C[1]$, elements are in order
+2. Traverse to the next element, $C[1]$ and compare it with $C[2]$
+    + if $C[1] > C[2]$, swap the elements
+    + if $C[1] < C[2]$, elements are in order
+    + Do this for every pair of elements until the end of the list.
+3. Repeatedly perform steps 1 and 2 $n$ times
 
 ## Bubble Sort: Example
 
-![](./figures/bubble-sort.png)
+Sort the following list $C = [7,6,1]$
 
-## Bubble Sort Implementation
+This would require 2 swaps for a list of 3 values 
+
+.   .   .
+
+**First iteration **
+
+1. Compare $7$ with $6$, swap them $[7,6,1]$ -> $[\textbf{6,7},1]$
+2. Compare $7$ with $1$, swap them $[6,7,1]$ -> $[6,\textbf{1,7}]$
+
+
+.   .   .
+
+
+**Second iteration**
+
+1. Compare $6$ with $1$, swap them $[6,1,7]$ -> $[\textbf{1,6},7]$
+
+
+.   .   .
+
+
+**Third iteration**
+
+Values are in order
+
+## Bubble Sort: Exercise
+
+Sort the following list $C = [5,3,1,9,8,2,4,7]$ using bubble sort
+
+## Bubble Sort: Solution
+
+<!-- 
+http://www.geeksforgeeks.org/wp-content/uploads/gq/2014/02/bubble-sort1.png
+-->
+![](./figures/bubble_sort.png)
+
+
+
+## Bubble Sort: Implementation
 
 ```python
-def bubble_sort(lista):
-    for i in range(len(lista), 1, -1):
-        for j in range(i-1):
-            if lista[j] > lista[j+1]:
-                lista[j], lista[j+1] = lista[j+1], lista[j]
+def bubble_sort(list):
+    n_times = len(list)
+    # Traverse all list elements
+    for i in range(n_times):
+        print "round: " + str(i) + " with " + str(list)
+        for j in range(0, n_times-i-1):
+            # traverse the list from 0 to n-i-1 (e.g number of possible swap left)
+            print str(list[j]) + " > " + str(list[j+1]) + "?"
+            if list[j] > list[j+1] :
+                list[j], list[j+1] = list[j+1], list[j]
+                print "swap"
+            else:
+              print "no swap"
+    return list
 ```
 
-```python
-alist = [54,26,93,17,77,31,44,55,20]
-bubble_sort(alist)
-print alist
-```
-
-```python
-[17, 20, 26, 31, 44, 54, 55, 77, 93]
-```
-
-## Bubble Sort Complexity
-
-![](./figures/sort_bs_1.svg)
-
-## Bubble Sort Complexity (1)
-
-![](./figures/sort_bs_2.svg)
-
-## Bubble Sort Complexity (2)
-
-![](./figures/sort_bs_3.svg){width=70%}
-
-Comparisons:
-
-$n-1 + n-2 + ... + 2 + 1 = n(n-1)/2$
+## Bubble Sort: Complexity
 
 
-This makes it $O(n^2)$
+* How many comparison does each loop perform? (inner loop)
+    + For each element in the list:  $n - 1$ comparisons
+    + bubble sort does $O(n)$ comparisons
+* How many times does it need to order the list? (outer loop)
+    + The list contains $n$ elements and has $O(n)$ elements
+For each iteration of loop variable $i$, there are $n-1$ comparisons performed.
+Thus, Bubble sort conducts $O(n)$ operations on an $O(n)$ number of elements
+that leads to a time complexity of $O(n^2)$
+
+## Bubble Sort: Complexity (2)
+* When $i = 1$, no comparisons 
+* When $i = 2$, one comparison is performed
+* When $i = 3$, two comparisons are performed and so forth 
+
+Therefore, when $i = n$, $n - 1$ comparisons are performed irrespective of the
+input
+
+For a list with $n$ elements does:
+
+$1 + 2 + 3 + 4 + \cdots + (n - 2) + (n - 1) = O(n^2)$ comparisons
+
+Last, the space complexity is $O(1)$ (e.g constant amount of memory)
 
 
-## Bubble Sort Complexity (3)
-
-Regardless of how the items are arranged in the initial list,
-$n−1$ passes will be made to sort a list of size $n$.
-
-In the *best* case scenario,
-if the list is already ordered,
-we will need to perform no exchanges.
-
-However, in the *worst* case, every comparison will cause an exchange.
-Therefore, the complexity of the algorithm is $O(n^2)$.
-
-## Bubble Sort Complexity: Any useful?
+## Bubble Sort: Any useful?
 
 * isn't the most efficient sorting algorithm 
 * we could do some optimizations:
     + not comparing numbers that are in their final position 
     + stop sorting if the list is already sorted
-
-## Bubble Sort: improvement
-``` python
-def bubble_sort(lista):
-    for i in range(len(lista), 1, -1):
-    ready = True
-    for j in range(i-1):
-        if lista[j] > lista[j+1]:
-            lista[j], lista[j+1] = lista[j+1], lista[j]
-            ready = False
-    if ready: break
-```
 
 
 ## Selection Sort
