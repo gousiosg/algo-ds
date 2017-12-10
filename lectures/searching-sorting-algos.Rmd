@@ -307,67 +307,172 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
 * The previous methods focus on exchanging elements with neighbouring elements
 * For faster sorting, we could increase the distance and not limit to exchanging 
   with neighbouring elements 
-* There are two algorithms for faster sorting:
-    + Quicksort: selection of a *pivot* value, 
-    + Mergesort: split until we have array of length 1, and merge pair of values
-      until we have one list
+* There are two algorithms for faster sorting: Quick Sort and Merge Sort
+* These algorithms is based on a *divide-and-conquer* technique 
+
+
+## Divide-and-Conquer Technique
+
+
+![](./figures/divide-conquer.svg)
+
+
 
 ## Quick Sort
 
-A quick sort first selects a value,
-which is called the *pivot* value.
+* A *divide-and-conquer* algorithm
+* The idea is to select a special element called a *pivot*
+* The *pivot* is used to partition the list into two sub-lists:
+    + elements smaller than the *pivot* value in one partition
+    + elements *greater* than the *pivot* in another partition
+* Further, the partitions are divided into smaller partitions until the 
+  sub-problem size becomes one
 
-The role of the pivot value is to assist with splitting the list.
-The actual position where the pivot value belongs in the final sorted list,
-commonly called the split point,
-will be used to divide the list for subsequent calls to the quick sort.
+## Quick Sort (2)
+* The *pivot* value can be any element in the list, we could also as example use 
+  a strategy where we select three random values and, select the middle most.
+* Compared to *Merge Sort*: Most of the work is performed at the *divide* stage 
+  while the *merge sort* conducts most of the work and the *combine*
+  stage
 
-## Quick Sort: Step-by-step
-1. Select a *pivot*
-    + simplest: select first element
-    + another: select the middle value of three randomly selected values
-    + another: the middle value of the list
-2. Add a pointer on the first element and the last element
-3. Move the *first* element pointer to a value that is $>$ pivot
-4. Move the *last* element pointer to a value that is $\le$ pivot
-5. Swap theses values and continue recursively with sort *element* $\le$ pivot and
-   *element* $>$ pivot
- 
-## How does it works?
+## Quick Sort: Partition Phase
+* Select a pivot
+* Move elements that are less than the pivot to the left
+* Move elements that are greater to the pivot to the right
 
-![](./figures/quick-sort.png)
+![](./figures/pivot.svg){width=80%}
 
-## Implementation
+## Quick Sort: Process
+
+1. **Divide:** Pick a pivot and divide into two partitions (see previous slide)
+2. **Conquer:** Recursively apply Quick Sort to both the left and right
+   partitions 
+3. *Combine:*  All sub-partitions are sorted and no effort is needed to merge
+
+
+## Quick Sort: Partition Example 
+![](./figures/partition-qs.svg)
+
+
+## Quick Sort: Combine Example 
+
+![](./figures/combine-qs.svg)
+
+
+## Quick Sort: Implementation
+* The hardest part is to implement the partitioning 
+* The quick sort algorithm can be implemented in two ways:
+    + Recursive
+    + Iterative
+
+.   .   .
+
+*We have mainly discussed with recursion, how would we do it iteratively?*
+*hint: think of a previous data structure*
+
+
+
+
+## Quick Sort: Recursive
 
 ```python
-def qs(lst, left, right):
-    if right - left > 1:
-        mid = (left + right + 1) // 2
-        lst[left], lst[mid] = lst[mid], lst[left]
-        pivot = lst[left]
-        le = left + 1
-        ri = right
-        while le <= ri:
-            while le <= right and lst[le] < pivot:
-                le += 1
-            while ri > left and lst[ri] >= pivot:
-                ri -= 1
-            if le < ri:
-                lst[le], lst[ri] = lst[ri], lst[le]
-        lst[ri], lst[left] = lst[left], lst[ri]
-        qs(lst, left, ri-1)
-        qs(lst, ri+1, right
+def qs_recursive(list, left, right):
+    """
+    Quick sort method (Recursive)
+    """
+    if right <= left:
+        return
+    else:
+        #Get pivot
+        piv = partition(list, left, right)
+        #Sort left side of pivot
+        qs_recursive(list, left, piv-1)
+        #Sort right side of pivot
+        qs_recursive(list, piv+1, right)
+    return list
 ```
+
+What is `left` and `right` for $[1,5,8,9,10]$
+
+.   .   .
+
+left is $1$ and right is $10$
+
+
+## Quick Sort: Iterative
+
+``` python
+def qs_iterative(list, left, right):
+    """
+    Quick sort (iterative)
+    """
+    stack = []
+    stack.append((left,right))
+    
+    #Main loop to pop and push items until stack is empty
+    while stack:      
+        pos = stack.pop()
+        right, left = pos[1], pos[0]
+        pivot = partition(list,left,right)
+        #If items in the left of the pivot push them to the stack
+        if pivot-1 > left:
+            stack.append((left,pivot-1))
+        #If items in the right of the pivot push them to the stack
+        if pivot+1 < right:
+            stack.append((pivot+1,right))
+    return list
+```
+
+## Quick Sort: Partition
+
+``` python
+def partition(list, left, right):
+    i = left - 1          # index of smaller element
+    pivot = list[right]     # pivot
+ 
+
+    for j in range(left, right):
+        print list
+        print i, j, pivot
+
+        # If current element is smaller than or
+        # equal to pivot
+        print "is " + str(list[j]) + " smallar or equal to " + str(pivot)
+        if list[j] <= pivot:
+            # increment index of smaller element
+            i = i + 1
+            print "swap list[i]= " + str(list[i]) + " with list[j]=" + str(list[j]) 
+            list[i], list[j] = list[j], list[i]
+    list[i + 1], list[right] = list[right], list[i + 1]
+    return i + 1
+```
+
 
 ## Quick Sort Complexity
 
-In the worst case, the split points may not be in the middle and
-can be very skewed to the left or the right.
-In this case, sorting a list of $n$ items divides into
-sorting a list of $0$ items and a list of $n−1$ items.
 
-Then sorting a list of $n−1$ divides into a list of size $0$ and a list of size $n−2$, and so on.
-The result is an $O(n^2)$ sort with all of the overhead that recursion requires
+**Best case scenario:**
+Pivot is the median of the array
+Each time we make a partition, the list is divided into two nearly equal
+partitions where left and right have the same size. Thus, each recursive call process a list of half its size and
+similar to a balanced BST, the depth of the call tree (e.g height)  is $log_2
+n$. Further, to create each partition, we need to make $n$ comparisons but not more
+than  $n/2$ swaps. Thus, the complexity is $O(n log n)$
+
+.   .   .
+
+**Worst case scenario:**
+This is when the pivot is the smallest or largest element. This means one of the
+partitions are empty and we repeat the process $N-1$ elements. Think of this as
+an unbalanced BST, the complexity is $O(n^2)$
+
+.   .   .
+
+**Average case scenario:**
+In average, each partitioning divides the list into two partitions and creating
+the partition takes $O(n)$, Thus
+* Average $log n$ partitioning and creating partitions takes $O(n)$
+
 
 ## Merge Sort
 
@@ -418,14 +523,6 @@ def mergesort(lst):
 A merge sort is an $O(n log n)$ algorithm.
 
 Can you explain why?
-
-## Summary: Merge & Quick
-
-* The shown algorithms are not optimized
-    + Merge sort could have used index instead of creating arrays
-    + Quick sort: use a stack instead of recursion
-* While both are  $O(n log n)$, what is a very distinct complexity aspect to
-  consider?
 
 
 # Searching
