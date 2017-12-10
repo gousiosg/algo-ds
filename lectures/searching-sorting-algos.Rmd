@@ -475,23 +475,41 @@ the partition takes $O(n)$, Thus
 
 
 ## Merge Sort
+* A *divide-an-conquer* algorithm 
+* Main idea:
+    + The *divide* phase recursively split the list into half until the 
+      list size is reduced to one (top-down approach)
+    + The *conquer* phase combines a sorted list of size 1 to get a sorted
+      list of size 2 and so on; we combine two sorted list of $n/2$ to get a
+      sorted list of $n$
 
-Merge sort is useful for large lists or files. The idea is the following:
+## Merge Sort: Split phase
 
-1. Compare the first element in each list and take the smallest value until one
-   of the lists are done
-2. Continue on non-empty lists
 
-## Merge Sort: Split
+![](./figures/split-merge.png)
 
-![](./figures/split.png)
 
-## Merge: Merge
+## Merge Sort: Merge phase
 
-![](./figures/merge.png)
+
+![](./figures/merge-merge.png)
 
 ## Merge Sort: Implementation
 
+``` python
+def mergesort(lst):
+    if len(lst) > 1:
+        mid = len(lst) // 2
+        left = mergesort(lst[:mid])
+        right = mergesort(lst[mid:])
+        return merge(left, right)
+    return lst
+```
+
+
+
+
+## Merge Sort: How are we doing merge?
 ``` python
 def merge(left, right):
     result = []
@@ -507,23 +525,14 @@ def merge(left, right):
     return result
 ```
 
-## Merge Sort: Implementation (2)
-``` python
-def mergesort(lst):
-    if len(lst) > 1:
-        mid = len(lst) // 2
-        left = mergesort(lst[:mid])
-        right = mergesort(lst[mid:])
-        return merge(left, right)
-    return lst
-```
 
 ## Complexity of Merge Sort
+For all cases it is $O(n logn)$, can someone explain why?
 
-A merge sort is an $O(n log n)$ algorithm.
+.   .   .
 
-Can you explain why?
-
+While Merge Sort have better overall complexity than Quick Sort, why would
+someone prefer quick sort? *hint: space complexity*
 
 # Searching
 
