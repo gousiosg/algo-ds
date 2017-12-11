@@ -145,9 +145,15 @@ def bubble_sort(list):
     + bubble sort does $O(n)$ comparisons
 * How many times does it need to order the list? (outer loop)
     + The list contains $n$ elements and has $O(n)$ elements
+
 For each iteration of loop variable $i$, there are $n-i$ comparisons performed.
 Thus, Bubble sort conducts $O(n)$ operations on an $O(n)$ number of elements
 that leads to a time complexity of $O(n^2)$
+
+.   .   .
+
+*What about best case scenario?*
+
 
 ## Bubble Sort: Complexity (2)
 * When $i = 1$, no comparisons 
@@ -162,14 +168,6 @@ For a list with $n$ elements does:
 $1 + 2 + 3 + 4 + \cdots + (n - 2) + (n - 1) = O(n^2)$ comparisons
 
 Last, the space complexity is $O(1)$ (e.g constant amount of memory)
-
-
-## Bubble Sort: Any useful?
-
-* isn't the most efficient sorting algorithm 
-* we could do some optimizations:
-    + not comparing numbers that are in their final position 
-    + stop sorting if the list is already sorted
 
 
 ## Selection Sort
@@ -188,7 +186,7 @@ Last, the space complexity is $O(1)$ (e.g constant amount of memory)
 
 1. Find smallest element 
 2. Swap it with the first element in the list
-3. Repeat the steps above with the second, third positions in the list until it
+3. Repeat the steps above with the second, third position in the list until it
    is sorted
 
 <!-- add small example -->
@@ -217,6 +215,8 @@ def selectionSort(list):
 
 ## Selection Sort: Complexity
 
+.   .   .
+
 The selection sort makes the same number of comparisons
 as the bubble sort and is therefore also $O(n^2)$. This is due to the linear
 search for finding the minimum element in which we have to pass $i - n$ values
@@ -224,6 +224,10 @@ search for finding the minimum element in which we have to pass $i - n$ values
 
 However, due to the reduction in the number of exchanges,
 the selection sort typically executes faster than the bubble sort.
+
+.   .   .
+
+*What is the best case?*
 
 ## Insertion Sort
 
@@ -304,9 +308,6 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
 
 ## Faster Sorting
 
-* The previous methods focus on exchanging elements with neighbouring elements
-* For faster sorting, we could increase the distance and not limit to exchanging 
-  with neighbouring elements 
 * There are two algorithms for faster sorting: Quick Sort and Merge Sort
 * These algorithms is based on a *divide-and-conquer* technique 
 
@@ -329,11 +330,12 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
   sub-problem size becomes one
 
 ## Quick Sort (2)
-* The *pivot* value can be any element in the list, we could also as example use 
-  a strategy where we select three random values and, select the middle most.
+* The *pivot* value can be any element in the list, we could also as an example use 
+  a strategy where we select three random values where the middle most is
+  selected.
 * Compared to *Merge Sort*: Most of the work is performed at the *divide* stage 
   while the *merge sort* conducts most of the work and the *combine*
-  stage
+  stage (later on this)
 
 ## Quick Sort: Partition Phase
 * Select a pivot
@@ -347,7 +349,7 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
 1. **Divide:** Pick a pivot and divide into two partitions (see previous slide)
 2. **Conquer:** Recursively apply Quick Sort to both the left and right
    partitions 
-3. *Combine:*  All sub-partitions are sorted and no effort is needed to merge
+3. **Combine:**  All sub-partitions are sorted and no effort is needed to merge
 
 
 ## Quick Sort: Partition Example 
@@ -452,14 +454,15 @@ def partition(list, left, right):
 
 
 **Best case scenario:**
-Pivot is the median of the array
-Each time we make a partition, the list is divided into two nearly equal
+
+* Pivot is the median of the array
+* Each time we make a partition, the list is divided into two nearly equal
 partitions where left and right have the same size. Thus, each recursive call process a list of half its size and
 similar to a balanced BST, the depth of the call tree (e.g height)  is $log_2
 n$. Further, to create each partition, we need to make $n$ comparisons but not more
 than  $n/2$ swaps. Thus, the complexity is $O(n log n)$
 
-.   .   .
+## Quick Sort Complexity (2)
 
 **Worst case scenario:**
 This is when the pivot is the smallest or largest element. This means one of the
