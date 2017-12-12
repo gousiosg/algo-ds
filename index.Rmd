@@ -121,11 +121,11 @@ teacher to arrange a case-specific deadline.
 | 3 | 1 | [Trees: basic concepts and binary Trees](trees.html) | JH | Red-Black Trees ([jupyter](assignment-rbtrees.ipynb), [html](assignment-rbtrees.html)) (12/12/2017) |
 | 3 | 2 | [More Trees: AVL and B+ Trees](trees.html) | JH | |
 | 4 | 1 | [Graphs](graphs_1.html) (Representation and Traversal) | PK | Graph algorithms ([jupyter](assignment-graphs.ipynb), [html](assignment-graphs.html)) (9/01/2018)|
-| 4 | 2 | [Graph algorithms](graphs_2.html) (Topological sorting, Centrality) | PK ||
-| 5 | 1 | Sorting | JH | Searching ([jupyter](assignment-searching.ipynb), [html](assignment-lists.html)) (15/01/2018)|
-| 5 | 2 | Searching | JH ||
+| 4 | 2 | [Graph algorithms](graphs_2.html) (Shortest paths, Topological sorting) | PK ||
+| 5 | 1 | [Sorting](searching-sorting-algos.html) | JH | Searching ([jupyter](assignment-searching.ipynb), [html](assignment-lists.html)) (15/01/2018)|
+| 5 | 2 | [Searching](searching-sorting-algos.html) | JH ||
 | 6 | 1 | [Strings and string search](strings.html)  | GG ||
-| 6 | 2 | Genetic algorithms  | MS ||
+| 6 | 2 | [Genetic algorithms](optimization_GAs.html)  | MS ||
 | 7 | 1 | Overall Q/A | GG ||
 | 7 | 2 | No lecture | -- ||
 

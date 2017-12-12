@@ -236,7 +236,7 @@ $$
 
 ## References
 
-* (Knuth-Morris-Pratt algorithm)[https://gist.github.com/Nicksil/5646003], by Nicksil
+* [Knuth-Morris-Pratt algorithm](https://gist.github.com/Nicksil/5646003), by Nicksil
 
 ```{r child="footer.Rmd", include=FALSE}
 ```
