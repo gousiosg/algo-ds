@@ -125,7 +125,7 @@ teacher to arrange a case-specific deadline.
 | 5 | 1 | [Sorting](searching-sorting-algos.html) | JH | Searching ([jupyter](assignment-searching.ipynb), [html](assignment-lists.html)) (15/01/2018)|
 | 5 | 2 | [Searching](searching-sorting-algos.html) | JH ||
 | 6 | 1 | [Strings and string search](strings.html)  | GG ||
-| 6 | 2 | [Genetic algorithms](optimization_GAs.html)  | MS ||
+| 6 | 2 | [Genetic algorithms](optimizations.html)  | MS ||
 | 7 | 1 | Overall Q/A | GG ||
 | 7 | 2 | No lecture | -- ||
 
