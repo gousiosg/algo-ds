@@ -9,11 +9,11 @@ author: |
   | Software Engineering Research Group
 date: "`r Sys.Date()`"
 output: revealjs::revealjs_presentation
-bibliography: bibliography.bib
-csl: ieee.csl
+bibliography: ./../bibliography.bib
+csl: ./../ieee.csl
 ---
 
-```{r child="header.Rmd", include=FALSE}
+```{r child="./../header.Rmd", include=FALSE}
 ```
 
 ## **Optimizations**
