@@ -3,7 +3,7 @@ title: |
   | **Optimizations &**
   | **Genetic Algorithms**
 author: |
-  | ![](./figs/Mozhan Soltani.jpg){width=12%}
+  | ![](./figures/Mozhan Soltani.jpg){width=12%}
   | Mozhan Soltani
   | PhD student 
   | Software Engineering Research Group
@@ -19,11 +19,11 @@ csl: ieee.csl
 ## **Optimizations**
 
 
-![](./figs/time.svg){width=70%}
+![](./figures/time.svg){width=70%}
 
 
 ## **What is optimization?**
-![](./figs/function.svg){width=45%}
+![](./figures/function.svg){width=45%}
 
 - Optimization is the process of adjusting the **inputs** to or
   **characteristics** of a device, mathematical process, or experiment to find
@@ -39,7 +39,7 @@ knowing much about the process that produces the output.
 
 e.g., adjusting the antenna to get the best reception.
 
-![](./figs/TV.svg){width=45%}
+![](./figures/TV.svg){width=45%}
 
 
 ## **Dynamic vs. static optimization**
@@ -47,7 +47,7 @@ Dynamic optimization is function of time!
 
 e.g., The fastest way to work may depend on the time of day and weather.
 
-![](./figs/routes.svg){width=45%}
+![](./figures/routes.svg){width=45%}
 
 ## **Descrete or continuous optimization**
 
@@ -57,7 +57,7 @@ e.g., The fastest way to work may depend on the time of day and weather.
 e.g.: If we are deciding in what order to attack a series of tasks on a
 list, discrete optimization is employed.
 
-![Continuous function](./figs/continuous.svg){width=45%}
+![Continuous function](./figures/continuous.svg){width=45%}
 
 ## **Natural optimization methods**
 
@@ -76,7 +76,7 @@ produce the crystalline lattice, which minimizes its energy
 probability distribution.
 
 
-![](./figs/simulated.svg){width=45%}
+![](./figures/simulated.svg){width=45%}
 
 ## Copyright
 ![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
