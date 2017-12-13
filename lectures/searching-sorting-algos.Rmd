@@ -564,11 +564,11 @@ we say that these elements have a *linear* or *sequential* relationship.
 - Given that the values of lists are *indexed*,
 it is possible for us to order the items and process them in a *sequence*.
 
-- But, *how* does this operate?
+*But, how does this operate?*
 
 . . .
 
-![](./figures/sequential-search1.svg)
+![](./figures/sequential-search.svg)
 
 ## Sequential Search Implementation
 
@@ -628,28 +628,57 @@ if __name__ == "__main__":
 
 ## Complexity of Sequential Search
 
-To find the **complexity** of a sequential search algorithm,
-we need to count the number of the comparisons we need to perform
+- To find the **complexity** of a **sequential search algorithm**,
+we need to count the **number of the comparisons** we have to perform
 until we find the element we are looking for in a collection.
 
-If we make the assumption that the elements of a list are in a **random order**
-the probability to find an element in a particular position,
-is the same as if it was allocated in any other position in the list.
+- If we make the assumption that the elements of a list are in a **random order**,
+the probability to find an element in a particular position
+is the same as if the item was allocated in any other position in the list.
 
-Whereas if the elements are in an **ascending order**,
-we still need to make `n` comparisons to find a particular element,
+- Whereas if the elements are in an **ascending order**,
+we still need to make a number of comparisons to find a particular element,
 but our search will be faster if the element is not, finally, in the list.
 
 ## Comparisons in Random Assignment
 
-If an element does not belong in a randomly ordered list, `L = {2, 6, 1, ... n}`,
-we will need to conduct `n` comparisons for a sequential search.
+- If the element we are looking for
+does not belong to the randomly ordered list, $A = {2, 6, 1, ... n}$,
+we will conduct $n$ comparisons for a sequential search.
 
-On the contrary, if an element does belong in the above list,
-we will conduct either `1` comparison (best case scenario),
-or `n` comparisons (worst case scenario) to find the right element.
+- On the contrary, if the element does belong to the above list,
+we will conduct either $1$ comparison (*best case scenario*),
+or $n$ comparisons (*worst case scenario*), until we find the right element.
 
-Therefore, the complexity of the sequential search algorithm is `O(n)`.
+*Why does this happen?*
+
+## Performance of a Sequential Search - Random Assignment (1)
+
+- Assume that $L$ is a list with $n$ elements, that is, $|L| = n$.
+
+- If the elements in $L$ are completely randomly assigned,
+then the element we are looking for can be found in any position of the $L$
+with equal probability, $1/n$.
+
+- If the element is the first item of the list,
+the loop of the sequential search (see the implementation in previous slides)
+will be executed only *once* (best scenario).
+Whereas if the element is the second item,
+the loop will be executed *twice*, and so on.
+
+## Performance of a Sequential Search - Random Assignment (2)
+
+- If the element is the last item or it does not exist
+in the list at all,
+we need to execute the loop of the sequential search $n$ times (worst scenario).
+
+- The performance of the algorithm is:
+
+$\frac{1}{n}*1 + \frac{1}{n}*2 + \cdot \cdot \cdot + \frac{1}{n}*n = \frac{1 + 2 + \cdot \cdot \cdot + n}{n} = \frac{n + 1}{2}$
+
+- Where $1 + 2 + \cdot \cdot \cdot + n = \frac{n*(n + 1)}{2}$.
+
+- Therefore, the performance of a successfull sequential search will be, *on average*: $O((n + 1) / 2) = O(n)$
 
 ## Comparisons in Ordered List
 
