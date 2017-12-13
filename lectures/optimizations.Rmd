@@ -151,6 +151,27 @@ If hill climbing hits the local optimum, one approach is to restart the search!
 
 ![](./figures/localoptimum.svg){width=55%}
 
+## **Genetic Algorithms**
+Inspired by the _Darwinian evolution_ and the concept of **survival of the
+fittest**!
+![](./figures/evolution.svg){width=75%}
+
+## **Which search algorithm to use?**
+**No Free Lunch Theorem** says that the average performance of all search
+algorithms on all optimization problems is equal!
+
+_i.e._ GA performs no better than pure random search when applied to all
+problems!
+
+![](./figures/freelunch.svg){width=40%}
+
+## **So again - which search algorithm to use?**
+We can always start by simpler algorithms, e.g. hill climbing, and see if they
+are good enough for the problem at hand.
+
+If the search landscape is purturbated, more advanced algorithms which can
+effectively explore the landscape may be a better start.
+
 ## **Travelling Salesman**
     
 ![](./figures/salesman.svg){width=75%}
