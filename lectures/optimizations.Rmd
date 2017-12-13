@@ -156,6 +156,19 @@ Inspired by the _Darwinian evolution_ and the concept of **survival of the
 fittest**!
 ![](./figures/evolution.svg){width=75%}
 
+## **Genetic Algorithm Overview**
+Each point in the search space is an referred to as an _individual_
+or _chromosome_.    
+
+Individuals collectively form a _population_, which is _iteratively evolved_
+until the optimum is found or the search budget is exhausted.
+
+![](./figures/GA loop.svg){width=75%}
+
+## **Travelling Salesman**
+    
+![](./figures/salesman.svg){width=75%}
+
 ## **Which search algorithm to use?**
 **No Free Lunch Theorem** says that the average performance of all search
 algorithms on all optimization problems is equal!
@@ -171,10 +184,6 @@ are good enough for the problem at hand.
 
 If the search landscape is purturbated, more advanced algorithms which can
 effectively explore the landscape may be a better start.
-
-## **Travelling Salesman**
-    
-![](./figures/salesman.svg){width=75%}
 
 
 ## Copyright
