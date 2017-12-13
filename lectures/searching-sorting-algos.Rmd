@@ -682,23 +682,20 @@ $\frac{1}{n}*1 + \frac{1}{n}*2 + \cdot \cdot \cdot + \frac{1}{n}*n = \frac{1 + 2
 
 ## Comparisons in Ordered List
 
-If an element does not belong in a ordered list, `L = {1, 2, 3, ... n}`,
-we will need to conduct either `1` comparison (best case scenario)
-or `n` comparisons (worst case scenario) for a sequential search.
-What if we search for the element `30` in the following list?
+- If an element does **not** belong to a **ordered list**, $L = {1, 2, 3, ... n}$,
+we will need to conduct either $1$ comparison (*best case scenario*)
+or $n$ comparisons (*worst case scenario*) for a sequential search.
 
-If an element does belong in the above list,
-we will conduct either `1` comparison (best case scenario),
-or `n` comparisons (worst case scenario) to find the right element.
+- If an element does belong in the above list,
+we will conduct either $1$ comparison (*best case scenario*),
+or $n$ comparisons (*worst case scenario*) to find the right element.
 
-Therefore, the complexity of the sequential search algorithm is again `O(n)`.
-
-![](./figures/ordered-ll.png)
+- Therefore, the complexity of the sequential search algorithm is again $O(n)$.
 
 ## Binary Search
 
-We can split the list in the middle and applying the searching process in its
-both halfs. For instance, consider to find the element `54` by using the
+- We can split the list in the middle and applying the searching process in its
+both halfs. For instance, consider to find the element $54$ by using the
 so-called *divide and conquer* strategy.
 
 ![](./figures/binary.png)
@@ -711,7 +708,7 @@ so-called *divide and conquer* strategy.
 	    last = len(alist)-1
 	    found = False
 	    while first<=last and not found:
-	        midpoint = (first + last)//2
+	        midpoint = (first + last)/2
 	        if alist[midpoint] == item:
 	            found = True
 	        else:
@@ -722,24 +719,67 @@ so-called *divide and conquer* strategy.
 	    return found
 ```
 
-## Complexity of Binary Search
+## Running Example of Binary Search
 
-To estimate the complexity of a binary search algorithm,
+```python
+def main():
+	testlist = [0, 1, 2, 8, 13, 17, 19, 32, 42,]
+	print(binarySearch(testlist, 3))
+	print(binarySearch(testlist, 13))
+
+def binarySearch(alist, item):
+    first = 0
+    last = len(alist)-1
+    found = False
+    while first<=last and not found:
+        midpoint = (first + last)/2
+        if alist[midpoint] == item:
+            found = True
+        else:
+            if item < alist[midpoint]:
+                last = midpoint-1
+            else:
+                first = midpoint+1
+    return found
+
+if __name__ == "__main__":
+    main()
+```
+
+*What will be the result?*
+
+. . .
+
+```False```
+
+```True```
+
+## Complexity of Binary Search (1)
+
+- To estimate the complexity of a binary search algorithm,
 we should take into account that each comparison eliminates
 about half of the remaining elements.
 
-If we have an *ordered* list of `n` elements,
+- If we have an *ordered* list of $n$ elements,
 around $n/2$ elements will be left after the first comparison.
-After the second comparison, there will be around $n/4$, and so on.
+After the second comparison, there will be around $n/4$, and so on,
+until the list have only $1$ item.
 
-The following table helps to understand how many time we need to split a list.
+## Complexity of Binary Search (2)
 
-XX: the table to be added here.
+- The **left** number of comparisons at the last item ($i$th item)
+will be $n/2^i = 1$. Solving this for $i$,
+we will get $i = \log n$ (max number of comparisons).
 
+- Then, the *worst case* performance of the algorithm is $O(\log n)$,
+the *best case* performance is $O(1)$,
+and the *average* performance is $O(\log n)$.
 
 ## Bibliography
 
 - Problem Solving with Algorithms and Data Structures using Python, by Brad Miller and David Ranum, Luther College.
+
+- Real-World Algorithms: A Beginner's Guide, by Panos Louridas, The MIT Press, 2017.
 
 ## Copyright
 ![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
