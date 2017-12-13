@@ -698,6 +698,8 @@ or $n$ comparisons (*worst case scenario*) to find the right element.
 both halfs. For instance, consider to find the element $54$ by using the
 so-called *divide and conquer* strategy.
 
+- Note that the array should be sorted first!
+
 ![](./figures/binary.png)
 
 ## Implementation of Binary Search Algorithm
@@ -708,7 +710,7 @@ so-called *divide and conquer* strategy.
 	    last = len(alist)-1
 	    found = False
 	    while first<=last and not found:
-	        midpoint = (first + last)/2
+	        midpoint = (first + last)//2
 	        if alist[midpoint] == item:
 	            found = True
 	        else:
@@ -732,7 +734,7 @@ def binarySearch(alist, item):
     last = len(alist)-1
     found = False
     while first<=last and not found:
-        midpoint = (first + last)/2
+        midpoint = (first + last)//2
         if alist[midpoint] == item:
             found = True
         else:
@@ -753,6 +755,12 @@ if __name__ == "__main__":
 ```False```
 
 ```True```
+
+## Representation of Binary Search
+
+- Search for $31$.
+
+![](./figures/binary-search.svg)
 
 ## Complexity of Binary Search (1)
 
