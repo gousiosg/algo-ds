@@ -22,7 +22,7 @@ csl: ./../ieee.csl
 ![](./figures/time.svg){width=70%}
 
 
-## **What is optimization?**
+## **What Is Optimization?**
 ![](./figures/function.svg){width=45%}
 
 - Optimization is the process of adjusting the **inputs** to or
@@ -32,7 +32,7 @@ csl: ./../ieee.csl
   _cost/objective_ function; and the output is the _cost/fitness_.
   
 
-## **Trial and error optimization**
+## **Trial and Error Optimization**
 
 refers to the process of adjusting variables that affect the output without
 knowing much about the process that produces the output.
@@ -42,14 +42,14 @@ e.g., adjusting the antenna to get the best reception.
 ![](./figures/TV.svg){width=45%}
 
 
-## **Dynamic vs. static optimization**
+## **Dynamic vs. Static Optimization**
 Dynamic optimization is function of time!
 
 e.g., The fastest way to work may depend on the time of day and weather.
 
 ![](./figures/routes.svg){width=45%}
 
-## **Descrete or continuous optimization**
+## **Descrete or Continuous Optimization**
 
 **Discrete** variables have only a finite number of possible values, whereas
 **continuous** variables have an infinite number of possible values.
@@ -59,7 +59,7 @@ discrete optimization is employed.
 
 ![Continuous function](./figures/continuous.svg){width=45%}
 
-## **Natural optimization methods**
+## **Natural Optimization Methods**
 
 - Simulated Annealing
 - Particle swarm optimization
@@ -165,6 +165,13 @@ until the optimum is found or the search budget is exhausted.
 
 ![](./figures/GA loop.svg){width=75%}
 
+## **Evolutionary Operators in GA**
+
+**Crossover** is used to _re-combine_ the _properties_ from parents.    
+**Mutation** is applied to explore the _neighborhood_!
+
+![](./figures/operators.svg){width=75%}
+
 ## **Travelling Salesman**
     
 ![](./figures/salesman.svg){width=75%}
@@ -185,6 +192,8 @@ are good enough for the problem at hand.
 If the search landscape is purturbated, more advanced algorithms which can
 effectively explore the landscape may be a better start.
 
+In any case, **fitness/cost function** and **individual representation** are
+the two key elements to prepare when applying any search algorithm.
 
 ## Copyright
 ![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png) This
