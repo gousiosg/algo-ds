@@ -54,8 +54,8 @@ e.g., The fastest way to work may depend on the time of day and weather.
 **Discrete** variables have only a finite number of possible values, whereas
 **continuous** variables have an infinite number of possible values.
 
-e.g.: If we are deciding in what order to attack a series of tasks on a
-list, discrete optimization is employed.
+e.g.: If we are deciding in what order to attack a series of tasks on a list,
+discrete optimization is employed.
 
 ![Continuous function](./figures/continuous.svg){width=45%}
 
@@ -65,24 +65,102 @@ list, discrete optimization is employed.
 - Particle swarm optimization
 - Ant colony optimization
 - Evolutionary algorithms
-- _Genetic Algorithm_
+- Genetic Algorithm
 - etc.
 
 ## **Simulated Annealing**
 Simulates the annealing process:
 
 a substance is heated above its melting temperature and then gradually cooled to
-produce the crystalline lattice, which minimizes its energy
-probability distribution.
-
+produce the crystalline lattice, which minimizes its energy probability
+distribution.
 
 ![](./figures/simulated.svg){width=45%}
 
+## **Simulated Annealing**
+So lowering the temperature until the material is in a steady _frozen_ state can
+be preceived as searching for the temperature and thereby material state in
+which the internal particles have the minimum energy.
+
+![](./figures/searchtemp.svg){width=40%}
+
+## **Simulated Annealing (SA) Algorithm**
+    
+``` {r, eval=FALSE}
+1. Set temperature T to maximum
+2. Generate a random solution
+3. Calculate fitness/cost
+4. Generate a neighbouring solution
+5. Calculate the fitness/cost of the new solution
+6. Compare f(new) and f(old)   
+	if  f(new) < f(old) then pick the new solution!   
+	else use an acceptance rate to choose between the two!   
+		ar = e ^ [(|f(new) - f(old)|)/T], (where e = 2.7182)   
+		if ar > random, then pick the new solution! (where 0<random<1)
+7. Reset T: T = T * alpha (where 0.8<alpha<0.99)
+8. Repeat 4-7 until:   
+		either the global optimum is found  
+		or T reaches the minimum.
+```
+
+## **SA in Python** ##
+
+Individual solutions and fitness/cost function would depend on the optimization
+problem of course!   
+
+```{python, echo = TRUE, fig.width=4, fig.height=6}
+import random
+import math
+
+def anneal(solution):
+    old_cost = cost(solution)
+    T = 1.0
+    T_min = 0.00001
+    alpha = 0.9
+    while T > T_min:
+            new_solution = neighbor(solution)
+            new_cost = cost(new_solution)
+            ap = acceptance_probability(old_cost, new_cost, T)
+            if ap > random():
+                solution = new_solution
+                old_cost = new_cost
+    T = T*alpha
+    return solution, old_cost
+
+def acceptance_probability(prev_score,next_score,temperature):
+    return math.exp(abs(next_score-prev_score)/temperature)
+
+def neighbor(solution):
+    return solution.neighbor
+
+def cost(solution):
+    return solution.fitness
+```
+
+
+## **Hill Climbing**
+
+Very similar to simulated annealing!   
+The difference is that worse neighbours will never get to be selected!
+
+![](./figures/hillclimbing.svg){width=50%}
+
+## **Local and Global Optimum**
+
+If hill climbing hits the local optimum, one approach is to restart the search!
+
+![](./figures/localoptimum.svg){width=55%}
+
+## **Travelling Salesman**
+    
+![](./figures/salesman.svg){width=75%}
+
+
 ## Copyright
-![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
-This work is (c) 2017 - onwards by TU Delft and Mozhan Soltani
-and licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 
-4.0 International](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.
+![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png) This
+work is (c) 2017 - onwards by TU Delft and Mozhan Soltani and licensed under the
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.
 
 <!--html_preserve-->
 <script>
