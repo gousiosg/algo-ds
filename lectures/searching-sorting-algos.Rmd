@@ -541,13 +541,11 @@ someone prefer quick sort? *hint: space complexity*
 
 ## Search in a simple array
 
-A search returns `true` if the element is found in a collection, and
+- A search returns `true` if the element is found in a collection, and
 `false` when it does not reside in that collection.
 
-In Python, we can use the `in` operator
+- In Python, we can use the `in` operator
 to search whether an element is a member of a particular collection of items.
-
-But, how is this operation actually implemented?
 
 ```python
 >>> 15 in [3,5,2,4,1]
@@ -559,11 +557,28 @@ True
 
 ## Sequential Search
 
-When elements are stored in a collection,
-such as a list, where there are relative to each other,
-we say that these elements have a linear or sequential relationship.
-Since the values of lists are indexed,
-it is possible to order the items and process them in a sequence.
+- When elements are stored in a collection,
+such as a list, where they are relative to each other,
+we say that these elements have a *linear* or *sequential* relationship.
+
+- Given that the values of lists are *indexed*,
+it is possible for us to order the items and process them in a *sequence*.
+
+- But, *how* does this operate?
+
+. . .
+
+![](./figures/sequential-search1.svg)
+
+## Sequential Search Implementation
+
+- In summary, we start from the first item of the list
+and, then, we move from item to item,
+following the sequential order,
+until we find the item we are looking for.
+
+- If we run out of items, it means that the item we are looking for
+does not belong to the list.
 
 ```python
 def sequentialSearch(alist, item):
@@ -577,6 +592,39 @@ def sequentialSearch(alist, item):
 	
     return found
 ```
+
+## Sequential Search Running Example
+
+```python
+#!/usr/bin/env python
+
+def main():
+	testlist = [1, 2, 32, 8, 17, 19, 42, 13, 0]
+	print(sequentialSearch(testlist, 3))
+	print(sequentialSearch(testlist, 13))
+
+def sequentialSearch(alist, item):
+	pos = 0
+	found = False
+	while pos < len(alist) and not found:
+	    if alist[pos] == item:
+	        found = True
+	    else:
+	        pos = pos+1
+
+	return found
+
+if __name__ == "__main__":
+    main()
+```
+
+*What will be the result?*
+
+. . .
+
+```False```
+
+```True```
 
 ## Complexity of Sequential Search
 
