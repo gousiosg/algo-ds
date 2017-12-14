@@ -9,7 +9,6 @@ author: |
   | Software Engineering Research Group
 date: "`r Sys.Date()`"
 output: revealjs::revealjs_presentation
-bibliography: ./../bibliography.bib
 csl: ./../ieee.csl
 ---
 
@@ -68,14 +67,18 @@ discrete optimization is employed.
 - Genetic Algorithm
 - etc.
 
+![](./figures/ant.svg){width=50%}
+
 ## **Simulated Annealing**
-Simulates the annealing process:
+Simulates the annealing process:     
+![](./figures/simulated.svg){width=45%}
+
+. . . 
 
 a substance is heated above its melting temperature and then gradually cooled to
 produce the crystalline lattice, which minimizes its energy probability
 distribution.
 
-![](./figures/simulated.svg){width=45%}
 
 ## **Simulated Annealing**
 So lowering the temperature until the material is in a steady _frozen_ state can
@@ -85,18 +88,22 @@ which the internal particles have the minimum energy.
 ![](./figures/searchtemp.svg){width=40%}
 
 ## **Simulated Annealing (SA) Algorithm**
-    
-``` {r, eval=FALSE}
+```{}    
 1. Set temperature T to maximum
 2. Generate a random solution
 3. Calculate fitness/cost
 4. Generate a neighbouring solution
 5. Calculate the fitness/cost of the new solution
-6. Compare f(new) and f(old)   
-	if  f(new) < f(old) then pick the new solution!   
-	else use an acceptance rate to choose between the two!   
-		ar = e ^ [(|f(new) - f(old)|)/T], (where e = 2.7182)   
-		if ar > random, then pick the new solution! (where 0<random<1)
+6. Compare f(new) and f(old)  
+``` 
+```{python, eval=FALSE} 
+  if  f(new) < f(old) then pick the new solution!
+  else use an acceptance rate to choose between the two!   
+    ar = e^[(|f(new) - f(old)|)/T], (where e = 2.7182)   
+    if ar > random, then pick the new solution! (where 0<random<1)
+```
+		
+```{} 
 7. Reset T: T = T * alpha (where 0.8<alpha<0.99)
 8. Repeat 4-7 until:   
 		either the global optimum is found  
@@ -165,15 +172,114 @@ until the optimum is found or the search budget is exhausted.
 
 ![](./figures/GA loop.svg){width=75%}
 
-## **Evolutionary Operators in GA**
-
+## **Evolutionary Operators in GA**      
+    
 **Crossover** is used to _re-combine_ the _properties_ from parents.    
 **Mutation** is applied to explore the _neighborhood_!
 
 ![](./figures/operators.svg){width=75%}
 
-## **Travelling Salesman**
+## **Let's play a guessing game!**
+
+![](./figures/guessing.svg){width=75%}
+
+## **What do we need to implement?**
+1. Individual (_chromosome_) generator
+2. Fitness function
+3. Evolutionary operators (_only mutation for now_)
+4. Search engine
+5. Display function, showing the search progress (optional!) 
+
+## **Individual Generator and Fitness Function**
+```{python, eval=FALSE}
+class Chromosome:
+    def __init__(self, genes, fitness):
+        self.Genes = genes
+        self.Fitness = fitness
+```
+. . .     
+
+```{python, eval=FALSE}
+def generate_parent(length, geneSet, get_fitness):
+    genes = []
+    while len(genes) < length:
+        sampleSize = min(length - len(genes), len(geneSet))
+        genes.extend(random.sample(geneSet, sampleSize))
+    genes = ''.join(genes)
+    fitness = get_fitness(genes)
+    return Chromosome(genes, fitness)
+```
+. . .     
+
+```{python, eval=FALSE}  
+def get_fitness(guess, target):
+    return sum(1 for expected, actual in zip(target, guess)
+               if expected == actual)
+```
+
+## **Mutation and Search Engine**
+```{python, eval=FALSE}
+def mutate(parent, geneSet, get_fitness):
+    index = random.randrange(0, len(parent.Genes))
+    childGenes = list(parent.Genes)
+    newGene, alternate = random.sample(geneSet, 2)
+    childGenes[index] = alternate if newGene == childGenes[index] 
+                                  else newGene
+    genes = ''.join(childGenes)
+    fitness = get_fitness(genes)
+    return Chromosome(genes, fitness)
+```
+. . .     
+
+```{python, eval=FALSE}
+def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
+    random.seed()
+    bestParent = _generate_parent(targetLen, geneSet, get_fitness)
+    display(bestParent)
+    if bestParent.Fitness >= optimalFitness:
+        return bestParent
+    while True:
+        child = _mutate(bestParent, geneSet, get_fitness)
+        if bestParent.Fitness >= child.Fitness:
+            continue
+        display(child)
+        if child.Fitness >= optimalFitness:
+            return child
+        bestParent = child
+```
+
+## **Let's test it!**
+```{python, eval=FALSE}
+class GuessPasswordTest(unittest.TestCase):
+    geneset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
+
+    def test_Hello_World(self):
+        target = "Hello World!"
+        self.guess_password(target)
     
+    def test_For_I_am_fearfully_and_wonderfully_made(self):
+        target = "For I am fearfully and wonderfully made."
+        self.guess_password(target)
+
+    def guess_password(self, target):
+        startTime = datetime.datetime.now()
+
+        def fnGetFitness(genes):
+            return genetic.get_fitness(genes, target)
+
+        def fnDisplay(candidate):
+            genetic.display(candidate, startTime)
+
+        optimalFitness = len(target)
+        best = genetic.get_best(fnGetFitness, len(target), optimalFitness,
+                                self.geneset, fnDisplay)
+        self.assertEqual(best.Genes, target)
+```
+
+## **Travelling Salesman**
+
+To further practice, try implementing GA for the TS problem!
+
 ![](./figures/salesman.svg){width=75%}
 
 ## **Which search algorithm to use?**
@@ -189,11 +295,18 @@ problems!
 We can always start by simpler algorithms, e.g. hill climbing, and see if they
 are good enough for the problem at hand.
 
-If the search landscape is purturbated, more advanced algorithms which can
+If the search landscape is perturbated, more advanced algorithms which can
 effectively explore the landscape may be a better start.
 
 In any case, **fitness/cost function** and **individual representation** are
 the two key elements to prepare when applying any search algorithm.
+
+
+## **REFERENCES**
+
+* Python examples:     
+https://github.com/handcraftsman/GeneticAlgorithmsWithPython
+ 
 
 ## Copyright
 ![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png) This
