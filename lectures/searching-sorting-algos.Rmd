@@ -334,7 +334,7 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
   a strategy where we select three random values where the middle most is
   selected.
 * Compared to *Merge Sort*: Most of the work is performed at the *divide* stage 
-  while the *merge sort* conducts most of the work and the *combine*
+  while the *merge sort* conducts most of the work at the *combine*
   stage (later on this)
 
 ## Quick Sort: Partition Phase
@@ -473,8 +473,7 @@ an unbalanced BST, the complexity is $O(n^2)$
 
 **Average case scenario:**
 In average, each partitioning divides the list into two partitions and creating
-the partition takes $O(n)$, Thus
-* Average $log n$ partitioning and creating partitions takes $O(n)$
+the partition takes $O(n)$, Thus the average $log n$ partitioning and creating partitions takes $O(n)$
 
 
 ## Merge Sort
@@ -702,6 +701,12 @@ so-called *divide and conquer* strategy.
 
 ![](./figures/binary.png)
 
+## Representation of Binary Search
+
+- Search for $31$.
+
+![](./figures/binary-search.svg)
+
 ## Implementation of Binary Search Algorithm
 
 ```python
@@ -756,11 +761,7 @@ if __name__ == "__main__":
 
 ```True```
 
-## Representation of Binary Search
 
-- Search for $31$.
-
-![](./figures/binary-search.svg)
 
 ## Complexity of Binary Search (1)
 
