@@ -662,7 +662,7 @@ with equal probability, $1/n$.
 
 - If the element is the first item of the list,
 the loop of the sequential search (see the implementation in previous slides)
-will be executed only *once* (best scenario).
+will be executed only *once* (best scenario, $O(1)$).
 Whereas if the element is the second item,
 the loop will be executed *twice*, and so on.
 
@@ -670,7 +670,7 @@ the loop will be executed *twice*, and so on.
 
 - If the element is the last item or it does not exist
 in the list at all,
-we need to execute the loop of the sequential search $n$ times (worst scenario).
+we need to execute the loop of the sequential search $n$ times (worst scenario, $O(n)$).
 
 - The performance of the algorithm is:
 
@@ -678,7 +678,7 @@ $\frac{1}{n}*1 + \frac{1}{n}*2 + \cdot \cdot \cdot + \frac{1}{n}*n = \frac{1 + 2
 
 - Where $1 + 2 + \cdot \cdot \cdot + n = \frac{n*(n + 1)}{2}$.
 
-- Therefore, the performance of a successfull sequential search will be, *on average*: $O((n + 1) / 2) = O(n)$
+- Therefore, the performance of a successfull sequential search will be, *on average*: $O((n + 1) / 2)$
 
 ## Comparisons in Ordered List
 
@@ -725,7 +725,7 @@ so-called *divide and conquer* strategy.
 
 ```python
 def main():
-	testlist = [0, 1, 2, 8, 13, 17, 19, 32, 42,]
+	testlist = [0, 1, 2, 8, 13, 17, 19, 32, 42]
 	print(binarySearch(testlist, 3))
 	print(binarySearch(testlist, 13))
 
