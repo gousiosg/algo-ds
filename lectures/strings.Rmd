@@ -117,6 +117,7 @@ strings/patterns in another string.
 * **Approximate matching:** How similar are two strings?
 * **Edit script:** What is the minimal set of additions/deletions to go from one string to another?
 
+---
 
 ## The string search problem
 
@@ -166,10 +167,84 @@ if we get a mismatch!
 |Prefix - Suffix  | $\emptyset$ | $\emptyset$ | a | ab | aba | $\emptyset$
 |$p[i]$           | 0 | 0 | 1 | 2 | 3 | 0 |
 
-Using this table, if we are search for `ABABA` in `ABABCABBAC`, we can
-jump ahead to $T$ position $cur + i - jump[i] + 1$, where $i$ is the index of 
-the character in $P$ that failed to match, _i.e._ restart at `C`
+This table is used to calculate where to jump to in $T$ in case of a 
+mismatch of character position $i$ in $P$. The new position should be
+$cur + i - jump[i]$, 
+ 
 
+## The Knuth-Morris-Pratt algorithm
+
+**Q**: Let `T = ABC ABCDAB ABCDABCDABDE` and `P = ABCDABD`. What is jump table?
+
+. . .
+
+`j = [0,0,0,0,1,2,0]`
+
+. . .
+
+```
+T: ABC ABCDAB ABCDABCDABDE
+P: ABCDABD
+      |
+      mismatch
+```
+
+Step **1**: We matched $k = 3$ letters so far and $j[k] = 0$. So we can jump by $k - j[k] = 3$
+letters ahead:
+
+```
+T: ABC ABCDAB ABCDABCDABDE
+P:    ABCDABD
+      |
+      mismatch
+```
+
+Step **2**: We matched $k = 0$ letters, $j[0] = -1$. So we can jump by $k - j[k] = 1$ letter
+
+```
+T: ABC ABCDAB ABCDABCDABDE
+P:     ABCDABD
+             |
+             mismatch
+```
+
+Step **3**: We matched $k = 6$ letters, $j[6] = 2$. So we can jump by $k - j[k] = 4$ letters
+
+```
+T: ABC ABCDAB ABCDABCDABDE
+P:         ABCDABD
+             |
+             mismatch
+```
+
+Step **4**: We matched $k = 2$ letters, $j[2] = 0$. So we can jump by $k - j[k] = 2$ letters
+
+```
+T: ABC ABCDAB ABCDABCDABDE
+P:           ABCDABD
+             |
+             mismatch
+```
+
+Step **5**: We matched $k = 0$ letters, $j[0] = -1$. So we can jump by $k - j[k] = 1$ letters
+
+```
+T: ABC ABCDAB ABCDABCDABDE
+P:            ABCDABD
+                    |
+                    mismatch
+```
+
+Step **6**: We matched $k = 6$ letters, $j[6] = 2$. So we can jump by $k - j[k] = 4$ letters
+
+```
+T: ABC ABCDAB ABCDABCDABDE
+P:                ABCDABD
+                
+                    success!
+```
+
+The example above was adapted from [Jaehyun Park's String Algorithms lecture](https://web.stanford.edu/class/cs97si/10-string-algorithms.pdf)
 
 
 
@@ -193,8 +268,10 @@ def jump_table(pattern):
       j = result[j]
   return result
 ```
- 
-## The Knuth-Morris-Pratt algorithm
+
+The complexity of the jump table calculator is $O(m)$
+
+## KMP in Python
 
 ```python
 def kmp(P, T):
@@ -219,7 +296,23 @@ def kmp(P, T):
     return None
 ```
 
-## Regi
+The complexity of KMP is $O(n)$; the overall complexity of applying KMP is
+$O(m) + O(n)$, which is much better than the brute force's $O(mn)$.
+
+---
+
+## Regular expressions
+
+
+It is often not enough to detect 
+* **.** Match any character once
+* `*` Match the previous pattern 0 or more times
+* **+** Match the previous pattern 1 or more times
+* **[e-fF-M]** Match any character in the (ASCII) range `F-M` or `e-f`
+* **[^e]** Match all characters _except_ e
+* **^** and **$** Match the beginning or the end of the line, respectively
+* **()** Group together items for future reference
+* **|** Match either the left or the right group
 
 ## Levenstein distance
 
@@ -234,9 +327,10 @@ $$
 \end{cases}
 $$
 
-## References
+## RContent credit
 
 * [Knuth-Morris-Pratt algorithm](https://gist.github.com/Nicksil/5646003), by Nicksil
 
+* [String Algorithms](https://web.stanford.edu/class/cs97si/10-string-algorithms.pdf), by Jaehyun Park
 ```{r child="footer.Rmd", include=FALSE}
 ```
