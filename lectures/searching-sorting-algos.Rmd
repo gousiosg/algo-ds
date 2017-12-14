@@ -334,7 +334,7 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
   a strategy where we select three random values where the middle most is
   selected.
 * Compared to *Merge Sort*: Most of the work is performed at the *divide* stage 
-  while the *merge sort* conducts most of the work and the *combine*
+  while the *merge sort* conducts most of the work at the *combine*
   stage (later on this)
 
 ## Quick Sort: Partition Phase
@@ -473,8 +473,7 @@ an unbalanced BST, the complexity is $O(n^2)$
 
 **Average case scenario:**
 In average, each partitioning divides the list into two partitions and creating
-the partition takes $O(n)$, Thus
-* Average $log n$ partitioning and creating partitions takes $O(n)$
+the partition takes $O(n)$, Thus the average $log n$ partitioning and creating partitions takes $O(n)$
 
 
 ## Merge Sort
@@ -662,7 +661,7 @@ with equal probability, $1/n$.
 
 - If the element is the first item of the list,
 the loop of the sequential search (see the implementation in previous slides)
-will be executed only *once* (best scenario).
+will be executed only *once* (best scenario, $O(1)$).
 Whereas if the element is the second item,
 the loop will be executed *twice*, and so on.
 
@@ -670,7 +669,7 @@ the loop will be executed *twice*, and so on.
 
 - If the element is the last item or it does not exist
 in the list at all,
-we need to execute the loop of the sequential search $n$ times (worst scenario).
+we need to execute the loop of the sequential search $n$ times (worst scenario, $O(n)$).
 
 - The performance of the algorithm is:
 
@@ -678,7 +677,7 @@ $\frac{1}{n}*1 + \frac{1}{n}*2 + \cdot \cdot \cdot + \frac{1}{n}*n = \frac{1 + 2
 
 - Where $1 + 2 + \cdot \cdot \cdot + n = \frac{n*(n + 1)}{2}$.
 
-- Therefore, the performance of a successfull sequential search will be, *on average*: $O((n + 1) / 2) = O(n)$
+- Therefore, the performance of a successfull sequential search will be, *on average*: $O((n + 1) / 2)$
 
 ## Comparisons in Ordered List
 
@@ -698,7 +697,15 @@ or $n$ comparisons (*worst case scenario*) to find the right element.
 both halfs. For instance, consider to find the element $54$ by using the
 so-called *divide and conquer* strategy.
 
+- Note that the array should be sorted first!
+
 ![](./figures/binary.png)
+
+## Representation of Binary Search
+
+- Search for $31$.
+
+![](./figures/binary-search.svg)
 
 ## Implementation of Binary Search Algorithm
 
@@ -708,7 +715,7 @@ so-called *divide and conquer* strategy.
 	    last = len(alist)-1
 	    found = False
 	    while first<=last and not found:
-	        midpoint = (first + last)/2
+	        midpoint = (first + last)//2
 	        if alist[midpoint] == item:
 	            found = True
 	        else:
@@ -723,7 +730,7 @@ so-called *divide and conquer* strategy.
 
 ```python
 def main():
-	testlist = [0, 1, 2, 8, 13, 17, 19, 32, 42,]
+	testlist = [0, 1, 2, 8, 13, 17, 19, 32, 42]
 	print(binarySearch(testlist, 3))
 	print(binarySearch(testlist, 13))
 
@@ -732,7 +739,7 @@ def binarySearch(alist, item):
     last = len(alist)-1
     found = False
     while first<=last and not found:
-        midpoint = (first + last)/2
+        midpoint = (first + last)//2
         if alist[midpoint] == item:
             found = True
         else:
@@ -753,6 +760,8 @@ if __name__ == "__main__":
 ```False```
 
 ```True```
+
+
 
 ## Complexity of Binary Search (1)
 
