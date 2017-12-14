@@ -334,7 +334,7 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
   a strategy where we select three random values where the middle most is
   selected.
 * Compared to *Merge Sort*: Most of the work is performed at the *divide* stage 
-  while the *merge sort* conducts most of the work and the *combine*
+  while the *merge sort* conducts most of the work at the *combine*
   stage (later on this)
 
 ## Quick Sort: Partition Phase
@@ -473,8 +473,7 @@ an unbalanced BST, the complexity is $O(n^2)$
 
 **Average case scenario:**
 In average, each partitioning divides the list into two partitions and creating
-the partition takes $O(n)$, Thus
-* Average $log n$ partitioning and creating partitions takes $O(n)$
+the partition takes $O(n)$, Thus the average $log n$ partitioning and creating partitions takes $O(n)$
 
 
 ## Merge Sort
@@ -662,7 +661,7 @@ with equal probability, $1/n$.
 
 - If the element is the first item of the list,
 the loop of the sequential search (see the implementation in previous slides)
-will be executed only *once* (best scenario).
+will be executed only *once* (best scenario, $O(1)$).
 Whereas if the element is the second item,
 the loop will be executed *twice*, and so on.
 
@@ -670,7 +669,7 @@ the loop will be executed *twice*, and so on.
 
 - If the element is the last item or it does not exist
 in the list at all,
-we need to execute the loop of the sequential search $n$ times (worst scenario).
+we need to execute the loop of the sequential search $n$ times (worst scenario, $O(n)$).
 
 - The performance of the algorithm is:
 
@@ -678,30 +677,35 @@ $\frac{1}{n}*1 + \frac{1}{n}*2 + \cdot \cdot \cdot + \frac{1}{n}*n = \frac{1 + 2
 
 - Where $1 + 2 + \cdot \cdot \cdot + n = \frac{n*(n + 1)}{2}$.
 
-- Therefore, the performance of a successfull sequential search will be, *on average*: $O((n + 1) / 2) = O(n)$
+- Therefore, the performance of a successfull sequential search will be, *on average*: $O((n + 1) / 2)$
 
 ## Comparisons in Ordered List
 
-If an element does not belong in a ordered list, `L = {1, 2, 3, ... n}`,
-we will need to conduct either `1` comparison (best case scenario)
-or `n` comparisons (worst case scenario) for a sequential search.
-What if we search for the element `30` in the following list?
+- If an element does **not** belong to a **ordered list**, $L = {1, 2, 3, ... n}$,
+we will need to conduct either $1$ comparison (*best case scenario*)
+or $n$ comparisons (*worst case scenario*) for a sequential search.
 
-If an element does belong in the above list,
-we will conduct either `1` comparison (best case scenario),
-or `n` comparisons (worst case scenario) to find the right element.
+- If an element does belong in the above list,
+we will conduct either $1$ comparison (*best case scenario*),
+or $n$ comparisons (*worst case scenario*) to find the right element.
 
-Therefore, the complexity of the sequential search algorithm is again `O(n)`.
-
-![](./figures/ordered-ll.png)
+- Therefore, the complexity of the sequential search algorithm is again $O(n)$.
 
 ## Binary Search
 
-We can split the list in the middle and applying the searching process in its
-both halfs. For instance, consider to find the element `54` by using the
+- We can split the list in the middle and applying the searching process in its
+both halfs. For instance, consider to find the element $54$ by using the
 so-called *divide and conquer* strategy.
 
+- Note that the array should be sorted first!
+
 ![](./figures/binary.png)
+
+## Representation of Binary Search
+
+- Search for $31$.
+
+![](./figures/binary-search.svg)
 
 ## Implementation of Binary Search Algorithm
 
@@ -722,24 +726,69 @@ so-called *divide and conquer* strategy.
 	    return found
 ```
 
-## Complexity of Binary Search
+## Running Example of Binary Search
 
-To estimate the complexity of a binary search algorithm,
+```python
+def main():
+	testlist = [0, 1, 2, 8, 13, 17, 19, 32, 42]
+	print(binarySearch(testlist, 3))
+	print(binarySearch(testlist, 13))
+
+def binarySearch(alist, item):
+    first = 0
+    last = len(alist)-1
+    found = False
+    while first<=last and not found:
+        midpoint = (first + last)//2
+        if alist[midpoint] == item:
+            found = True
+        else:
+            if item < alist[midpoint]:
+                last = midpoint-1
+            else:
+                first = midpoint+1
+    return found
+
+if __name__ == "__main__":
+    main()
+```
+
+*What will be the result?*
+
+. . .
+
+```False```
+
+```True```
+
+
+
+## Complexity of Binary Search (1)
+
+- To estimate the complexity of a binary search algorithm,
 we should take into account that each comparison eliminates
 about half of the remaining elements.
 
-If we have an *ordered* list of `n` elements,
+- If we have an *ordered* list of $n$ elements,
 around $n/2$ elements will be left after the first comparison.
-After the second comparison, there will be around $n/4$, and so on.
+After the second comparison, there will be around $n/4$, and so on,
+until the list have only $1$ item.
 
-The following table helps to understand how many time we need to split a list.
+## Complexity of Binary Search (2)
 
-XX: the table to be added here.
+- The **left** number of comparisons at the last item ($i$th item)
+will be $n/2^i = 1$. Solving this for $i$,
+we will get $i = \log n$ (max number of comparisons).
 
+- Then, the *worst case* performance of the algorithm is $O(\log n)$,
+the *best case* performance is $O(1)$,
+and the *average* performance is $O(\log n)$.
 
 ## Bibliography
 
 - Problem Solving with Algorithms and Data Structures using Python, by Brad Miller and David Ranum, Luther College.
+
+- Real-World Algorithms: A Beginner's Guide, by Panos Louridas, The MIT Press, 2017.
 
 ## Copyright
 ![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png)
