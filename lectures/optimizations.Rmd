@@ -88,62 +88,127 @@ which the internal particles have the minimum energy.
 ![](./figures/searchtemp.svg){width=40%}
 
 ## **Simulated Annealing (SA) Algorithm**
-```{}    
-1. Set temperature T to maximum
+    
+1. Set temperature **$T$** to maximum
 2. Generate a random solution
 3. Calculate fitness/cost
 4. Generate a neighbouring solution
 5. Calculate the fitness/cost of the new solution
-6. Compare f(new) and f(old)  
-``` 
-```{python, eval=FALSE} 
-  if  f(new) < f(old) then pick the new solution!
-  else use an acceptance rate to choose between the two!   
-    ar = e^[(|f(new) - f(old)|)/T], (where e = 2.7182)   
-    if ar > random, then pick the new solution! (where 0<random<1)
-```
-		
-```{} 
-7. Reset T: T = T * alpha (where 0.8<alpha<0.99)
+6. Compare **$f$~(_new_)~** and **$f$~(_old_)~**      
+  **if**  the new solution is better then take it!        
+  **else** use an acceptance rate to choose between the two!       
+7. Reset **$T$**:  **$T$** * **$alpha$**       
+    (normally $0.8<$**$alpha$**$<0.99$)
 8. Repeat 4-7 until:   
 		either the global optimum is found  
-		or T reaches the minimum.
-```
+		or **$T$** reaches the minimum.
 
-## **SA in Python** ##
+## **Let's play a guessing game!**
 
-Individual solutions and fitness/cost function would depend on the optimization
-problem of course!   
+![](./figures/guessing.svg){width=75%}
 
-```{python, echo = TRUE, fig.width=4, fig.height=6}
+
+## **Implementation in Python**
+```{python , echo=TRUE}
 import random
 import math
+import datetime
 
-def anneal(solution):
-    old_cost = cost(solution)
-    T = 1.0
-    T_min = 0.00001
-    alpha = 0.9
+class Guess:
+    def __init__(self, chars, fitness):
+        self.Chars = chars
+        self.Fitness = fitness
+
+def generate_guess(length, charSet, get_fitness):
+    chars = []
+    while len(chars) < length:
+        sampleSize = min(length - len(chars), len(charSet))
+        chars.extend(random.sample(charSet, sampleSize))
+    chars = ''.join(chars)
+    fitness = get_fitness(chars)
+    return Guess(chars, fitness)
+
+def get_fitness(guess, target):
+    return sum(1 for expected, actual in zip(target, guess)
+               if expected == actual)
+
+def display(candidate, startTime):
+    timeDiff = datetime.datetime.now() - startTime
+    print("{}\t{}\t{}".format(
+        candidate.Chars, candidate.Fitness, timeDiff))
+
+def get_neighbor(parent, charSet, get_fitness):
+    index = random.randrange(0, len(parent.Chars))
+    childChars = list(parent.Chars)
+    newChar, alternate = random.sample(charSet, 2)
+    childChars[index] = alternate if newChar == childChars[index] else newChar
+    chars = ''.join(childChars)
+    fitness = get_fitness(chars)
+    return Guess(chars, fitness)
+
+def acceptance_probability(prev_score, next_score, temperature):
+    return math.exp(temperature/(1+temperature))
+
+def anneal(get_fitness, targetLen, optimalFitness, charSet, display, temperature, min_temp, alpha):
+    bestGuess = generate_guess(targetLen, charSet, get_fitness)
+    display(bestGuess)
+    best_fitness = bestGuess.Fitness
+    if bestGuess.Fitness >= optimalFitness:
+        return bestGuess
+    T = temperature
+    T_min = min_temp
     while T > T_min:
-            new_solution = neighbor(solution)
-            new_cost = cost(new_solution)
-            ap = acceptance_probability(old_cost, new_cost, T)
-            if ap > random():
-                solution = new_solution
-                old_cost = new_cost
-    T = T*alpha
-    return solution, old_cost
-
-def acceptance_probability(prev_score,next_score,temperature):
-    return math.exp(abs(next_score-prev_score)/temperature)
-
-def neighbor(solution):
-    return solution.neighbor
-
-def cost(solution):
-    return solution.fitness
+        new_solution = get_neighbor(bestGuess, charSet, get_fitness)
+        new_fitness = new_solution.Fitness
+        if new_fitness == optimalFitness:
+            return new_solution
+        if new_fitness > best_fitness:
+            bestGuess = new_solution
+            best_fitness = new_fitness
+        else:
+            ar = acceptance_probability(best_fitness, new_fitness, T)
+            if ar > random.uniform(2,3):
+                bestGuess = new_solution
+                best_fitness = new_fitness
+        T = T*alpha
+        display(bestGuess)
+    return bestGuess
 ```
+     
 
+## **Let's test it!** ##
+
+```{python , eval=FALSE}
+import datetime
+import unittest
+import sa
+
+class GuessPasswordTest(unittest.TestCase):
+    charset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
+
+    def test_Hello_World(self):
+        target = "Hello World!"
+        self.guess_password(target)
+
+    def guess_password(self, target):
+        startTime = datetime.datetime.now()
+
+        def fnGetFitness(chars):
+            return sa.get_fitness(chars, target)
+
+        def fnDisplay(candidate):
+            sa.display(candidate, startTime)
+
+        optimalFitness = len(target)
+        best = sa.anneal(fnGetFitness, len(target), optimalFitness,
+                                self.charset, fnDisplay, 100000.0, 0.00001, 0.99 )
+        self.assertEqual(best.Chars, target)
+
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
 
 ## **Hill Climbing**
 
@@ -179,7 +244,7 @@ until the optimum is found or the search budget is exhausted.
 
 ![](./figures/operators.svg){width=75%}
 
-## **Let's play a guessing game!**
+## **Let's play the same guessing game!**
 
 ![](./figures/guessing.svg){width=75%}
 
@@ -276,6 +341,11 @@ class GuessPasswordTest(unittest.TestCase):
         self.assertEqual(best.Genes, target)
 ```
 
+## What was missing in the implementation? ##
+- implementation of selection
+- implementation of crossover
+- implementation of insertion
+
 ## **Travelling Salesman**
 
 To further practice, try implementing GA for the TS problem!
@@ -304,7 +374,7 @@ the two key elements to prepare when applying any search algorithm.
 
 ## **REFERENCES**
 
-* Python examples:     
+* The Python implementation is partially borrowed from:     
 https://github.com/handcraftsman/GeneticAlgorithmsWithPython
  
 
