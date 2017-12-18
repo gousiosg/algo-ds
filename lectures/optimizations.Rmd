@@ -3,7 +3,6 @@ title: |
   | **Optimizations &**
   | **Genetic Algorithms**
 author: |
-  | ![](./figures/Mozhan Soltani.jpg){width=12%}
   | Mozhan Soltani
   | PhD student 
   | Software Engineering Research Group
@@ -15,7 +14,7 @@ csl: ./../ieee.csl
 ```{r child="./../header.Rmd", include=FALSE}
 ```
 
-## **Optimizations**
+## **What is optimization about?**
 
 
 ![](./figures/time.svg){width=70%}
@@ -26,9 +25,9 @@ csl: ./../ieee.csl
 
 - Optimization is the process of adjusting the **inputs** to or
   **characteristics** of a device, mathematical process, or experiment to find
-  the minimum or maximum output.
-- The input consists of variables; the process or function is known as the
-  _cost/objective_ function; and the output is the _cost/fitness_.
+  the minimum or maximum output.      
+  e.g., adjusting the screen light so it takes as little power as possible to
+  produce sufficient light!
   
 
 ## **Trial and Error Optimization**
@@ -48,7 +47,7 @@ e.g., The fastest way to work may depend on the time of day and weather.
 
 ![](./figures/routes.svg){width=45%}
 
-## **Descrete or Continuous Optimization**
+## **Discrete or Continuous Optimization**
 
 **Discrete** variables have only a finite number of possible values, whereas
 **continuous** variables have an infinite number of possible values.
@@ -60,14 +59,58 @@ discrete optimization is employed.
 
 ## **Natural Optimization Methods**
 
-- Simulated Annealing
-- Particle swarm optimization
-- Ant colony optimization
-- Evolutionary algorithms
-- Genetic Algorithm
-- etc.
+- **Particle swarm optimization**         
+  -- inspired by the social behavior of animals, such as bird flocking or fish
+    schooling       
+- **Ant colony optimization**
+- **Simulated Annealing**          
+  -- inspired by the anealing process for material
+- **Genetic Algorithm**     
+  -- inspired by the natural selection mechanism where the fittest entity has a
+    higher chance to survive.  
+- **_etc_**.
 
-![](./figures/ant.svg){width=50%}
+## **Particle Swarm Optimization - _PSO_**
+PSO simulates the behavior of bird flocking.    
+**_Suppose_**: a group of birds are randomly searching food in an
+area. There is only one piece of food in the area being searched.
+No bird knows where the food is.
+But they know how far the food is in each iteration.
+An effective way to find the food is to **follow the bird which is nearest to
+the food.**
+
+![](./figures/bird.svg){width=55%}
+
+## **PSO**
+PSO is a population based algorithm that uses a number of _particles_ which form
+a swarm to search for an optimum.     
+
+Each particle adjusts their flying based on their own and other particle's
+experience until the swarm finally **finds the optimum** or the **search
+budget is exhausted**.      
+
+_Search budget_ could be based on time, number of iterations, etc.
+
+## **PSO Algorithm** ##
+1. Begin with a random population of particles _(solutions)_.     
+2. For each particle, calculate the fitness score.      
+  -- Fitness score shows the distance from the optimum                   
+  -- If the fitness score is better than the value the row has ever had, update
+  *pBest*.
+3. Choose the particle with the best fitness score.
+4. For each particle, calculate the **velocity**, and update the **position** of
+  the particle accordingly.
+  -- Velocity is calculated based on the position of the current particle and
+   the particle with the best fitness value.
+5. repeat 2-4 until global optimum is found, or search budget is
+   exhausted.       
+   
+   
+## **More on PSO**   
+For further details, check out the following:     
+- http://www.swarmintelligence.org/tutorials.php         
+- https://ch.mathworks.com/help/gads/particle-swarm-optimization-algorithm.html   
+
 
 ## **Simulated Annealing**
 Simulates the annealing process:     
@@ -376,6 +419,9 @@ the two key elements to prepare when applying any search algorithm.
 
 * The Python implementation is partially borrowed from:     
 https://github.com/handcraftsman/GeneticAlgorithmsWithPython
+
+* Details on _PSO_ is taken from:
+http://www.swarmintelligence.org/tutorials.php
  
 
 ## Copyright
