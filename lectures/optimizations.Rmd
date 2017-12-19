@@ -60,14 +60,13 @@ discrete optimization is employed.
 ## **Natural Optimization Methods**
 
 - **Particle swarm optimization**         
-  -- inspired by the social behavior of animals, such as bird flocking or fish
-    schooling       
-- **Ant colony optimization**
-- **Simulated Annealing**          
-  -- inspired by the anealing process for material
+  -- inspired by flocking birds/schooling fish           
+- **Ant colony optimization**       
+  -- inspired by the social behavior of ants      
+- **Simulated Annealing**             
+  -- inspired by the anealing process for material        
 - **Genetic Algorithm**     
-  -- inspired by the natural selection mechanism where the fittest entity has a
-    higher chance to survive.  
+  -- inspired by the Darwinian evolution process     
 - **_etc_**.
 
 ## **Particle Swarm Optimization - _PSO_**
@@ -94,22 +93,34 @@ _Search budget_ could be based on time, number of iterations, etc.
 ## **PSO Algorithm** ##
 1. Begin with a random population of particles _(solutions)_.     
 2. For each particle, calculate the fitness score.      
-  -- Fitness score shows the distance from the optimum                   
+  -- Fitness score shows the distance from the optimum                     
   -- If the fitness score is better than the value the row has ever had, update
-  *pBest*.
+  **pBest**.     
 3. Choose the particle with the best fitness score.
 4. For each particle, calculate the **velocity**, and update the **position** of
-  the particle accordingly.
-  -- Velocity is calculated based on the position of the current particle and
-   the particle with the best fitness value.
+  the particle accordingly.      
 5. repeat 2-4 until global optimum is found, or search budget is
    exhausted.       
-   
+
+## **How to calculate position and velocity?**
+**$x$**^$i$^~$(k+1)$~ $=$ $x$^$i$^~$k$~ $+$ $v$^$i$^~$(k+1)$~             
+**$v$**^$i$^~$(k+1)$~ $=$ $w$~$k$~**$v$**^$i$^~$k$~ $+$ $c$~$1$~$r$~$1$~ (**$p$**^$i$^~$k$~ $-$ **$x$**^$i$^~$k$~) $+$ $c$~$2$~$r$~$2$~ (**$p$**^$g$^~$k$~ $-$ **$x$**^$i$^~$k$~)                
+
+. . .
+     
+**where:**               
+**$p$**^$i$^~$(k)$~ $=$ best position particle $i$ has had                
+**$p$**^$g$^~$(k)$~ $=$ best particle position        
+$w$~$k$~ $=$ constant inertia weight       
+$c$~$1$~, $c$~$2$~ $=$  learning factors (usually $c$~$1$~ $=$ $c$~$2$~ $=$ $2$)          
+$r$~$1$~, $r$~$2$~ $=$  random numbers between $0$ and $1$      
+
+## **Let's see an example!**    
    
 ## **More on PSO**   
-For further details, check out the following:     
-- http://www.swarmintelligence.org/tutorials.php         
-- https://ch.mathworks.com/help/gads/particle-swarm-optimization-algorithm.html   
+For more on PSO, check out the following:  
+              
+ - https://ch.mathworks.com/help/gads/particle-swarm-optimization-algorithm.html     
 
 
 ## **Simulated Annealing**
@@ -125,7 +136,7 @@ distribution.
 
 ## **Simulated Annealing**
 So lowering the temperature until the material is in a steady _frozen_ state can
-be preceived as searching for the temperature and thereby material state in
+be preceived as searching for the material state in
 which the internal particles have the minimum energy.
 
 ![](./figures/searchtemp.svg){width=40%}
@@ -151,12 +162,8 @@ which the internal particles have the minimum energy.
 ![](./figures/guessing.svg){width=75%}
 
 
-## **Implementation in Python**
+## **Guess implementation**
 ```{python , echo=TRUE}
-import random
-import math
-import datetime
-
 class Guess:
     def __init__(self, chars, fitness):
         self.Chars = chars
@@ -170,16 +177,10 @@ def generate_guess(length, charSet, get_fitness):
     chars = ''.join(chars)
     fitness = get_fitness(chars)
     return Guess(chars, fitness)
+```
+## **How to get a neighbor solution?**     
 
-def get_fitness(guess, target):
-    return sum(1 for expected, actual in zip(target, guess)
-               if expected == actual)
-
-def display(candidate, startTime):
-    timeDiff = datetime.datetime.now() - startTime
-    print("{}\t{}\t{}".format(
-        candidate.Chars, candidate.Fitness, timeDiff))
-
+```{python , echo=TRUE}
 def get_neighbor(parent, charSet, get_fitness):
     index = random.randrange(0, len(parent.Chars))
     childChars = list(parent.Chars)
@@ -188,10 +189,28 @@ def get_neighbor(parent, charSet, get_fitness):
     chars = ''.join(childChars)
     fitness = get_fitness(chars)
     return Guess(chars, fitness)
+```
+    
+## **Fitness function and acceptance rate**    
 
-def acceptance_probability(prev_score, next_score, temperature):
+Reward a guess for every correct character in the right place!       
+```{python , echo=TRUE}   
+def get_fitness(guess, target):
+    return sum(1 for expected, actual in zip(target, guess)
+               if expected == actual)
+```        
+. . .      
+   
+As the temprature goes down (search progresses), the probability of
+accepting a worse guess also goes down!   
+```{python , eval=FALSE}
+def acceptance_probability(prev_score, next_score, temperature):     
     return math.exp(temperature/(1+temperature))
+``` 
 
+## **Implementation of the annealing process**  
+
+```{python , echo=TRUE}
 def anneal(get_fitness, targetLen, optimalFitness, charSet, display, temperature, min_temp, alpha):
     bestGuess = generate_guess(targetLen, charSet, get_fitness)
     display(bestGuess)
@@ -217,15 +236,11 @@ def anneal(get_fitness, targetLen, optimalFitness, charSet, display, temperature
         display(bestGuess)
     return bestGuess
 ```
-     
+    
 
-## **Let's test it!** ##
+## **Let's now guess a password, using the SA algorithm!** ##
 
 ```{python , eval=FALSE}
-import datetime
-import unittest
-import sa
-
 class GuessPasswordTest(unittest.TestCase):
     charset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
 
@@ -246,25 +261,22 @@ class GuessPasswordTest(unittest.TestCase):
         best = sa.anneal(fnGetFitness, len(target), optimalFitness,
                                 self.charset, fnDisplay, 100000.0, 0.00001, 0.99 )
         self.assertEqual(best.Chars, target)
-
-
-
-if __name__ == '__main__':
-    unittest.main()
 ```
 
-## **Hill Climbing**
+## **Hill Climbing:**     
+**a very similar optimziation algorithm to SA**
 
-Very similar to simulated annealing!   
 The difference is that worse neighbours will never get to be selected!
 
 ![](./figures/hillclimbing.svg){width=50%}
 
-## **Local and Global Optimum**
-
-If hill climbing hits the local optimum, one approach is to restart the search!
+## **Local Optimum**
 
 ![](./figures/localoptimum.svg){width=55%}
+
+. . .       
+
+If hill climbing hits the local optimum, one approach is to restart the search!
 
 ## **Genetic Algorithms**
 Inspired by the _Darwinian evolution_ and the concept of **survival of the
@@ -325,7 +337,10 @@ def get_fitness(guess, target):
                if expected == actual)
 ```
 
-## **Mutation and Search Engine**
+## **Mutation**
+
+Similar to the one used in SA!
+
 ```{python, eval=FALSE}
 def mutate(parent, geneSet, get_fitness):
     index = random.randrange(0, len(parent.Genes))
@@ -337,7 +352,9 @@ def mutate(parent, geneSet, get_fitness):
     fitness = get_fitness(genes)
     return Chromosome(genes, fitness)
 ```
-. . .     
+. . .  
+
+## **Search Engine**   
 
 ```{python, eval=FALSE}
 def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
@@ -361,12 +378,8 @@ def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
 class GuessPasswordTest(unittest.TestCase):
     geneset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
 
-    def test_Hello_World(self):
+    def test_GA(self):
         target = "Hello World!"
-        self.guess_password(target)
-    
-    def test_For_I_am_fearfully_and_wonderfully_made(self):
-        target = "For I am fearfully and wonderfully made."
         self.guess_password(target)
 
     def guess_password(self, target):
@@ -395,6 +408,13 @@ To further practice, try implementing GA for the TS problem!
 
 ![](./figures/salesman.svg){width=75%}
 
+## **What are the _similarities_ and _differences_ among the algorithms?**
+
+- individual representation
+- fitness function
+- random initialization
+- local/global approaches
+
 ## **Which search algorithm to use?**
 **No Free Lunch Theorem** says that the average performance of all search
 algorithms on all optimization problems is equal!
@@ -410,9 +430,6 @@ are good enough for the problem at hand.
 
 If the search landscape is perturbated, more advanced algorithms which can
 effectively explore the landscape may be a better start.
-
-In any case, **fitness/cost function** and **individual representation** are
-the two key elements to prepare when applying any search algorithm.
 
 
 ## **REFERENCES**
