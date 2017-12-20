@@ -30,97 +30,56 @@ csl: ./../ieee.csl
   produce sufficient light!
   
 
+## **Dynamic Optimization**
+Optimization depends on secondary variables like time!       
+
+**_examples:_**    
+- The fastest way to work may depend on the time of day and weather.     
+- The cheapest flight ticket depends on the season of the year.   
+![](./figures/routes.svg){width=45%}
+   
+Any other situation you can think of?    
+
+## **Static Optimization**
+
+Finding the minimum for $f(x) = x^2$ does not depend on a secondary variable like time!    
+
+It is less complex than dynamic optimization!
+
+![](./figures/x2.svg){width=45%}
+
+## **Discrete or Continuous Optimization**
+
+**Discrete** variables have a finite number of possible values        
+_e.g.:_ the order to do a series of tasks on a list to take as little time
+as possible.        
+**Continuous** variables have an infinite number of possible values,
+like below:                
+![Continuous function](./figures/continuous.svg){width=45%}
+
 ## **Trial and Error Optimization**
 
 refers to the process of adjusting variables that affect the output without
 knowing much about the process that produces the output.
 
-e.g., adjusting the antenna to get the best reception.
+**_examples:_**     
+adjusting the antenna to get the best reception.
 
-![](./figures/TV.svg){width=45%}
+![](./figures/TV2.svg){width=35%}
 
-
-## **Dynamic vs. Static Optimization**
-Dynamic optimization is function of time!
-
-e.g., The fastest way to work may depend on the time of day and weather.
-
-![](./figures/routes.svg){width=45%}
-
-## **Discrete or Continuous Optimization**
-
-**Discrete** variables have only a finite number of possible values, whereas
-**continuous** variables have an infinite number of possible values.
-
-e.g.: If we are deciding in what order to attack a series of tasks on a list,
-discrete optimization is employed.
-
-![Continuous function](./figures/continuous.svg){width=45%}
+mixing chemicals to find new drugs, _e.g. antibiotics_.
 
 ## **Natural Optimization Methods**
 
-- **Particle swarm optimization**         
+- **Simulated Annealing - _SA_**             
+  -- inspired by the anealing process for material      
+- **Particle Swarm Optimization - _PSO_**         
   -- inspired by flocking birds/schooling fish           
-- **Ant colony optimization**       
-  -- inspired by the social behavior of ants      
-- **Simulated Annealing**             
-  -- inspired by the anealing process for material        
-- **Genetic Algorithm**     
+- **Ant Colony Optimization - _ACO_**       
+  -- inspired by the social behavior of ants              
+- **Genetic Algorithm - _GA_**     
   -- inspired by the Darwinian evolution process     
-- **_etc_**.
-
-## **Particle Swarm Optimization - _PSO_**
-PSO simulates the behavior of bird flocking.    
-**_Suppose_**: a group of birds are randomly searching food in an
-area. There is only one piece of food in the area being searched.
-No bird knows where the food is.
-But they know how far the food is in each iteration.
-An effective way to find the food is to **follow the bird which is nearest to
-the food.**
-
-![](./figures/bird.svg){width=55%}
-
-## **PSO**
-PSO is a population based algorithm that uses a number of _particles_ which form
-a swarm to search for an optimum.     
-
-Each particle adjusts their flying based on their own and other particle's
-experience until the swarm finally **finds the optimum** or the **search
-budget is exhausted**.      
-
-_Search budget_ could be based on time, number of iterations, etc.
-
-## **PSO Algorithm** ##
-1. Begin with a random population of particles _(solutions)_.     
-2. For each particle, calculate the fitness score.      
-  -- Fitness score shows the distance from the optimum                     
-  -- If the fitness score is better than the value the row has ever had, update
-  **pBest**.     
-3. Choose the particle with the best fitness score.
-4. For each particle, calculate the **velocity**, and update the **position** of
-  the particle accordingly.      
-5. repeat 2-4 until global optimum is found, or search budget is
-   exhausted.       
-
-## **How to calculate position and velocity?**
-**$x$**^$i$^~$(k+1)$~ $=$ $x$^$i$^~$k$~ $+$ $v$^$i$^~$(k+1)$~             
-**$v$**^$i$^~$(k+1)$~ $=$ $w$~$k$~**$v$**^$i$^~$k$~ $+$ $c$~$1$~$r$~$1$~ (**$p$**^$i$^~$k$~ $-$ **$x$**^$i$^~$k$~) $+$ $c$~$2$~$r$~$2$~ (**$p$**^$g$^~$k$~ $-$ **$x$**^$i$^~$k$~)                
-
-. . .
-     
-**where:**               
-**$p$**^$i$^~$(k)$~ $=$ best position particle $i$ has had                
-**$p$**^$g$^~$(k)$~ $=$ best particle position        
-$w$~$k$~ $=$ constant inertia weight       
-$c$~$1$~, $c$~$2$~ $=$  learning factors (usually $c$~$1$~ $=$ $c$~$2$~ $=$ $2$)          
-$r$~$1$~, $r$~$2$~ $=$  random numbers between $0$ and $1$      
-
-## **Let's see an example!**    
-   
-## **More on PSO**   
-For more on PSO, check out the following:  
-              
- - https://ch.mathworks.com/help/gads/particle-swarm-optimization-algorithm.html     
+- **_etc_**. 
 
 
 ## **Simulated Annealing**
@@ -163,39 +122,50 @@ which the internal particles have the minimum energy.
 
 
 ## **Guess implementation**
-```{python , echo=TRUE}
+
+Generate a random string which has the same size with the target string
+_(password)_.
+```{python}
 class Guess:
     def __init__(self, chars, fitness):
+        # a guess is made of characters and has a fitness score
         self.Chars = chars
         self.Fitness = fitness
 
 def generate_guess(length, charSet, get_fitness):
     chars = []
-    while len(chars) < length:
-        sampleSize = min(length - len(chars), len(charSet))
-        chars.extend(random.sample(charSet, sampleSize))
+    #pick (length) random elements from the charSet (set of genes)
+    chars.extend(random.sample(charSet, length))
+    #turn the assembled set of characters into a string
     chars = ''.join(chars)
     fitness = get_fitness(chars)
     return Guess(chars, fitness)
 ```
 ## **How to get a neighbor solution?**     
 
-```{python , echo=TRUE}
+A neighbor solution has a minimal difference with the current one!
+```{python}
 def get_neighbor(parent, charSet, get_fitness):
+    # get a random index
     index = random.randrange(0, len(parent.Chars))
+    #turn the parent characters into a list
     childChars = list(parent.Chars)
+    #pick 2 random characters from the possible set of genes
     newChar, alternate = random.sample(charSet, 2)
+    #replace the index character with one of the randomly found genes
     childChars[index] = alternate if newChar == childChars[index] else newChar
     chars = ''.join(childChars)
+    #get the fitness of the newly generated character set
     fitness = get_fitness(chars)
     return Guess(chars, fitness)
 ```
     
 ## **Fitness function and acceptance rate**    
-
+      
 Reward a guess for every correct character in the right place!       
 ```{python , echo=TRUE}   
 def get_fitness(guess, target):
+    #increment the fitness score by 1 for every matching character
     return sum(1 for expected, actual in zip(target, guess)
                if expected == actual)
 ```        
@@ -210,56 +180,70 @@ def acceptance_probability(prev_score, next_score, temperature):
 
 ## **Implementation of the annealing process**  
 
-```{python , echo=TRUE}
+Until the temperature hits the minimum, keep searching for better neighbors,
+and somtimes allow worse ones to enter the loop.
+```{python}
 def anneal(get_fitness, targetLen, optimalFitness, charSet, display, temperature, min_temp, alpha):
+    #make the random initial guess
     bestGuess = generate_guess(targetLen, charSet, get_fitness)
     display(bestGuess)
     best_fitness = bestGuess.Fitness
+    #If the guess is already perfect then no need to go on with the search!
     if bestGuess.Fitness >= optimalFitness:
         return bestGuess
+    #Set the temperatures
     T = temperature
     T_min = min_temp
+    #until the temperature reaches the minimum, search!
     while T > T_min:
         new_solution = get_neighbor(bestGuess, charSet, get_fitness)
         new_fitness = new_solution.Fitness
+        #If the generated neighbor is already good, return it.
         if new_fitness == optimalFitness:
             return new_solution
+        #If the generated neighbor is better, move on to it.
         if new_fitness > best_fitness:
             bestGuess = new_solution
             best_fitness = new_fitness
         else:
             ar = acceptance_probability(best_fitness, new_fitness, T)
+            #let the acceptance rate recommend whether to switch to the worse or not.
             if ar > random.uniform(2,3):
                 bestGuess = new_solution
                 best_fitness = new_fitness
+        #the temperature decreases
         T = T*alpha
         display(bestGuess)
     return bestGuess
 ```
     
 
-## **Let's now guess a password, using the SA algorithm!** ##
+## **Let's now guess a password, using SA!** ##
 
 ```{python , eval=FALSE}
 class GuessPasswordTest(unittest.TestCase):
+    # The set of possible genes to choose randomly from.
     charset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
-
-    def test_Hello_World(self):
+    def test_sa(self):
+        # The target string to search for
         target = "Hello World!"
         self.guess_password(target)
-
+```  
+```{python , eval=FALSE}
     def guess_password(self, target):
         startTime = datetime.datetime.now()
-
+        
+        #wrapper for the fitness function to pass to GA
         def fnGetFitness(chars):
             return sa.get_fitness(chars, target)
 
-        def fnDisplay(candidate):
-            sa.display(candidate, startTime)
-
+        #optimal fitness score based on the length of the target string
         optimalFitness = len(target)
+        
+        #let's search for it
         best = sa.anneal(fnGetFitness, len(target), optimalFitness,
                                 self.charset, fnDisplay, 100000.0, 0.00001, 0.99 )
+        #The search result must be the same as the target string!
         self.assertEqual(best.Chars, target)
 ```
 
@@ -277,6 +261,98 @@ The difference is that worse neighbours will never get to be selected!
 . . .       
 
 If hill climbing hits the local optimum, one approach is to restart the search!
+
+## **Particle Swarm Optimization - _PSO_**
+PSO simulates the behavior of bird flocking.    
+**_Suppose_**: a group of birds are randomly searching food in an area. There is
+only one piece of food in the area being searched. No bird knows where the food
+is. But they know how far the food is in each iteration. An effective way to
+find the food is to **follow the bird which is nearest to the food.**
+
+![](./figures/bird.svg){width=55%}
+
+## **PSO**
+PSO is a population based algorithm that uses a number of _particles_ which form
+a swarm to search for an optimum.     
+
+Each particle adjusts their flying based on their own and other particle's
+experience until the swarm finally **finds the optimum** or the **search budget
+is exhausted**.      
+
+_Search budget_ could be based on time, number of iterations, etc.
+
+## **PSO Algorithm** ##
+1. Begin with a random population of particles _(solutions)_.     
+2. For each particle, calculate the fitness score.      
+  -- Fitness score shows the distance from the optimum                     
+  -- If the fitness score is better than the value the row has ever had, update
+  **pBest**.     
+3. Choose the particle with the best fitness score.
+4. For each particle, calculate the **velocity**, and update the **position** of
+  the particle accordingly.      
+5. repeat 2-4 until global optimum is found, or search budget is
+   exhausted.       
+
+## **How to calculate position and velocity?**
+**$x$**^$i$^~$(k+1)$~ $=$ $x$^$i$^~$k$~ $+$ $v$^$i$^~$(k+1)$~             
+**$v$**^$i$^~$(k+1)$~ $=$ $w$~$k$~**$v$**^$i$^~$k$~ $+$ $c$~$1$~$r$~$1$~
+(**$p$**^$i$^~$k$~ $-$ **$x$**^$i$^~$k$~) $+$ $c$~$2$~$r$~$2$~
+(**$p$**^$g$^~$k$~ $-$ **$x$**^$i$^~$k$~)                
+
+. . .
+     
+**where:**               
+**$p$**^$i$^~$(k)$~ $=$ best position particle $i$ has had                
+**$p$**^$g$^~$(k)$~ $=$ best particle position        
+$w$~$k$~ $=$ constant inertia weight       
+$c$~$1$~, $c$~$2$~ $=$  learning factors (usually $c$~$1$~ $=$ $c$~$2$~ $=$
+$2$)          
+$r$~$1$~, $r$~$2$~ $=$  random numbers between $0$ and $1$      
+
+## **Let's find the minimum for $f(x) = x^2$ !**      
+![](./figures/x2.svg){width=45%}     
+
+We can use the Python library called _PySwarms:_     
+https://github.com/ljvmiranda921/pyswarms
+   
+## **SOP example, using _PySwarms_**
+
+Set up the PSO parameters, then call an optimizer.     
+ 
+You could plot the search progress and animate it _(optional)_.
+
+```{python, eval=FALSE}
+import pyswarms as ps
+import matplotlib.pyplot as plt
+from pyswarms.utils.functions import single_obj as fx
+from pyswarms.utils.environments import PlotEnvironment
+
+#Set-up optimizer
+options = {'c1':0.5, 'c2':0.3, 'w':0.9}
+optimizer = ps.single.GlobalBestPSO(n_particles=10, 
+                                    dimensions=3, 
+                                    options=options)
+#Initialize plot environment
+plt_env = PlotEnvironment(optimizer, fx.sphere_func, 350)
+#Plot the cost
+plt_env.plot_cost(figsize=(8,6));
+plt.show()
+#animate the search process
+anim = plt_env.plot_particles2D(limits=((-1.2,1.2),(-1.2,1.2)))
+anim.save('animation.gif', writer='imagemagick', fps=15)
+```  
+
+## **What does it look like?** 
+![](./figures/swarmplot.svg)   
+  
+## **What does it look like?**    
+![Swarm optimization](./figures/swarm.gif) 
+   
+## **More on PSO**   
+For more on PSO, check out the following:  
+              
+ - https://ch.mathworks.com/help/gads/particle-swarm-optimization-algorithm.html
+
 
 ## **Genetic Algorithms**
 Inspired by the _Darwinian evolution_ and the concept of **survival of the
@@ -434,12 +510,14 @@ effectively explore the landscape may be a better start.
 
 ## **REFERENCES**
 
-* The Python implementation is partially borrowed from:     
+* The GA implementation is partially borrowed from:          
 https://github.com/handcraftsman/GeneticAlgorithmsWithPython
 
-* Details on _PSO_ is taken from:
+* Details on _PSO_ is taken from:       
 http://www.swarmintelligence.org/tutorials.php
- 
+
+* Optimizing a sphere example is from:        
+https://github.com/ljvmiranda921/pyswarms 
 
 ## Copyright
 ![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png) This
