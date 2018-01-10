@@ -33,7 +33,7 @@ lapply(c(), function(pkg) {
 
 ## Copyright information {-}
 
-![Creative Commons](../images/ccsa.png)
+![Creative Commons](../figures/ccsa.png)
 This work is (c) 2017 - onwards by TU Delft, Georgios Gousios and the book
 co-authors distributed
 under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0

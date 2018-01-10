@@ -131,9 +131,7 @@ teacher to arrange a case-specific deadline.
 
 Lecture notes alternative formats:
 
-* [Lecture notes in a single PDF document](https://drive.google.com/open?id=1ui7gpfhMza59TQSHf2Pm01d3Igcpgp8o)
 * [Lecture notes in GitBook format](http://gousios.org/courses/algo-ds/book/preface.html)
-
 
 **Lecturers**
 
