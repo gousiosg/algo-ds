@@ -9,7 +9,7 @@ output:
   slidy_presentation: default
 ---
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -46,7 +46,7 @@ Example:
 
 ## The Sorting Problem
 
-![](./figures/sort-example.svg){width=60%}
+![](../figures/sort-example.svg){width=60%}
 
 
 <center>You have to arrange the sticks in descending order, how would you
@@ -114,7 +114,7 @@ Sort the following list $C = [5,3,1,9,8,2,4,7]$ using bubble sort
 <!-- 
 http://www.geeksforgeeks.org/wp-content/uploads/gq/2014/02/bubble-sort1.png
 -->
-![](./figures/bubble_sort.png)
+![](../figures/bubble_sort.png)
 
 
 
@@ -194,7 +194,7 @@ Last, the space complexity is $O(1)$ (e.g constant amount of memory)
 
 Sort the following list $C = [-1,5,3,9,12,4,8]$
 
-![](./figures/selection-sort-example.svg)
+![](../figures/selection-sort-example.svg)
 
 
 ## Selection Sort: Implementation
@@ -245,12 +245,12 @@ with our hands
 
 ## Insertion Sort: Example
 
-![](./figures/insert_sort_1.svg)
+![](../figures/insert_sort_1.svg)
 
 
 ## Insertion Sort: Example (2)
 
-![](./figures/insert_sort_2.svg)
+![](../figures/insert_sort_2.svg)
 
 
 ## Insertion Sort: Exercise
@@ -315,7 +315,7 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
 ## Divide-and-Conquer Technique
 
 
-![](./figures/divide-conquer.svg)
+![](../figures/divide-conquer.svg)
 
 
 
@@ -342,7 +342,7 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
 * Move elements that are less than the pivot to the left
 * Move elements that are greater to the pivot to the right
 
-![](./figures/pivot.svg){width=80%}
+![](../figures/pivot.svg){width=80%}
 
 ## Quick Sort: Process
 
@@ -353,12 +353,12 @@ $\sum _{ i=1 }^{ N-1}{\frac{i}{2}} = \frac{1}{2}(1 + 2 + 3 + \cdot + (N-1)) +
 
 
 ## Quick Sort: Partition Example 
-![](./figures/partition-qs.svg)
+![](../figures/partition-qs.svg)
 
 
 ## Quick Sort: Combine Example 
 
-![](./figures/combine-qs.svg)
+![](../figures/combine-qs.svg)
 
 
 ## Quick Sort: Implementation
@@ -488,13 +488,13 @@ the partition takes $O(n)$, Thus the average $log n$ partitioning and creating p
 ## Merge Sort: Split phase
 
 
-![](./figures/split-merge.png)
+![](../figures/split-merge.png)
 
 
 ## Merge Sort: Merge phase
 
 
-![](./figures/merge-merge.png)
+![](../figures/merge-merge.png)
 
 ## Merge Sort: Implementation
 
@@ -567,7 +567,7 @@ it is possible for us to order the items and process them in a *sequence*.
 
 . . .
 
-![](./figures/sequential-search.svg)
+![](../figures/sequential-search.svg)
 
 ## Sequential Search Implementation
 
@@ -699,13 +699,13 @@ so-called *divide and conquer* strategy.
 
 - Note that the array should be sorted first!
 
-![](./figures/binary.png)
+![](../figures/binary.png)
 
 ## Representation of Binary Search
 
 - Search for $31$.
 
-![](./figures/binary-search.svg)
+![](../figures/binary-search.svg)
 
 ## Implementation of Binary Search Algorithm
 

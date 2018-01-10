@@ -13,7 +13,7 @@ output:
     transition: none
 ---
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(GGally)
 library(network)

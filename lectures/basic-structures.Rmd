@@ -7,7 +7,7 @@ output:
   slidy_presentation: default
 ---
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -51,7 +51,7 @@ can be identified using numerical *indices*.
 
 - A basic property of an array is its *size*
 
-![](./figures/array.png)
+![](../figures/array.png)
 
 ## Array `insert`
 
@@ -419,7 +419,7 @@ Each array element has its own space in the array and it can be directly accesse
 using the ```[]``` syntax.
 The following figure illustrates how an array might look like in memory.
 
-![](./figures/array-memory.png)
+![](../figures/array-memory.png)
 
 ## Disadvantages of Arrays (1)
 
@@ -463,7 +463,7 @@ A "data" field that stores the element and a "next" field,
 which is the pointer to the next node.
 Each node is allocated in the *heap*.
 
-![](./figures/ll-memory.png)
+![](../figures/ll-memory.png)
 
 ## Implementation of a Linked List in Python
 
@@ -500,7 +500,7 @@ class Node:
 93
 ```
 
-![](./figures/node.png)
+![](../figures/node.png)
 
 ## An Unordered List Class
 
@@ -530,7 +530,7 @@ class UnorderedList:
 >>> mylist.add(54)
 ```
 
-![](./figures/ll.png)
+![](../figures/ll.png)
 
 ## Linked List Traversal
 
@@ -600,7 +600,7 @@ True
 Here, the traversal needs to move up to the
 node that contains the element ```17```.
 
-![](./figures/search-ll.png)
+![](../figures/search-ll.png)
 
 ## Remove an Element
 
@@ -652,7 +652,7 @@ def remove(self,item):
 
 In mathematics, a **set** is a collection of *distinct* elemets.
 
-![](./figures/set-of-shapes.svg)
+![](../figures/set-of-shapes.svg)
 
 
 ## Implement a Set from a List
@@ -709,7 +709,7 @@ Maps are usuful in order to:
 
 ## An Example of a Map
 
-![](./figures/dictionary.png)
+![](../figures/dictionary.png)
 
 ## Operations of the Map Data Type
 
@@ -736,7 +736,7 @@ or `None` if there is no value.
 We can store key-value pairs in a linked list
 as it is illustrated in the following figure.
 
-![](./figures/map-ll.png)
+![](../figures/map-ll.png)
 
 ## Basic Operations
 
@@ -782,7 +782,7 @@ However, we are going to talk in another lecture about it.
 by adding the special Python `None` value
 to the slots of the table.
 
-![](./figures/hash-map.png)
+![](../figures/hash-map.png)
 
 ## How does it work?
 

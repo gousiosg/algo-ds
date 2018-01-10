@@ -17,11 +17,11 @@ csl: ieee.csl
 ## **What is optimization about?**
 
 
-![](./figures/time.svg){width=70%}
+![](../figures/time.svg){width=70%}
 
 
 ## **What Is Optimization?**
-![](./figures/function.svg){width=45%}
+![](../figures/function.svg){width=45%}
 
 - Optimization is the process of adjusting the **inputs** to or
   **characteristics** of a device, mathematical process, or experiment to find
@@ -36,7 +36,7 @@ Optimization depends on secondary variables like time!
 **_examples:_**    
 - The fastest way to work may depend on the time of day and weather.     
 - The cheapest flight ticket depends on the season of the year.   
-![](./figures/routes.svg){width=45%}
+![](../figures/routes.svg){width=45%}
    
 Any other situation you can think of?    
 
@@ -46,7 +46,7 @@ Finding the minimum for $f(x) = x^2$ does not depend on a secondary variable lik
 
 It is less complex than dynamic optimization!
 
-![](./figures/x2.svg){width=45%}
+![](../figures/x2.svg){width=45%}
 
 ## **Discrete or Continuous Optimization**
 
@@ -55,7 +55,7 @@ _e.g.:_ the order to do a series of tasks on a list to take as little time
 as possible.        
 **Continuous** variables have an infinite number of possible values,
 like below:                
-![Continuous function](./figures/continuous.svg){width=45%}
+![Continuous function](../figures/continuous.svg){width=45%}
 
 ## **Trial and Error Optimization**
 
@@ -65,7 +65,7 @@ knowing much about the process that produces the output.
 **_examples:_**     
 adjusting the antenna to get the best reception.
 
-![](./figures/TV2.svg){width=35%}
+![](../figures/TV2.svg){width=35%}
 
 mixing chemicals to find new drugs, _e.g. antibiotics_.
 
@@ -84,7 +84,7 @@ mixing chemicals to find new drugs, _e.g. antibiotics_.
 
 ## **Simulated Annealing**
 Simulates the annealing process:     
-![](./figures/simulated.svg){width=45%}
+![](../figures/simulated.svg){width=45%}
 
 . . . 
 
@@ -98,7 +98,7 @@ So lowering the temperature until the material is in a steady _frozen_ state can
 be preceived as searching for the material state in
 which the internal particles have the minimum energy.
 
-![](./figures/searchtemp.svg){width=40%}
+![](../figures/searchtemp.svg){width=40%}
 
 ## **Simulated Annealing (SA) Algorithm**
     
@@ -118,7 +118,7 @@ which the internal particles have the minimum energy.
 
 ## **Let's play a guessing game!**
 
-![](./figures/guessing.svg){width=75%}
+![](../figures/guessing.svg){width=75%}
 
 
 ## **Guess implementation**
@@ -252,11 +252,11 @@ class GuessPasswordTest(unittest.TestCase):
 
 The difference is that worse neighbours will never get to be selected!
 
-![](./figures/hillclimbing.svg){width=50%}
+![](../figures/hillclimbing.svg){width=50%}
 
 ## **Local Optimum**
 
-![](./figures/localoptimum.svg){width=55%}
+![](../figures/localoptimum.svg){width=55%}
 
 . . .       
 
@@ -269,7 +269,7 @@ only one piece of food in the area being searched. No bird knows where the food
 is. But they know how far the food is in each iteration. An effective way to
 find the food is to **follow the bird which is nearest to the food.**
 
-![](./figures/bird.svg){width=55%}
+![](../figures/bird.svg){width=55%}
 
 ## **PSO**
 PSO is a population based algorithm that uses a number of _particles_ which form
@@ -310,7 +310,7 @@ $2$)
 $r$~$1$~, $r$~$2$~ $=$  random numbers between $0$ and $1$      
 
 ## **Let's find the minimum for $f(x) = x^2$ !**      
-![](./figures/x2.svg){width=45%}     
+![](../figures/x2.svg){width=45%}     
 
 We can use the Python library called _PySwarms:_     
 https://github.com/ljvmiranda921/pyswarms
@@ -343,10 +343,10 @@ anim.save('animation.gif', writer='imagemagick', fps=15)
 ```  
 
 ## **What does it look like?** 
-![](./figures/swarmplot.svg)   
+![](../figures/swarmplot.svg)   
   
 ## **What does it look like?**    
-![Swarm optimization](./figures/swarm.gif) 
+![Swarm optimization](../figures/swarm.gif) 
    
 ## **More on PSO**   
 For more on PSO, check out the following:  
@@ -357,7 +357,7 @@ For more on PSO, check out the following:
 ## **Genetic Algorithms**
 Inspired by the _Darwinian evolution_ and the concept of **survival of the
 fittest**!
-![](./figures/evolution.svg){width=75%}
+![](../figures/evolution.svg){width=75%}
 
 ## **Genetic Algorithm Overview**
 Each point in the search space is an referred to as an _individual_
@@ -366,18 +366,18 @@ or _chromosome_.
 Individuals collectively form a _population_, which is _iteratively evolved_
 until the optimum is found or the search budget is exhausted.
 
-![](./figures/GA loop.svg){width=75%}
+![](../figures/GA loop.svg){width=75%}
 
 ## **Evolutionary Operators in GA**      
     
 **Crossover** is used to _re-combine_ the _properties_ from parents.    
 **Mutation** is applied to explore the _neighborhood_!
 
-![](./figures/operators.svg){width=75%}
+![](../figures/operators.svg){width=75%}
 
 ## **Let's play the same guessing game!**
 
-![](./figures/guessing.svg){width=75%}
+![](../figures/guessing.svg){width=75%}
 
 ## **What do we need to implement?**
 1. Individual (_chromosome_) generator
@@ -482,7 +482,7 @@ class GuessPasswordTest(unittest.TestCase):
 
 To further practice, try implementing GA for the TS problem!
 
-![](./figures/salesman.svg){width=75%}
+![](../figures/salesman.svg){width=75%}
 
 ## **What are the _similarities_ and _differences_ among the algorithms?**
 
@@ -498,7 +498,7 @@ algorithms on all optimization problems is equal!
 _i.e._ GA performs no better than pure random search when applied to all
 problems!
 
-![](./figures/freelunch.svg){width=40%}
+![](../figures/freelunch.svg){width=40%}
 
 ## **So again - which search algorithm to use?**
 We can always start by simpler algorithms, e.g. hill climbing, and see if they
