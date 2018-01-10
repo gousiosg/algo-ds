@@ -387,7 +387,7 @@ Parents are selected according to their fitness share.
 3. Generate a random number $x$ from $0-100$
 4. Select the individual whose fitness covers the range for $x$
 
-![http://www.rubicite.com/Tutorials/GeneticAlgorithms/SelectionBias.aspx](./figures/roulette.svg){width=50%}
+![http://www.rubicite.com/Tutorials/GeneticAlgorithms/SelectionBias.aspx](../figures/roulette.svg){width=50%}
 
 ## **Rank selection**
 The previous selection approach becomes biased if fitness values do not vary
@@ -399,7 +399,7 @@ chromosome is ranked $1$, and the best is ranked $N$.
 While this approach allows worse ones to have a chance, it also may lead to
 slower convergence!
 
-![](./figures/rank.svg){width=30%}
+![](../figures/rank.svg){width=30%}
 
 ## **Tournament selection**
 Chromosomes are compared relatively in each tournament, as opposed to the
@@ -421,7 +421,7 @@ population. The rest is done in a classical way.
        
 **_note:_** Elitism can very rapidly increase performance of GA!
   
-![](./figures/elitism.svg){width=40%}
+![](../figures/elitism.svg){width=40%}
 
 ## **Evolutionary Operators in GA**      
 
@@ -511,7 +511,7 @@ def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
 
 ## **What was missing in the implementation?** ##
 
-![](./figures/GA loop.svg){width=75%}     
+![](../figures/GA loop.svg){width=75%}     
     
 . . .
     
@@ -553,7 +553,7 @@ class GuessPasswordTest(unittest.TestCase):
 ## **Let's do the 8 Queens Puzzle**
 It is the problem of placing eight chess queens on an $8*8$ chessboard so that no two queens threaten each other. Thus, a solution requires
 that no two queens share the same row, column, or diagonal.    
-![](./figures/queens.svg){width=30%}
+![](../figures/queens.svg){width=30%}
 
 Let's use the _pyeasyga_ library this time!
 https://pypi.python.org/pypi/pyeasyga

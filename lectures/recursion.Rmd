@@ -10,6 +10,8 @@ csl: ieee.csl
 ```{r child="header.Rmd", include=FALSE}
 ```
 
+# Recursion
+
 ## The greatest common divisor problem
 
 The [greatest common divisor (GCD)](https://en.wikipedia.org/wiki/Greatest_common_divisor) 
@@ -32,7 +34,7 @@ One typical way of computing the GCD is Euclid's algorithm:
   \end{cases}
 \]
 
-## Converting to code
+## Converting to code {- }
 
 \[
   gcd(p, q) =
@@ -63,7 +65,7 @@ print gcd(1007, 143)
 ```{python, ref.label=c('gcd', 'gcd1'), echo=F}
 ```
 
-## How is `gcd` evaluated?
+## How is `gcd` evaluated? {- }
 
 We modify `gcd` to print its arguments 
 
@@ -84,7 +86,7 @@ The output we get is:
 ```{python ref.label=c('gcdprint'), echo=F}
 ```
 
-## Recursion
+## Recursion 
 
 **Recursion** is a problem solving method where the solution to a problem 
 depends on solutions to smaller instances of the same problem.
@@ -106,7 +108,7 @@ Recursion is everywhere in CS:
 * Data types:  `List = EmptyList | Cons Item List`
 * Acronyms: **GNU** means GNU is Not Unix
 
-## Types of recursion
+## Types of recursion {- }
 
 * **Linear** recursion: Only one recursive call in function body, e.g. `gcd`
 * **Binary** recursion: Two recursive calls
@@ -116,7 +118,7 @@ Binary recursion is typical with *divide-and-conquer* algorithms: the
 problem is split in two equally sized sub-parts and the solution is
 recursively computed by aggregating the results of the sub-parts.
 
-## Divide-and-conquer matrix addition
+## Divide-and-conquer matrix addition {- }
 
 Suppose we have an array
 
@@ -144,9 +146,9 @@ def sum_dc(a):
 Of course, this only works because `+` (addition) is commutitative.
 It wouldn't work with, e.g. '/'
 
-## How is `sum_dc` evaluated?
+## How is `sum_dc` evaluated? {- }
 
-![Recursive divide and conquer array addition](figures/recursive-array-addition.png)
+![Recursive divide and conquer array addition](../figures/recursive-array-addition.png)
 
 This is an example of a recursive evaluation tree
 
@@ -182,7 +184,7 @@ RuntimeError: maximum recursion depth exceeded
 
 One typical problem related with recursive algorithms is stack overflow errors!
 
-## What is a call stack?
+## What is a call stack? {- }
 
 For the following program
 ```python
@@ -194,7 +196,7 @@ When `DrawLine` is invoked, the computer must know where it will return
 when done
 
 <div id="left">
-![A call stack](figures/callstack.png)
+![A call stack](../figures/callstack.png)
 </div>
 
 <div id="right">
@@ -230,7 +232,7 @@ def foo_opt(i):
 
 ## Fun with recursion: Towers of Hannoi
 
-![Towers of Hanoi](figures/towers_of_hanoi.jpeg)
+![Towers of Hanoi](../figures/towers_of_hanoi.jpeg)
 
 Move all disks to the right most peg, observing the following rules:
 
@@ -238,7 +240,7 @@ Move all disks to the right most peg, observing the following rules:
 2. The upper disk from one of the stacks is placed on top of another stack
 3. No disk may be placed on top of a smaller disk
 
-## Solution in Python
+## Solution in Python {- }
 
 ```python
 def hanoi(n, source, tmp, target):
@@ -260,7 +262,7 @@ Here is the intuition:
 
 For a visual solution, have a look [here](http://towersofhanoi.info/)
 
-## Content credits
+## Content credits {- }
 
 * [Call stack](https://commons.wikimedia.org/wiki/File:Call_stack_layout.svg), by R. S. Shaw on Wikipedia
 * [Towers of Hanoi image](https://en.wikipedia.org/wiki/Tower_of_Hanoi#/media/File:Tower_of_Hanoi.jpeg), by User:Evanherk.

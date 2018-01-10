@@ -9,15 +9,15 @@ R=Rscript -e
 
 EXAM_DIRS := exams
 CONTENT_DIRS := assignments lectures
-REQ_FILES := ieee.csl _output.yaml bibliography.bib theme.css footer.Rmd header.Rmd
-JUPYTER_SRC := notebooks assignments
+REQ_FILES := ieee.csl bibliography.bib theme.css footer.Rmd header.Rmd
+JUPYTER_SRC := assignments
 
 EXAM_INPUTS := $(shell find exams -type f -name '*.Rmd')
 
 DEPS := $(foreach dir,$(CONTENT_DIRS) $(EXAM_DIRS), $(foreach file, $(REQ_FILES), $(dir)/$(file)))
 
 EXAM_INPUTS = $(shell find $(EXAM_DIRS) -type f -name '*.Rmd' | egrep -v "header|footer")
-INPUTS = $(shell find $(CONTENT_DIRS) -type f -name '*.Rmd' | egrep -v "header|footer")
+INPUTS = $(shell find $(CONTENT_DIRS) -type f -name '*.Rmd' | egrep -v "header|footer") index.Rmd
 JUPYTER_INPUTS = $(shell find $(JUPYTER_SRC) -type f -name '*.ipynb'|grep -v "ipynb_checkpoints")
 
 OUTPUTS_HTML = $(INPUTS:.Rmd=.html) $(JUPYTER_INPUTS:.ipynb=.html)
@@ -34,7 +34,7 @@ OUTPUTS_EXAMS = $(EXAM_INPUTS:.Rmd=.pdf)
 	jupyter nbconvert --to html --output=$(shell basename $@) $(shell basename $<)
 
 %.html: %.Rmd  $(DEPS)
-	$(R) "library(rmarkdown); render('$<', output_file=gsub(pattern = '.Rmd', '.html', basename('$<')), output_format = html_document())"
+	$(R) "library(rmarkdown); render('$<', output_file=gsub(pattern = '.Rmd', '.html', basename('$<')), output_format = 'html_document')"
 
 %.pdf: %.Rmd $(DEPS)
 	$(eval TMP := $(shell mktemp))

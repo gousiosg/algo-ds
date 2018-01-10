@@ -1,0 +1,40 @@
+---
+title: "Algorithms and Data Structures"
+author: "Georgios Gousios"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [bibliography.bib]
+colorlinks: yes
+link-citations: yes
+fontsize: 12pt
+github-repo: gousiosg/algo-ds
+lot: yes
+lof: yes
+graphics: yes
+description: "Lecture notes for the TU Delft TI3110TU course Algorithms and Data
+Structures"
+new_session: yes
+---
+
+```{r, include=FALSE}
+options(
+  htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
+)
+
+# install the packages needed by this book; you fill out c(), e.g. c('ggplot2', 'dplyr')
+lapply(c(), function(pkg) {
+  if (system.file(package = pkg) == '') install.packages(pkg)
+})
+```
+
+# Preface
+
+## Copyright information {-}
+
+![Creative Commons](../images/ccsa.png)
+This work is (c) 2017 - onwards by TU Delft, Georgios Gousios and the book
+co-authors distributed
+under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International](http://creativecommons.org/licenses/by-nc-sa/4.0/) license.

@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+#
+# (c) 2017 Georgios Gousios
+#
+# Convert slide Rmds into Rmds suitable for book format
+#
+
+if ARGV.empty?
+  puts "usage: slides2book slide.Rmd"
+  exit 1
+end
+
+f = File.open(ARGV[0]).readlines
+
+continue_removing = false
+
+f = f.reduce([]) do |acc, l|
+  if l =~ /```.*header.Rmd/
+    continue_removing = true
+    acc
+  elsif l =~ /```.*footer.Rmd/
+    continue_removing = true
+    acc
+  elsif l =~ /^```/ and continue_removing
+    continue_removing = false
+    acc
+  else
+    acc + [l]
+  end
+end
+
+def convert_headers(l)
+  return l unless l =~ /(#+)\s+(.*)\s+\{(.*)\}/
+
+  case $3
+  when "-"
+    l
+  when "- "
+    "**#{$2}**"
+  when "--"
+    "#{$1 + '#'} #{$2}"
+  when "---"
+    "#{$1 + '##'} #{$2}"
+  else
+    l
+  end
+end
+
+f = f.map{|l| convert_headers l}
+
+f.each{|l| puts l}

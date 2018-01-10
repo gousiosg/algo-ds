@@ -38,7 +38,7 @@ strings/patterns in another string.
 
 In computer memory, strings are nothing more that binary data.
 
-![Data in computer memory](figures/data-inmem.png){width=50%}
+![Data in computer memory](../figures/data-inmem.png){width=50%}
 
 In order to interprect what the value `0x48` (first 8 bits) means in terms
 of characters, we need an _encoding_.
@@ -96,7 +96,7 @@ the extra characters where required.
 A file encoded in ISO-8859-7 (Greek) could not be read 
 correctly in a computer configured with ISO-8859-1 (Latin-1).
 
-![Encodings](figures/encodings.png)
+![Encodings](../figures/encodings.png)
 
 
 ## Unicode
@@ -154,7 +154,7 @@ rare ones.
 For the character U+262D (☭), various Unicode encodings produce the following
 results
 
-![Unicode encodings for ☭](figures/unicode-encoding.png)
+![Unicode encodings for ☭](../figures/unicode-encoding.png)
 
 
 One thing to remember about strings in computers:
@@ -369,7 +369,7 @@ The most common way to express search patterns are _regular expressions_.
 Regular expressions are converted to state machines, through which the text
 passes. For example, the state machine for `((e|a)b*)*` is:
 
-![Regular expression state machine](figures/re-sm.png){width=50%}
+![Regular expression state machine](../figures/re-sm.png){width=50%}
 
 ## Regular expression examples
 
@@ -562,7 +562,7 @@ give `ys`.
 The ability to compare strings and produce edit scripts has been generalized
 in the `diff` Unix tool, where differences are only considered at the line level.
 
-![Output from Git Diff](figures/gitdiff.png){width=50%}
+![Output from Git Diff](../figures/gitdiff.png){width=50%}
 
 The output of `diff` is the basis for all version control systems, like Git and 
 Subversion.

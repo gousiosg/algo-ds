@@ -10,9 +10,9 @@ csl: ieee.csl
 ```{r child="header.Rmd", include=FALSE}
 ```
 
-# Tree as a data structure {data-background="figures/tree_american.jpg"}
+# Trees
 
-## Why organize data as a tree structure?
+## Why organize data as a tree structure? 
 
 - Humans have a natural inclination towards hierarchical thinking and this have
 had a profound impact on the way we reason, decide and look at *things*
@@ -23,7 +23,7 @@ to make decisions in a much more efficient way then linear data
 structures
 
 
-## Example: Visiting a distant aunt
+## Example: Visiting a distant aunt {- }
 What do we know about this aunt and our family:
 
 - You only meet her once every three years
@@ -32,19 +32,19 @@ What do we know about this aunt and our family:
 address.
 
 
-## Example: Visiting a distant aunt (1)
+## Example: Visiting a distant aunt {- }
 - Equipped with the knowledge from the previous week, we would organize family
 relatives in the following fashion:
 
 ![](../figures/tree_linear.svg)
 
-## Example: Visiting a distant aunt (2)
+## Example: Visiting a distant aunt (2) {- }
 Knowing the hierarchical **order** of our family, we would prefer making a
 family tree!
 
 ![](../figures/tree_nonlinear.svg)
 
-## Introducing the notion of *order* to a dataset
+## Order
 
 - Provides the computer additional insights on the relation between data values
 - Allows the computer to examine the relationship between data values and make
@@ -58,10 +58,10 @@ hierarchical order)
 
 <!-- How can we integrate *order* in a data structure? -->
 
-## Tree terminology (1)
+## Tree terminology
 ![](../figures/tree_def.svg)
 
-## Tree Properties (1)
+## Tree Properties {- }
 A tree constitute with the following properties:
 
 * A single & special node named **root**, start node on top of tree and does not have a **parent**
@@ -70,25 +70,25 @@ A tree constitute with the following properties:
 + The *preceding* node is known as a **parent** node
 + A **parent** node has *zero, one or more* children(successor nodes)
 
-## Tree terminology (2)
+## Subtrees {- }
 ![](../figures/tree_def_2.svg)
 
-## Tree Properties (2)
+## Subtrees Properties {- }
 
 * All nodes in a tree (except the **root**) are child nodes
 * **Siblings** are nodes with the same **parent**
 * **Subtree** are the descendants of a node
 * A node without children is a **leaf** node
 
-## Tree Height
+## Tree Height {- }
 
 ![](../figures/tree_height.svg)
 
-## Tree Depth
+## Tree Depth {- }
 
 ![](../figures/tree_depth.svg)
 
-## Path 
+## Path {- }
 ![](../figures/tree_path.svg)
 
 
@@ -101,28 +101,27 @@ depth-first methods:
 * In-order
 * Post-order
 
-## Traversal Methods (1)
+## Traversal Methods (1) {- }
 
 ![](../figures/tree_traversal_intro.svg)
 
 
-## Traversal Methods (3)
+## Traversal Methods (3) {- }
 
 Visit Nodes in a recursive fashion 
 
-### Pre-order traversal
+**Pre-order traversal**
 ```
 root node => left sub-tree => right sub-tree
 ```
-### In-order traversal
+**In-order traversal**
 ```
 left sub-tree => root node => right sub-tree
 ```
-### Post-order traversal
+**Post-order traversal**
 ```
 left sub-tree => right sub-tree => root node
 ```
-# Binary Trees  {data-background="figures/tree_binary_intro.svg"}
 
 ## Binary Trees
 
@@ -132,11 +131,11 @@ left sub-tree => right sub-tree => root node
 - Useful for Searching: Traversing either **left** or **right** to find the
 target
 
-## Example
+## Example {- }
 
 ![](../figures/tree_bt_example.svg)
 
-## Implementation of the data structure
+## Implementation {- }
 ``` python
 class Node:
 def __init__(self, data):
@@ -171,13 +170,13 @@ root.right = a
   7
 -->
 
-## Binary Search Tree (BST)
+## Binary Search Tree (BST) {- }
 *  Adding a notion of *order* to a Binary Tree structure, the *order invariant*
 *  A tree is ordered the following way:
 + The child node on the **right** is **always** greater than its parent
 + The child node on the **left** is **always** lesser than its parent
 
-## Example of a BST  
+## Example of a BST {- }
 
 ![](../figures/tree_bst_example.svg)
 

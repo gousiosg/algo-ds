@@ -609,7 +609,7 @@ def getPath(nodes, targetNode):
 
 ## Know your heroes
 
-![](figures/Dijkstra.jpg){ width=20% }
+![](../figures/Dijkstra.jpg){ width=20% }
 
 **Edsger W. Dijkstra** - Dutch computer scientist  
 
@@ -651,7 +651,7 @@ g(v) = \sum{\frac{\sigma_{st}(v)}{\sigma_{st}}}
 $$
 where $\sigma_{st}$ is the total number of shortest paths from node s to not t and $\sigma_{st}(v)$ is the number of those paths that pass through $v$. [image source](https://en.wikipedia.org/wiki/Betweenness_centrality)
 
-![](figures/centrality.png){ width=25% }
+![](../figures/centrality.png){ width=25% }
 
 
 
@@ -671,7 +671,7 @@ where $d(y,x)$ is the distance between vertices $x$ and $y$.
 
 How to identify communities in social media?
 
-![](figures/communities.jpg){ width=30%}
+![](../figures/communities.jpg){ width=30%}
 
 ## Connected components
 
@@ -736,7 +736,7 @@ Looping through nodes which where not visited yet and running a search algorithm
 
 A directed graph is called strongly connected if there is a path in each direction between each pair of vertices of the graph. 
 
-![](figures/strongly_connected.png)
+![](../figures/strongly_connected.png)
 
 https://en.wikipedia.org/wiki/Strongly_connected_component
 
@@ -756,7 +756,7 @@ For a directed graph:
 
 How to schedule lectures some of which depend on others?
 
-![](figures/timetable.png)
+![](../figures/timetable.png)
 
 ## Topological sort (for DAG)
 
@@ -765,13 +765,13 @@ How to schedule lectures some of which depend on others?
 - as each node is finished, insert it onto the front of a linked list
 - return the list of nodes
 
-![](figures/topological_sort.png){ width=60% }
+![](../figures/topological_sort.png){ width=60% }
 
 ## Challenge #3
 
 Telecom company tries to lay cable in a neighborhood. How to decide where to bury the cable to make sure all the houses are connected?
 
-![](figures/cable_trailer.jpg)
+![](../figures/cable_trailer.jpg)
 
 
 
@@ -780,13 +780,13 @@ Telecom company tries to lay cable in a neighborhood. How to decide where to bur
 
 A subset of the edges of a connected, edge-weighed undirected graph that connects all nodes together, without cycles and with the minimum total edge weight.
 
-![](figures/spanning_trees.jpg)
+![](../figures/spanning_trees.jpg)
 
 [image source](https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/tutorial/)
 
 ## MST (Kruskal's algorithm)
 
-![](figures/kruskal.jpg){ width=45% }
+![](../figures/kruskal.jpg){ width=45% }
 
 
 
@@ -796,7 +796,7 @@ A subset of the edges of a connected, edge-weighed undirected graph that connect
 
 How to rank webpages and build a search engine?
 
-![](figures/google.jpg)
+![](../figures/google.jpg)
 
 
 ## Page rank
@@ -936,19 +936,19 @@ def pagerank(graph, damping=0.85, epsilon=1.0e-8):
 
 ## Online course  (Very basic)
 
-![](figures/udacity.png){ width=70% }
+![](../figures/udacity.png){ width=70% }
 
 [Course Intro to Algorithms](https://classroom.udacity.com/courses/cs215)
 
 ## Tutorial (Basic)
 
-![](figures/interactivepython.png){ width=70% }
+![](../figures/interactivepython.png){ width=70% }
 
 [Graph algorithms in Python](http://interactivepython.org/runestone/static/pythonds/Graphs/toctree.html)
 
 ## Book (Advanced)
 
-![](figures/cormen.png){ width=40% }
+![](../figures/cormen.png){ width=40% }
 
 [Introduction to Algorithms](https://tudelft.on.worldcat.org/search?queryString=Introduction+to+Algorithms#/oclc/676697295)
 

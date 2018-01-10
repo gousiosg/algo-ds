@@ -1,0 +1,66 @@
+---
+title: "Algorithms and Data Structures: Things to remember"
+author: "Georgios Gousios"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
+---
+
+```{r child="header.Rmd", include=FALSE}
+```
+
+## Algorithms and complexity
+
+- What is the divide and conquer technique?
+- What is the $O$ and the $\Theta$ complexity?
+- How can we calculate the complexity of recursive functions?
+- How can we avoid the recomputation of recursive function calls?
+
+## Basic data structures
+
+- How do we implement a stack?
+- How do we implement a linked list?
+    - What types of lists exist?
+- How do we implement a stack/queue using a linked list?
+- What is the complexity of add/remove/search in all basic data structures?
+
+## Trees
+
+- What is the main benefit of trees?
+- How are trees represented in memory? What types of nodes are there?
+- What types of traversals can we do with trees?
+- How do we build trees? What are the basic operations?
+- What is a binary search tree? How can we implement one? What is the complexity
+of searching in a BST?
+- What are the use cases for more complex trees (AVL, RB and BTrees)? 
+    - What are the complexities of basic ops?
+
+## Graphs
+
+- What is the relationship between trees and graphs?
+- How do we represent graphs in memory?
+- How do we search graphs? What is BFS and what is DFS?
+- How can we calculate shortest paths?
+- What is topological short and what are spanning trees?
+
+## Sorting and searching
+
+- What are the complexities of naive sorting algorithms?
+- How can we implement quicksort recursively?
+- How can we implement merge sort?
+- What is sequential search and what is binary search?
+- How can we implement binary search?
+
+## Strings
+
+- How are strings represented in memory? What is ASCII and what is Unicode?
+- What is the intuition behind the Knuth-Morris-Pratt algorithm?
+- How does string differencing work? 
+
+## Optimization
+
+- Why do we need optimization algorithms? What classes of problems do they solve?
+
+```{r child="footer.Rmd", include=FALSE}
+```
