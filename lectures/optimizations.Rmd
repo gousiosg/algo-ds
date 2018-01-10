@@ -368,8 +368,65 @@ until the optimum is found or the search budget is exhausted.
 
 ![](../figures/GA loop.svg){width=75%}
 
+## **How to select individuals for evolution?** 
+- **Roulette Wheel selection** 
+
+- **Rank selection**
+
+- **Tournament selection**
+
+- **Elitism**
+
+- **etc.**
+
+## **Roulette Wheel selection**
+Parents are selected according to their fitness share.     
+
+1. Calculate fitness percentage for each chromosome
+2. Define a range for each chromosome based on the fitness share    
+3. Generate a random number $x$ from $0-100$
+4. Select the individual whose fitness covers the range for $x$
+
+![http://www.rubicite.com/Tutorials/GeneticAlgorithms/SelectionBias.aspx](./figures/roulette.svg){width=50%}
+
+## **Rank selection**
+The previous selection approach becomes biased if fitness values do not vary
+much!
+
+Rank selection ranks chromosomes based on their fitness value, where the wors
+chromosome is ranked $1$, and the best is ranked $N$.
+
+While this approach allows worse ones to have a chance, it also may lead to
+slower convergence!
+
+![](./figures/rank.svg){width=30%}
+
+## **Tournament selection**
+Chromosomes are compared relatively in each tournament, as opposed to the
+previous selection operators.
+
+1. Selects $k$ chromosomes randomly.
+2. The best chromosome has $p$ probability to be selected.
+3. The 2nd best chromosome has $1-p$ probability to be selected.
+4. The 3rd best chromosome has $1-p^2$ probability to be selected.
+5. etc.
+
+## **Elitism** 
+
+When creating new population by crossover and mutation, we have a big
+chance that we will loose the best chromosome.
+
+Elitism first copies the best chromosome (or a few) to the new
+population. The rest is done in a classical way.       
+       
+**_note:_** Elitism can very rapidly increase performance of GA!
+  
+![](./figures/elitism.svg){width=40%}
+
 ## **Evolutionary Operators in GA**      
-    
+
+Evolutionary operators are used to evolve the next generation of _individuals_!
+
 **Crossover** is used to _re-combine_ the _properties_ from parents.    
 **Mutation** is applied to explore the _neighborhood_!
 
@@ -387,6 +444,8 @@ until the optimum is found or the search budget is exhausted.
 5. Display function, showing the search progress (optional!) 
 
 ## **Individual Generator and Fitness Function**
+
+Same as done for SA!
 ```{python, eval=FALSE}
 class Chromosome:
     def __init__(self, genes, fitness):
@@ -399,8 +458,7 @@ class Chromosome:
 def generate_parent(length, geneSet, get_fitness):
     genes = []
     while len(genes) < length:
-        sampleSize = min(length - len(genes), len(geneSet))
-        genes.extend(random.sample(geneSet, sampleSize))
+        genes.extend(random.sample(geneSet, length))
     genes = ''.join(genes)
     fitness = get_fitness(genes)
     return Chromosome(genes, fitness)
@@ -415,7 +473,7 @@ def get_fitness(guess, target):
 
 ## **Mutation**
 
-Similar to the one used in SA!
+Similar to the way neighbors were found in SA!
 
 ```{python, eval=FALSE}
 def mutate(parent, geneSet, get_fitness):
@@ -430,30 +488,52 @@ def mutate(parent, geneSet, get_fitness):
 ```
 . . .  
 
-## **Search Engine**   
+## **A minimal search engine**   
 
 ```{python, eval=FALSE}
 def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
-    random.seed()
+    #generate a chromosome
     bestParent = _generate_parent(targetLen, geneSet, get_fitness)
-    display(bestParent)
+    #if it is already good, no need to go for evolution
     if bestParent.Fitness >= optimalFitness:
         return bestParent
     while True:
         child = _mutate(bestParent, geneSet, get_fitness)
+        #if the mutated chromosome is worse, discard it.
         if bestParent.Fitness >= child.Fitness:
             continue
-        display(child)
+        #if the mutated chromosome is optimal, return it!
         if child.Fitness >= optimalFitness:
             return child
+        #if the mutated chromosome is a better one, save it!
         bestParent = child
 ```
+
+## **What was missing in the implementation?** ##
+
+![](./figures/GA loop.svg){width=75%}     
+    
+. . .
+    
+ - making a _population_
+       
+. . .  
+
+- implementation of _selection_
+
+. . .
+
+- implementation of _crossover_
+
+. . .
+
+- implementation of _insertion_
+
 
 ## **Let's test it!**
 ```{python, eval=FALSE}
 class GuessPasswordTest(unittest.TestCase):
     geneset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
-
     def test_GA(self):
         target = "Hello World!"
         self.guess_password(target)
@@ -464,23 +544,89 @@ class GuessPasswordTest(unittest.TestCase):
         def fnGetFitness(genes):
             return genetic.get_fitness(genes, target)
 
-        def fnDisplay(candidate):
-            genetic.display(candidate, startTime)
-
         optimalFitness = len(target)
         best = genetic.get_best(fnGetFitness, len(target), optimalFitness,
                                 self.geneset, fnDisplay)
         self.assertEqual(best.Genes, target)
 ```
 
-## What was missing in the implementation? ##
-- implementation of selection
-- implementation of crossover
-- implementation of insertion
+## **Let's do the 8 Queens Puzzle**
+It is the problem of placing eight chess queens on an $8*8$ chessboard so that no two queens threaten each other. Thus, a solution requires
+that no two queens share the same row, column, or diagonal.    
+![](./figures/queens.svg){width=30%}
 
-## **Travelling Salesman**
+Let's use the _pyeasyga_ library this time!
+https://pypi.python.org/pypi/pyeasyga
+
+## **Creating an individual**
+
+Each individual in this problem could be represented by a list of positions
+where the queens can be placed!
+
+```{python, eval=FALSE}
+def create_individual(data):
+    #copy the array of data to an individual
+    individual = data[:]
+    #shuffle the genes
+    random.shuffle(individual)
+    return individual
+```
+
+## **The crossover and mutation operators **
+
+Let's swap the elements between the two parents!
+
+```{python, eval=FALSE}
+def crossover(parent_1, parent_2):
+    crossover_index = random.randrange(1, len(parent_1))
+    child_1a = parent_1[:crossover_index]
+    child_1b = [i for i in parent_2 if i not in child_1a]
+    child_1 = child_1a + child_1b
+
+    child_2a = parent_2[crossover_index:]
+    child_2b = [i for i in parent_1 if i not in child_2a]
+    child_2 = child_2a + child_2b
+
+    return child_1, child_2
+```
+
+Let's flip 2 genes at random indexes of the individual
+
+```{python, eval=FALSE}
+def mutate(individual):
+    mutate_index1 = random.randrange(len(individual))
+    mutate_index2 = random.randrange(len(individual))
+    individual[mutate_index1], individual[mutate_index2] = individual[mutate_index2], individual[mutate_index1]
+```
+
+## **The fitness function**
+
+Each queen has to be checked for clashes in _rows_, _columns_, and _diagonal_.
+For each clash, the fitness score is incremented by 1.
+Since there can be 28 different pairs of queens, the worst fitness score would
+be 28!
+
+```{python, eval=FALSE}
+def fitness (individual):
+    collisions = 0
+    for item in individual:
+        item_index = individual.index(item)
+        for elem in individual:
+            elem_index = individual.index(elem)
+            if item_index != elem_index:
+                if item - (elem_index - item_index) == elem \
+                    or (elem_index - item_index) + item == elem:
+                    collisions += 1
+    return collisions
+```
+
+## **Travelling Salesman Problem**
 
 To further practice, try implementing GA for the TS problem!
+
+_**TSP:**_ asks the following question: "Given a list of cities and the
+distances between each pair of cities, what is the shortest possible route that
+visits each city and returns to the origin city?"
 
 ![](../figures/salesman.svg){width=75%}
 
@@ -510,8 +656,11 @@ effectively explore the landscape may be a better start.
 
 ## **REFERENCES**
 
-* The GA implementation is partially borrowed from:          
+* The GA implementation for the guessing game is borrowed from:          
 https://github.com/handcraftsman/GeneticAlgorithmsWithPython
+
+* The GA implementation for the 8 queens problem is from:
+https://github.com/remiomosowon/pyeasyga/tree/develop/examples
 
 * Details on _PSO_ is taken from:       
 http://www.swarmintelligence.org/tutorials.php
