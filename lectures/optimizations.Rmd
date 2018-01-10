@@ -8,10 +8,10 @@ author: |
   | Software Engineering Research Group
 date: "`r Sys.Date()`"
 output: revealjs::revealjs_presentation
-csl: ./../ieee.csl
+csl: ieee.csl
 ---
 
-```{r child="./../header.Rmd", include=FALSE}
+```{r child="header.Rmd", include=FALSE}
 ```
 
 ## **What is optimization about?**

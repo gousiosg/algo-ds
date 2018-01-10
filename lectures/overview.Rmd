@@ -1,0 +1,16 @@
+---
+title: "Algorithms and Data Structures: Things to remember"
+author: "Georgios Gousios"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: revealjs::revealjs_presentation
+bibliography: bibliography.bib
+csl: ieee.csl
+---
+
+```{r child="header.Rmd", include=FALSE}
+```
+
+
+
+```{r child="footer.Rmd", include=FALSE}
+```
