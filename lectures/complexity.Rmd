@@ -16,7 +16,9 @@ library(ggplot2)
 ```{r child="header.Rmd", include=FALSE}
 ```
 
-## Algorithm analysis
+# Algorithm Analysis
+
+## Algorithm analysis {- }
 
 Algorithm analysis is the theoretical study of program performance
 and resource usage.[@Leirs05]
@@ -35,7 +37,7 @@ and resource usage.[@Leirs05]
 
 Because it allows us to determine what is possible to do given a problem.
 
-## A simple (?) algorithm
+## A simple (?) algorithm 
 
 ```{python}
 def fib(x):
@@ -48,9 +50,9 @@ def fib(x):
 
 . . .
 
-![Fib(5) call tree](figures/fib-5-calltree.png)
+![Fib(5) call tree](../figures/fib-5-calltree.png)
 
-## Analysing `fib`
+## Analysing `fib` {- }
 
 What we observe is that `fib` takes a number of steps that is _proportional_
 to its argument.
@@ -123,7 +125,7 @@ of functions as a function of problem size.
 It also enables us to compare algorithm implementations: an $O(n^2)$ algorithm
 is _always_ worse than an $O(log(n))$ one.
 
-## Math growth functions
+## Math growth functions {- }
 
 We usually determine the asymptotic growth in terms of the following functions.
 Each one is asymptotically better than the following:
@@ -137,7 +139,7 @@ Each one is asymptotically better than the following:
 7. $f(x) = x^3$ (cubic function)
 7. $f(x) = a^x, \forall a > 1$ (exponential function)
 
-## Function growth examples
+## Function growth examples {- }
 
 Growth of important functions for $x \in (0, 1)$
 
@@ -203,7 +205,7 @@ ggplot(data.frame(x=c(0,10)), aes(x)) +
 ```
 
 
-## Function growth in time
+## Function growth in time {- }
 
 If the time to execute for input size $n = 1$ is 1 sec, then for input size $n = 1000$ 
 
@@ -228,7 +230,7 @@ ggplot(data.frame(x=c(0,100)), aes(x)) +
   ylab("") + xlab("") + theme_bw() 
 ```
 
-## Examples with big-O
+## Examples with big-O {- }
 
 What is the asymptotic complexity of the following polynomials?
 
@@ -245,7 +247,7 @@ $f(x) = 5x^2 + 3x +2$
 
 $f(x) = O(x^2)$
 
-## Calculating the number of steps
+## Calculating the number of steps {- }
 We can now estimate the asymptotic complexity of algorithms, but what we
 are missing is a way to evaluate the number of "steps" an algorithm takes as
 a function of the input size, i.e., the $f(x)$ function.
@@ -262,7 +264,7 @@ In general, any operation that consumes computing resources can be considered
 as a step.
 
 
-## Calculating complexity - Example 1
+## Calculating complexity 
 
 ```python
 def foo(x):
@@ -283,7 +285,7 @@ Steps:
 None of the above actions depend on the size of `x`. Therefore this algorithm
 is $O(1)$. This means that no matter how big `x` is, it will run in constant time.
 
-## Iteration
+## Iteration {- }
 
 ```python
 def foo(a):
@@ -306,7 +308,7 @@ then, also a return statement
 Our complexity function is $T(x) = 3x + 1$, which can be upper bounded by $g(x) = 5x$.
 Therefore, the compexity class is $O(n)$
 
-## Matrix multiplication
+## Matrix multiplication {- }
 
 ```python
 # a is (n x m) and b is (m x p). The result is (n x p)
@@ -360,7 +362,7 @@ Send packet CA->Netherlands->CA    150,000,000   ns
 
 By Jonas Boner, available [here](https://gist.github.com/jboner/2841832)
 
-## Cost at human scale
+## Cost at human scale {- }
 Humans are very bad at appreciating very small or very big numbers.
 Let's convert those numbers to something more relevant to humans:
 seconds
@@ -388,7 +390,7 @@ Send packet CA->Netherlands->CA    150,000,000 ns -> 4.8 years
 It should be obvious now that when calculating complexity, not all steps
 are of the same cost.
 
-## Iteration cost
+## Iteration cost {- }
 
 ```python       
                #  cost    times
@@ -408,7 +410,7 @@ Associated costs:
 Calculating costs is very complicated and depends on the computer architecture.
 This is why algorithm analysis usually avoids it.
 
-## Going back to `fib`
+## Going back to `fib` {- }
 
 ```{python}
 def fib(x):
@@ -434,7 +436,7 @@ Therefore, a (relatively loose) upper bound for `fib` is $O(n^2)$
 
 ## `fib` complexity graphically
 
-![Fibonacci complexity, graphically](figures/fib-complexity.png)
+![Fibonacci complexity, graphically](../figures/fib-complexity.png)
 
 As we can see, $2^4$ is an over approximation for the last step, therefore
 $O(2^n)$ is a not too tight bound. 
@@ -445,7 +447,7 @@ A tighter bound for `fib` is $O(\frac{1 + \sqrt 5}{2}^n) \approx O(1.618^{n})$
 
 $\phi = \frac{1 + \sqrt 5}{2}$ is otherwise known as the [golden ratio](https://en.wikipedia.org/wiki/Golden_ratio)
 
-## Group exercise
+## Group exercise {- }
 
 What is the complexity of Towers of Hanoi?
 

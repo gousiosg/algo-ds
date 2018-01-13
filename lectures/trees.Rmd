@@ -10,9 +10,9 @@ csl: ieee.csl
 ```{r child="header.Rmd", include=FALSE}
 ```
 
-# Tree as a data structure {data-background="figures/tree_american.jpg"}
+# Trees
 
-## Why organize data as a tree structure?
+## Why organize data as a tree structure? 
 
 - Humans have a natural inclination towards hierarchical thinking and this have
 had a profound impact on the way we reason, decide and look at *things*
@@ -23,7 +23,7 @@ to make decisions in a much more efficient way then linear data
 structures
 
 
-## Example: Visiting a distant aunt
+## Example: Visiting a distant aunt {- }
 What do we know about this aunt and our family:
 
 - You only meet her once every three years
@@ -32,19 +32,19 @@ What do we know about this aunt and our family:
 address.
 
 
-## Example: Visiting a distant aunt (1)
+## Example: Visiting a distant aunt {- }
 - Equipped with the knowledge from the previous week, we would organize family
 relatives in the following fashion:
 
-![](./figures/tree_linear.svg)
+![](../figures/tree_linear.svg)
 
-## Example: Visiting a distant aunt (2)
+## Example: Visiting a distant aunt (2) {- }
 Knowing the hierarchical **order** of our family, we would prefer making a
 family tree!
 
-![](./figures/tree_nonlinear.svg)
+![](../figures/tree_nonlinear.svg)
 
-## Introducing the notion of *order* to a dataset
+## Order
 
 - Provides the computer additional insights on the relation between data values
 - Allows the computer to examine the relationship between data values and make
@@ -58,10 +58,10 @@ hierarchical order)
 
 <!-- How can we integrate *order* in a data structure? -->
 
-## Tree terminology (1)
-![](./figures/tree_def.svg)
+## Tree terminology
+![](../figures/tree_def.svg)
 
-## Tree Properties (1)
+## Tree Properties {- }
 A tree constitute with the following properties:
 
 * A single & special node named **root**, start node on top of tree and does not have a **parent**
@@ -70,26 +70,26 @@ A tree constitute with the following properties:
 + The *preceding* node is known as a **parent** node
 + A **parent** node has *zero, one or more* children(successor nodes)
 
-## Tree terminology (2)
-![](./figures/tree_def_2.svg)
+## Subtrees {- }
+![](../figures/tree_def_2.svg)
 
-## Tree Properties (2)
+## Subtrees Properties {- }
 
 * All nodes in a tree (except the **root**) are child nodes
 * **Siblings** are nodes with the same **parent**
 * **Subtree** are the descendants of a node
 * A node without children is a **leaf** node
 
-## Tree Height
+## Tree Height {- }
 
-![](./figures/tree_height.svg)
+![](../figures/tree_height.svg)
 
-## Tree Depth
+## Tree Depth {- }
 
-![](./figures/tree_depth.svg)
+![](../figures/tree_depth.svg)
 
-## Path 
-![](./figures/tree_path.svg)
+## Path {- }
+![](../figures/tree_path.svg)
 
 
 ## Traversal Methods
@@ -101,28 +101,27 @@ depth-first methods:
 * In-order
 * Post-order
 
-## Traversal Methods (1)
+## Traversal Methods (1) {- }
 
-![](./figures/tree_traversal_intro.svg)
+![](../figures/tree_traversal_intro.svg)
 
 
-## Traversal Methods (3)
+## Traversal Methods (3) {- }
 
 Visit Nodes in a recursive fashion 
 
-### Pre-order traversal
+**Pre-order traversal**
 ```
 root node => left sub-tree => right sub-tree
 ```
-### In-order traversal
+**In-order traversal**
 ```
 left sub-tree => root node => right sub-tree
 ```
-### Post-order traversal
+**Post-order traversal**
 ```
 left sub-tree => right sub-tree => root node
 ```
-# Binary Trees  {data-background="figures/tree_binary_intro.svg"}
 
 ## Binary Trees
 
@@ -132,11 +131,11 @@ left sub-tree => right sub-tree => root node
 - Useful for Searching: Traversing either **left** or **right** to find the
 target
 
-## Example
+## Example {- }
 
-![](./figures/tree_bt_example.svg)
+![](../figures/tree_bt_example.svg)
 
-## Implementation of the data structure
+## Implementation {- }
 ``` python
 class Node:
 def __init__(self, data):
@@ -171,15 +170,15 @@ root.right = a
   7
 -->
 
-## Binary Search Tree (BST)
+## Binary Search Tree (BST) {- }
 *  Adding a notion of *order* to a Binary Tree structure, the *order invariant*
 *  A tree is ordered the following way:
 + The child node on the **right** is **always** greater than its parent
 + The child node on the **left** is **always** lesser than its parent
 
-## Example of a BST  
+## Example of a BST {- }
 
-![](./figures/tree_bst_example.svg)
+![](../figures/tree_bst_example.svg)
 
 
 ## Insertion in a BST
@@ -218,27 +217,27 @@ else:
 
 ## Inserting a value into a BST
 
-![](./figures/tree_bst_in_1.svg)
+![](../figures/tree_bst_in_1.svg)
 
 ## Inserting a value into a BST
 
-![](./figures/tree_bst_in_2.svg)
+![](../figures/tree_bst_in_2.svg)
 
 ## Inserting a value into a BST
 
-![](./figures/tree_bst_in_3.svg)
+![](../figures/tree_bst_in_3.svg)
 
 ## Inserting a value into a BST
 
-![](./figures/tree_bst_in_4.svg)
+![](../figures/tree_bst_in_4.svg)
 
 ## Inserting a value into a BST
 
-![](./figures/tree_bst_in_5.svg)
+![](../figures/tree_bst_in_5.svg)
 
 ## Inserting a value into a BST
 
-![](./figures/tree_bst_in_6.svg)
+![](../figures/tree_bst_in_6.svg)
 
 ## Search in a BST
 
@@ -274,15 +273,15 @@ return find(root.left,key)
 
 ## Example: Lookup value 49 in a BST
 
-![](./figures/tree_bst_search_1.svg)
+![](../figures/tree_bst_search_1.svg)
 
 ## Example: Lookup value 49 in a BST
 
-![](./figures/tree_bst_search_2.svg)
+![](../figures/tree_bst_search_2.svg)
 
 ## Example: Lookup value 49 in a BST
 
-![](./figures/tree_bst_search_3.svg)
+![](../figures/tree_bst_search_3.svg)
 
 ## Remove a node from a BST
 <!-- before this slide show three examples -->
@@ -307,7 +306,7 @@ How do we find the **successor/predecessor node** of $K$?
 * Traverse the left child in each branch until there is a node that don't have
 a left child.
 
-![](./figures/tree_min.svg){ width=80% }
+![](../figures/tree_min.svg){ width=80% }
 
 
 ## Predecessor node
@@ -315,23 +314,23 @@ a left child.
 * Traverse the right child in each branch until there is a node that don't have 
 a right child.
 
-![](./figures/tree_max.svg){ width=80% }
+![](../figures/tree_max.svg){ width=80% }
 
 
 
 ## Removing 40 from the BST Example 
 Finding the predecessor node
 
-![](./figures/tree_rm_1.svg)
+![](../figures/tree_rm_1.svg)
 
 
 ## Removing 40 from the BST Example
 
-![](./figures/tree_rm_2.svg)
+![](../figures/tree_rm_2.svg)
 
 ## Removing 40 from the BST Example
 
-![](./figures/tree_rm_3.svg)
+![](../figures/tree_rm_3.svg)
 
 
 ## Analysis of the BST operations
@@ -361,7 +360,7 @@ How does it look like for BSTs that are not balanced?
 
 ## What is the height of the tree likely to be? (2) 
 
-![](./figures/bst_unbalanced.svg){ width=80% }
+![](../figures/bst_unbalanced.svg){ width=80% }
 
 What is the time complexity for such a tree? *Hint: think in terms of a list
 structure*
@@ -388,7 +387,7 @@ The logarithmic value of number of nodes is truncated (e.g floor $\lfloor{x}\rfl
 ## A look at the problem size
 A great example on [StackOverflow](https://stackoverflow.com/questions/2307283/what-does-olog-n-mean-exactly/13093274#13093274)
 
-![](./figures/tree-so.png){ width=60% }
+![](../figures/tree-so.png){ width=60% }
 
 
 
@@ -423,7 +422,7 @@ case
 
 ## Visualize the relation between height and nodes 
 
-![](./figures/tree-so.png){ width=60% }
+![](../figures/tree-so.png){ width=60% }
 
 
 <!--## AVL-tree (3)
@@ -452,12 +451,12 @@ case
 
 ## `Right-rotation(y)`
 
-![](./figures/tree_right.svg)
+![](../figures/tree_right.svg)
 
 
 ## `Left-rotation(x)`
 
-![](./figures/tree_left.svg)
+![](../figures/tree_left.svg)
 
 ## Insertion 
 
@@ -472,11 +471,11 @@ There are three cases of insertion we need to consider:
 
 ## Insertion (2)
 
-![](./figures/tree_weight.svg)
+![](../figures/tree_weight.svg)
 
 ## Insertion: Violation on the left
 
-![](./figures/tree_left_violation.svg){ width=80% }
+![](../figures/tree_left_violation.svg){ width=80% }
 
 Let's imagine we want to insert a value $\beta$ into the $C$ tree and the left tree
 also has children $A$ and $B$
@@ -484,14 +483,14 @@ also has children $A$ and $B$
 
 ## Insertion: Violation on the left (2)
 
-![](./figures/tree_avl_case.svg){ width=80% }
+![](../figures/tree_avl_case.svg){ width=80% }
 
 Two places we can insert  $\beta$ 
 
 
 ## First Case: $\beta$ inserted in $A$
 
-![](./figures/tree_rr_example.svg){ width=80% }
+![](../figures/tree_rr_example.svg){ width=80% }
 
 This is a simple right rotation
 
@@ -507,7 +506,7 @@ def rotateRight(node, self):
 
 ## Second Case: $\beta$ inserted in $B$
 
-![](./figures/tree_rr_example2.svg){ width=80% }
+![](../figures/tree_rr_example2.svg){ width=80% }
 
 A simple right or left rotation won't solve the problem
 
@@ -516,12 +515,12 @@ He have to perform something called a double right rotation
 
 1. Make a left-rotation on $x$
 
-![](./figures/tree_lr_example.svg){ width=90% }
+![](../figures/tree_lr_example.svg){ width=90% }
 
 ## Second Case: $\beta$ inserted in $B$ (2)
 2. Make a right-rotation on $y$
    
-![](./figures/tree_double.svg){ width=80% }
+![](../figures/tree_double.svg){ width=80% }
 
 Performing a left rotation or double left rotation is symmetric
 
@@ -553,7 +552,7 @@ https://webdocs.cs.ualberta.ca/~holte/T26/ins-b-tree.html
 
 ## Example of a B-tree
 
-![](./figures/btree-example-wiki.png)
+![](../figures/btree-example-wiki.png)
 
 ## B-Tree Invariant (1)
 
@@ -631,7 +630,7 @@ For a value $V$, we do the following
 
 ## Example of a B+ Tree
 
-![](./figures/bplustree.png)
+![](../figures/bplustree.png)
 
 
 ## Bibliography

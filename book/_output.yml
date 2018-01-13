@@ -1,0 +1,25 @@
+bookdown::gitbook:
+  css: css/style.css
+  config:
+    toc:
+      collapse: false
+      before: |
+        <li><b>Algorithms and Data Structures</b></li>
+    download: [pdf, epub]
+    edit: https://github.com/gousiosg/algo-ds/edit/master/%s
+    sharing:
+      github: yes
+      facebook: yes
+      twitter: yes
+bookdown::pdf_book:
+  dev: "cairo_pdf"
+  latex_engine: xelatex
+  citation_package: natbib
+  template: null
+  pandoc_args: --top-level-division=chapter
+  toc_depth: 3
+  toc_unnumbered: no
+  toc_appendix: yes
+  quote_footer: ["\\VA{", "}{}"]
+#bookdown::epub_book:
+  #stylesheet: css/style.css

@@ -13,7 +13,7 @@ output:
     transition: none
 ---
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(GGally)
 library(network)
@@ -72,7 +72,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 ## Not about
 
 ### Charts and Grafs
-![](figures/graphs_chart.png){ width=20% } ![](figures/graphs_dracula.jpg){ width=30% }
+![](../figures/graphs_chart.png){ width=20% } ![](../figures/graphs_dracula.jpg){ width=30% }
 
 ## Nodes represent objects
 
@@ -616,18 +616,18 @@ ggnet2(net,
 
 ## Finding a path in a maze
 
-![](figures/maze.png)
+![](../figures/maze.png)
 
 Such maze could be presented as a grid graph, with no connections, in places with walls.
 
 ## Finding a path on a map
 
-![](figures/delft.png)
+![](../figures/delft.png)
 Points of interest are nodes. And roads are edges connecting points of interests.
 
 ## Finding people who can introduce you on Linkedin
 
-![](figures/obama.png)
+![](../figures/obama.png)
 
 People are nodes. And edges are connections between them.
 
@@ -671,7 +671,7 @@ Start with Node 1 and see how BFS and DFS traverse the graph.
 
 Breadth-first search is an algorithm for traversing or searching tree or graph data structures. It starts at some arbitrary node of a graph and explores the neighbor nodes first, before moving to the next level neighbours.
 
-![](figures/bfs.png){ width=40% }
+![](../figures/bfs.png){ width=40% }
 
 Worst-case performance = O(|V| + |E|)
 
@@ -1098,7 +1098,7 @@ def getPath(nodes, targetNode):
 
 Breadth-first search is an algorithm for traversing graph data structures. One starts selecting some arbitrary node as the root and explores as far as possible along each branch before backtracking.
 
-![](figures/dfs.png){ width=40% }
+![](../figures/dfs.png){ width=40% }
 
 Worst-case performance O(|V| + |E|)
 

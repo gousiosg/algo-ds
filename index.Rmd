@@ -126,8 +126,12 @@ teacher to arrange a case-specific deadline.
 | 5 | 2 | [Searching](searching-sorting-algos.html) | JH ||
 | 6 | 1 | [Strings and string search](strings.html)  | GG ||
 | 6 | 2 | [Genetic algorithms](optimizations.html)  | MS ||
-| 7 | 1 | Overall Q/A | GG ||
-| 7 | 2 | No lecture | -- ||
+| 7 | 1 | No Lecture | -- ||
+| 7 | 2 | [Overall Q/A](recap.html) | GG ||
+
+Lecture notes alternative formats:
+
+* [Lecture notes in GitBook format](http://gousios.org/courses/algo-ds/book/preface.html)
 
 **Lecturers**
 
@@ -144,7 +148,7 @@ assessment criteria specified below:
 
 * Assignments (40%): Grade calculated as mean grade for all assignments.
 All individual assignments must have a passing grade.
-* Written Exam (60%):
+* Written Exam (60%)
 
 ```{r child="footer.Rmd", include=FALSE}
 ```
