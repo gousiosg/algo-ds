@@ -1,0 +1,108 @@
+---
+title: "TI3110TU -- Exam January 2018"
+author: "Georgios Gousios"
+date: "31/01/2018"
+output:
+  pdf_document:
+    latex_engine: lualatex
+    md_extensions: ['+fancy_lists', '+startnum']
+---
+
+**Name:**
+
+**Student Number:**
+
+**BSc CS/TI or minor student?: **
+
+# Instructions
+
+* Before you start, write down your name and student number on this page.
+On all the following pages, write your student number at the top of the page.
+* When you are asked to provide implementations, you can provide them in
+Python. Your code should be generally correct, minor omissions
+can be tolerated, as long as the algorithm is appropriate.
+* The use of material (book, slides, laptop, etc.) during the exam is not allowed.
+* Use the provided paper for notes etc. Don't write on the exam paper.
+* **Write clearly!** If your writing cannot be deciphered, it will not be
+considered for grading.
+
+The total number of points is **XXX**. You have **180** minutes: _Good Luck!_
+
+# Open Questions
+
+Please provide **brief** answers to the following questions. Be precice!
+
+* (**6 points**) What is the divide and conquer (D&C) algorithmic technique? 
+Describe an algorithm that uses D&C and present its evaluation strategy.
+
+* (**4 points**) A typical problem with recursion is stack overflow errors.
+Write an (any!) function that will overflow and then re-write it so that it does
+not.
+
+* (**4 points**) Rewrite the Fibonacci algorithm given below so that
+each individual recursion branch is only executed once.
+
+```python
+def fib(x):
+    if x == 0: return 0
+    elif x == 1: return 1
+    else: return fib(x - 2) + fib(x - 1)
+```
+
+* (**10 points**) Write a _class_ that implements a singly linked list that stores
+integers. Make sure it includes a constructor, an operator to add to the list
+and an operator to remove an element from a particular index point. 
+Here is a class prototype:
+
+```python
+class IntList(object):
+
+    def __init__(self):
+      pass
+        
+    def add(self, int_val):
+      pass
+
+    def remove_at(self, idx):
+      pass
+```
+
+* (**2 points**) Explain the differences in the working characteristics of
+data structures backed by arrays vs data structures backed by linked lists.
+When is each implementation preferable?
+
+
+* (**2 points**) How does the Knuth-Morris-Pratt work and why is it faster
+than naive search?
+
+
+* (**4 points**) Calculate the jump table used by the Knuth-Morris-Pratt 
+algorithm, for the search pattern $P=12332112$. Describe the algorithm you
+used (in pseudocode or Python).
+
+* (**8 points**) Write a recursive implementation of `quicksort`.
+
+* (**4 points**) Describe 2 ways in which we can represent graphs in memory.
+
+* (**2 points**) What is topological sorting for graphs?. Describe a use case
+for it.
+
+
+* (**4 points**) Why do we need optimization algorithms? Describe a problem
+that is best solved using any optimization technique.
+
+* (**15 points**) What is the time complexity ($O$) of the following operations?
+
+  * (**1 point**) Adding an element to the head of a linked list: 
+  * (**1 point**) Adding an element to a set backed by an array: 
+  * (**1 point**) Searching through a sorted array with binary search:
+  * (**1 point**) Sorting an array with quicksort:
+  * (**1 point**) Sorting an array with mergesort:
+  * (**1 point**) Recursive least common subsequence:
+  * (**1 point**) Breadth-first search in a graph:
+  * (**1 point**) Breadth-first search on a balanced tree:
+  * (**1 point**) Knutt-Moris-Pratt substring search:
+  * (**1 point**) 
+  
+  
+
