@@ -24,19 +24,23 @@ can be tolerated, as long as the algorithm is appropriate.
 * **Write clearly!** If your writing cannot be deciphered, it will not be
 considered for grading.
 
-The total number of points is **75**. You have **180** minutes: _Good Luck!_
+The total number of points is **75**. The total number of points you need
+to collect to get a 10 is **70**. The total number of points you need to collect
+to pass is **40**.
+
+You have **180** minutes: _Good Luck!_
 
 # Exam questions
 
-* (**4 points**) What is the divide and conquer (D&C) algorithmic technique? 
+1. (**4 points**) What is the divide and conquer (D&C) algorithmic technique? 
 Describe an algorithm (no need to implement it) that uses D&C and present 
 its evaluation strategy.
 
-* (**4 points**) A typical problem with recursion is stack overflow errors.
+2. (**4 points**) A typical problem with recursion is stack overflow errors.
 Write an (any!) function that will overflow and then re-write it so that it does
 not.
 
-* (**4 points**) Rewrite the Fibonacci algorithm given below so that
+3. (**4 points**) Rewrite the Fibonacci algorithm given below so that
 each individual recursion branch is only executed once.
 
 ```python
@@ -46,8 +50,9 @@ def fib(x):
     else: return fib(x - 2) + fib(x - 1)
 ```
 
-* (**20 points**) Write a _class_ that implements a singly linked list that 
-stores integers, using the following prototype:
+4. (**20 points**) Write a _class_ that implements a singly linked list that 
+stores integers, using the following prototype (each correct function
+implementation is worth 5 points):
 
 ```python
 class IntList(object):
@@ -88,37 +93,36 @@ Here is an example usage scenario for it:
 [ 10, 15 ]
 ```
 
-* (**2 points**) Explain the differences in the working characteristics of
+5. (**2 points**) Explain the differences in the working characteristics of
 data structures backed by arrays vs data structures backed by linked lists.
 When is each implementation preferable?
 
-* (**2 points**) How does the Knuth-Morris-Pratt work and why is it faster
+6. (**2 points**) How does the Knuth-Morris-Pratt work and why is it faster
 than naive string search?
 
-* (**4 points**) Calculate the jump table used by the Knuth-Morris-Pratt 
+7. (**4 points**) Calculate the jump table used by the Knuth-Morris-Pratt 
 algorithm, for the search pattern $P=12332112$. Describe the algorithm you
 used (in pseudocode or Python).
 
-* (**8 points**) Write a recursive implementation of `quicksort`.
+8. (**4 points**) Write a recursive implementation of `quicksort`.
 
-* (**4 points**) Describe 2 ways in which we can represent graphs in memory.
+9. (**4 points**) Describe 2 ways in which we can represent graphs in memory.
 
-* (**4 points**) Given a set of web sites, we need to decide how to split
+10. (**8 points**) Given a set of web sites, we need to decide how to split
 our advertising budget. One idea is to put most of our money on sites that
 that have lots of incoming links, as the propability of users visiting them 
 will be higher. 
-
 In our servers, we keep a full copy of the home page of each site.
 Describe a potential data structure/algorithm combination to
 use in order to calculate the budget distribution.
 
-* (**2 points**) What is topological sorting for graphs?. Describe a use case
+11. (**2 points**) What is topological sorting for graphs?. Describe a use case
 for it.
 
-* (**2 points**) Why do we need optimization algorithms? Describe a problem
+12. (**2 points**) Why do we need optimization algorithms? Describe a problem
 that is best solved using any optimization technique.
 
-* (**15 points**) What is the time complexity ($O$) of the following operations?
+13. (**15 points**) What is the time complexity ($O$) of the following operations?
 
   * (**1 point**) Adding an element to the head of a linked list: 
   * (**1 point**) Adding an element to a set backed by an array: 
