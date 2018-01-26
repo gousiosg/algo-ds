@@ -12,8 +12,6 @@ output:
 
 **Student Number:**
 
-**BSc CS/TI or minor student?: **
-
 # Instructions
 
 * Before you start, write down your name and student number on this page.
@@ -26,14 +24,13 @@ can be tolerated, as long as the algorithm is appropriate.
 * **Write clearly!** If your writing cannot be deciphered, it will not be
 considered for grading.
 
-The total number of points is **XXX**. You have **180** minutes: _Good Luck!_
+The total number of points is **75**. You have **180** minutes: _Good Luck!_
 
-# Open Questions
+# Exam questions
 
-Please provide **brief** answers to the following questions. Be precice!
-
-* (**6 points**) What is the divide and conquer (D&C) algorithmic technique? 
-Describe an algorithm that uses D&C and present its evaluation strategy.
+* (**4 points**) What is the divide and conquer (D&C) algorithmic technique? 
+Describe an algorithm (no need to implement it) that uses D&C and present 
+its evaluation strategy.
 
 * (**4 points**) A typical problem with recursion is stack overflow errors.
 Write an (any!) function that will overflow and then re-write it so that it does
@@ -49,32 +46,54 @@ def fib(x):
     else: return fib(x - 2) + fib(x - 1)
 ```
 
-* (**10 points**) Write a _class_ that implements a singly linked list that stores
-integers. Make sure it includes a constructor, an operator to add to the list
-and an operator to remove an element from a particular index point. 
-Here is a class prototype:
+* (**20 points**) Write a _class_ that implements a singly linked list that 
+stores integers, using the following prototype:
 
 ```python
 class IntList(object):
 
+    # Constructs an empty list
     def __init__(self):
       pass
-        
-    def add(self, int_val):
+
+    # Adds a element to the list
+    def add(self, val):
       pass
 
-    def remove_at(self, idx):
+    # Removes all elements equal to val
+    def remove(self, val):
       pass
+
+    # Prints the list like a Python array
+    def __str__(self):
+      pass
+```
+
+Here is an example usage scenario for it:
+
+```python
+> a = IntList()
+> print a
+[ ]
+> a.add(5)
+> a.add(10)
+> print a
+[ 5, 10 ]
+> a.add(15)
+> a.add(5)
+> print(a)
+[ 5, 10, 15, 5 ]
+> a.remove(5)
+> print(a)
+[ 10, 15 ]
 ```
 
 * (**2 points**) Explain the differences in the working characteristics of
 data structures backed by arrays vs data structures backed by linked lists.
 When is each implementation preferable?
 
-
 * (**2 points**) How does the Knuth-Morris-Pratt work and why is it faster
-than naive search?
-
+than naive string search?
 
 * (**4 points**) Calculate the jump table used by the Knuth-Morris-Pratt 
 algorithm, for the search pattern $P=12332112$. Describe the algorithm you
@@ -84,25 +103,35 @@ used (in pseudocode or Python).
 
 * (**4 points**) Describe 2 ways in which we can represent graphs in memory.
 
+* (**4 points**) Given a set of web sites, we need to decide how to split
+our advertising budget. One idea is to put most of our money on sites that
+that have lots of incoming links, as the propability of users visiting them 
+will be higher. 
+
+In our servers, we keep a full copy of the home page of each site.
+Describe a potential data structure/algorithm combination to
+use in order to calculate the budget distribution.
+
 * (**2 points**) What is topological sorting for graphs?. Describe a use case
 for it.
 
-
-* (**4 points**) Why do we need optimization algorithms? Describe a problem
+* (**2 points**) Why do we need optimization algorithms? Describe a problem
 that is best solved using any optimization technique.
 
 * (**15 points**) What is the time complexity ($O$) of the following operations?
 
   * (**1 point**) Adding an element to the head of a linked list: 
   * (**1 point**) Adding an element to a set backed by an array: 
+  * (**1 point**) Inserting an element in a list by index:
+  * (**1 point**) Inserting in a AVL (balanced binary) tree:
   * (**1 point**) Searching through a sorted array with binary search:
   * (**1 point**) Sorting an array with quicksort:
   * (**1 point**) Sorting an array with mergesort:
   * (**1 point**) Recursive least common subsequence:
   * (**1 point**) Breadth-first search in a graph:
-  * (**1 point**) Breadth-first search on a balanced tree:
+  * (**1 point**) Breadth-first search in a balanced tree:
+  * (**1 point**) Naive substring search (searching a pattern within a text):
   * (**1 point**) Knutt-Moris-Pratt substring search:
-  * (**1 point**) 
-  
-  
-
+  * (**1 point**) Sorting an array with bubble sort:
+  * (**1 point**) Deleting elements by value in a list
+  * (**1 point**) Deleting elements by value in a AVL tree
