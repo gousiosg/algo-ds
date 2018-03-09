@@ -1,0 +1,325 @@
+---
+title: "TI3110TU -- Exam January 2018"
+author: "Georgios Gousios"
+date: "31/01/2018"
+output:
+  pdf_document:
+    latex_engine: lualatex
+    md_extensions: ['+fancy_lists', '+startnum']
+---
+
+**Name:**
+
+**Student Number:**
+
+# Instructions
+
+* Before you start, write down your name and student number on this page.
+On all the following pages, write your student number at the top of the page.
+* When you are asked to provide implementations, you should do that in
+Python. Your code should be generally correct, minor omissions
+can be tolerated, as long as the algorithm is appropriate.
+* The use of material (book, slides, laptop, etc.) during the exam is not allowed.
+* Use the provided paper for notes etc. Don't write on the exam paper.
+* **Write clearly!** If your writing cannot be deciphered, it will not be
+considered for grading.
+
+The total number of points is **75**. The total number of points you need
+to collect to get a 10 is **70**. The total number of points you need to collect
+to pass is **40**.
+
+You have **180** minutes: _Good Luck!_
+
+# Exam questions
+
+1. (**4 points**) What is the divide and conquer (D&C) algorithmic technique? 
+Describe an algorithm (no need to show its implementation) that uses D&C 
+and present its evaluation strategy.
+
+_Answer:_ D&C works by recursively breaking down the problem space, until the
+individual problems become simple enough to be solved independently. A typical
+D&C algorithm is `mergesort`; `mergesort` will split an unsorted list into $n$
+sublists, until it gets to 1 element lists. Then, it will merge and sort
+the indvidual sublists.
+
+2. (**4 points**) A typical problem with recursion is stack overflow errors.
+Write an (any!) function that will overflow and then re-write it so that it does
+not.
+
+_Answer:_` foo` will overflow for $n > 100$
+
+```python
+def foo(n):
+    if n == 0:
+        return 0
+    return 1 + foo(n - 1)
+```
+
+`foo_it` works for arbitrarily large $n$s
+
+```python
+def foo_it(n):
+    i = 0
+    for j in range(0, n):
+        i = i + 1
+    return i
+```
+
+3. (**4 points**) Rewrite the Fibonacci algorithm given below so that
+each individual recursion branch is only executed once.
+
+_Answer:_
+
+```python
+def fib(x):
+    if x == 0: return 0
+    elif x == 1: return 1
+    else: return fib(x - 2) + fib(x - 1)
+```
+
+A recursive solution can use memoization to prune recursion branches.
+
+```python
+mem = {}
+mem[0] = 0
+mem[1] = 1
+def fib_mem(x):
+    if x in mem.keys():
+        return mem[x]
+
+    mem[x] = fib_mem(x - 2) + fib_mem(x - 1)
+    return mem[x]
+```
+
+
+4. (**20 points**) Write a _class_ that implements a singly linked list that 
+stores integers, using the following prototype (each correct function
+implementation is worth 5 points):
+
+```python
+class IntList(object):
+
+    # Constructs an empty list
+    def __init__(self):
+      pass
+
+    # Adds a element to the list
+    def add(self, val):
+      pass
+
+    # Removes all elements equal to val
+    def remove(self, val):
+      pass
+
+    # Prints the list like a Python array
+    def __str__(self):
+      pass
+```
+
+Here is an example usage scenario for it:
+
+```python
+> a = IntList()
+> print a
+[ ]
+> a.add(5)
+> a.add(10)
+> print a
+[ 5, 10 ]
+> a.add(15)
+> a.add(5)
+> print(a)
+[ 5, 10, 15, 5 ]
+> a.remove(5)
+> print(a)
+[ 10, 15 ]
+```
+
+_Answer:_ The trick is to implement a class `Node` that stores the value and has a pointer
+to the `next` list item. The `remove` method is particularly tricky as we
+need to keep 2 pointers to the `head` and to the `prev`iously processed item.
+
+```python
+class IntList(object):
+    
+    class Node(object):
+        def __init__(self, val, next = None):
+            self.val = val
+            self.next = next
+
+    def __init__(self):
+        self.head = None
+        self.cur = None
+        
+
+    def add(self, val):
+        node = IntList.Node(val)
+
+        if self.head is None:
+            self.head = node
+            self.cur = node
+        else:
+            self.cur.next = node
+            self.cur = node
+    
+    # Remove all elements equal to val
+    def remove(self, val):
+        prev = self.head
+        p = self.head
+        while p:
+            if p.val != val:
+                prev = p
+                p = p.next
+                continue
+
+            if p == self.head:
+                self.head = p.next
+            else:
+                prev.next = p.next
+                p = p.next
+
+    #Prints our list formated as a Python array
+    def __str__(self):
+        res = "["
+        cur = self.head
+        while cur:
+            res = "%s %d," % (res, cur.val)
+            cur = cur.next
+        if res[-1] is ',':
+            res = res[:-1]
+        res = res + " ]"
+        return res
+    
+    __repr__ = __str__
+```
+
+5. (**2 points**) Explain the differences in the working characteristics of
+data structures backed by arrays vs data structures backed by linked lists.
+When is each implementation preferable?
+
+_Answer:_  Data structures backed by arrays usually have constant access, insert and
+delete time, and can be sorted and searched in logartithmic time. However,
+we cannot use them to store arbitrarily large datasets, as the arrays 
+are statically initialized to a fixed size.
+
+Data structures backed by linked lists can store as many items as the
+computer memory allows; the drawback is increased memory use and mostly
+linear time access operations.
+
+6. (**2 points**) How does the Knuth-Morris-Pratt work and why is it faster
+than naive string search?
+
+_Answer:_ KMP pre-calculates a jump table on the pattern that is used to skip some
+checks when a match fails. The table contains the lengths of prefixes in the
+search pattern that are also suffixes.
+
+7. (**4 points**) Calculate the jump table used by the Knuth-Morris-Pratt 
+algorithm, for the search pattern $P=12332112$. Describe the algorithm you
+used (in pseudocode or Python).
+
+_Answer:_
+```
+P:   1 2 3 3 2 1 1 2
+J: 0 0 0 0 0 0 1 1 2
+```
+
+```python
+def jump_table(pattern):
+  result = [None]
+
+  for i in range(0, len(pattern)):
+    j = i
+
+    while True:
+      if j == 0:
+        result.append(0)
+          break
+
+      if pattern[result[j]] == pattern[i]:
+        result.append(result[j] + 1)
+          break
+      j = result[j]
+  return result
+```
+
+8. (**6 points**) Write a recursive implementation of `quicksort`.
+
+_Answer:_ A beautiful (but inefficient!) implementation
+
+```python
+def quicksort(xs):
+    if xs:
+        pivot = xs[0]
+        below = [i for i in xs[1:] if i < pivot] 
+        above = [i for i in xs[1:] if i >= pivot]
+        return quicksort(below) + [pivot] + quicksort(above)
+    else: 
+        return xs
+```
+
+9. (**4 points**) Describe 2 ways in which we can represent graphs in memory.
+
+_Answer:_ For graphs with $m$ nodes, we can use:
+
+* Adjacency martices: An $m \times m$ matrix whose $i,j$ element is 1 iff there is an edge between nodes $i$ and $j$
+* Adjacency lists: A set of $m$ lists where each list contains the nodes that a particular node is connected to
+
+
+10. (**6 points**) Given a set of web sites, we need to decide on how to split
+our advertising budget. One idea is to put most of our money on sites 
+that have many incoming links, as the propability of users visiting them 
+will be higher. 
+In our servers, we keep a full copy of the home page of each web site.
+Describe a potential data structure/algorithm combination to
+use in order to calculate the budget distribution.
+
+_Answer:_ 
+The data structure to use is obviously a graph; we could use a tree if we
+were certain that there are no loops, i.e. web page $A$ links to $B$, which 
+links to $C$ which links to $A$.
+
+Then, we need an estimate of how important a web page is in this graph.
+For that, we can calculate each node's Pagerank, or probability that a
+random surfer will hit a web page by simply following links. Since the total
+PageRank of a graph is always 1, we can simply multiply each node's Pagerank
+with the total amount of money we have to calculate the total investment per
+page.
+
+11. (**2 points**) What is topological sorting for graphs? Describe a use case
+for it.
+
+_Answer:_ 
+Topological sorting allows us to get a linear ordering of the vertices of a directed
+graph, in a way that if there exists an edge between $m$ and $n$, then $m$
+will come before $n$.
+The canonical application of topological sorting is in scheduling a sequence of 
+jobs or tasks based on their dependencies. For example, if we want to calculate
+a schedule for courses that depend upon each others, we can topologically sort
+them.
+
+12. (**2 points**) Why do we need optimization algorithms? Describe a problem
+that is best solved using any optimization technique.
+
+_Answer:_ We need optimization because some problems have a solution space
+that far exceeds the computational power available.
+A typical problem solved by optimization is the traveling salesman problem
+for graphs.
+
+13. (**15 points**) What is the time complexity ($O$) of the following operations?
+
+  * (**1 point**) Adding an element to the head of a linked list: $O(1)$
+  * (**1 point**) Adding an element to a set backed by an array: $O(n)$ if not sorted, $O(nlogn) if using quicksort to search if element exists$
+  * (**1 point**) Inserting an element in a list by index: $O(n)$
+  * (**1 point**) Inserting in a AVL (balanced binary) tree: $O(logn)$
+  * (**1 point**) Searching through a sorted array with binary search: $O(log(n)$
+  * (**1 point**) Sorting an array with quicksort: $O(nlog(n))$
+  * (**1 point**) Sorting an array with mergesort: $O(nlog(n))$
+  * (**1 point**) Recursive version of longest common subsequence: $2^{n + m}$
+  * (**1 point**) Breadth-first search in a graph: $O(|V| + |E|)$, $|V|$ is number of vertices and $|E|$ is number of edges
+  * (**1 point**) Breadth-first search in a balanced tree: $O(n)$
+  * (**1 point**) Naive substring search (searching a pattern within a text): $O(mn)$, where $m$ is the length of the pattern and $n$ is the length of the string. A less tight bound is $O(n^2)$
+  * (**1 point**) Knutt-Moris-Pratt substring search: $O(m+n)$
+  * (**1 point**) Sorting an array with bubble sort: $O(n^2)$
+  * (**1 point**) Deleting elements by value in a list: $O(n)$
+  * (**1 point**) Deleting elements by value in a AVL tree: $O(logn)$
+  

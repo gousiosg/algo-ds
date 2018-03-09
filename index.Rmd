@@ -129,7 +129,7 @@ teacher to arrange a case-specific deadline.
 | 7 | 1 | No Lecture | -- ||
 | 7 | 2 | [Overall Q/A](recap.html) | GG ||
 
-Lecture notes alternative formats:
+Lecture notes alternative formats (may be obsolete/contain errors):
 
 * [Lecture notes in GitBook format](http://gousios.org/courses/algo-ds/book/preface.html)
 
@@ -149,6 +149,10 @@ assessment criteria specified below:
 * Assignments (40%): Grade calculated as mean grade for all assignments.
 All individual assignments must have a passing grade.
 * Written Exam (60%)
+
+#### Example exam material
+
+* [Model exam](model-exam.html), [Solutions](model-exam-solutions.html)
 
 ```{r child="footer.Rmd", include=FALSE}
 ```
