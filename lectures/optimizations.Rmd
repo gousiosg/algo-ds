@@ -4,7 +4,7 @@ title: |
   | **Genetic Algorithms**
 author: |
   | Mozhan Soltani
-  | PhD student 
+  | PhD student
   | Software Engineering Research Group
 date: "`r Sys.Date()`"
 output: revealjs::revealjs_presentation
@@ -16,33 +16,30 @@ csl: ieee.csl
 
 ## **What is optimization about?**
 
-
 ![](../figures/time.svg){width=70%}
-
 
 ## **What Is Optimization?**
 ![](../figures/function.svg){width=45%}
 
 - Optimization is the process of adjusting the **inputs** to or
   **characteristics** of a device, mathematical process, or experiment to find
-  the minimum or maximum output.      
+  the minimum or maximum output.
   e.g., adjusting the screen light so it takes as little power as possible to
   produce sufficient light!
-  
 
 ## **Dynamic Optimization**
-Optimization depends on secondary variables like time!       
+Optimization depends on secondary variables like time!
 
-**_examples:_**    
-- The fastest way to work may depend on the time of day and weather.     
-- The cheapest flight ticket depends on the season of the year.   
+**_examples:_**
+- The fastest way to work may depend on the time of day and weather.
+- The cheapest flight ticket depends on the season of the year.
 ![](../figures/routes.svg){width=45%}
-   
-Any other situation you can think of?    
+
+Any other situation you can think of?
 
 ## **Static Optimization**
 
-Finding the minimum for $f(x) = x^2$ does not depend on a secondary variable like time!    
+Finding the minimum for $f(x) = x^2$ does not depend on a secondary variable like time!
 
 It is less complex than dynamic optimization!
 
@@ -50,11 +47,11 @@ It is less complex than dynamic optimization!
 
 ## **Discrete or Continuous Optimization**
 
-**Discrete** variables have a finite number of possible values        
+**Discrete** variables have a finite number of possible values
 _e.g.:_ the order to do a series of tasks on a list to take as little time
-as possible.        
+as possible.
 **Continuous** variables have an infinite number of possible values,
-like below:                
+like below:
 ![Continuous function](../figures/continuous.svg){width=45%}
 
 ## **Trial and Error Optimization**
@@ -62,7 +59,7 @@ like below:
 refers to the process of adjusting variables that affect the output without
 knowing much about the process that produces the output.
 
-**_examples:_**     
+**_examples:_**
 adjusting the antenna to get the best reception.
 
 ![](../figures/TV2.svg){width=35%}
@@ -71,27 +68,25 @@ mixing chemicals to find new drugs, _e.g. antibiotics_.
 
 ## **Natural Optimization Methods**
 
-- **Simulated Annealing - _SA_**             
-  -- inspired by the anealing process for material      
-- **Particle Swarm Optimization - _PSO_**         
-  -- inspired by flocking birds/schooling fish           
-- **Ant Colony Optimization - _ACO_**       
-  -- inspired by the social behavior of ants              
-- **Genetic Algorithm - _GA_**     
-  -- inspired by the Darwinian evolution process     
-- **_etc_**. 
-
+- **Simulated Annealing - _SA_**
+  -- inspired by the anealing process for material
+- **Particle Swarm Optimization - _PSO_**
+  -- inspired by flocking birds/schooling fish
+- **Ant Colony Optimization - _ACO_**
+  -- inspired by the social behavior of ants
+- **Genetic Algorithm - _GA_**
+  -- inspired by the Darwinian evolution process
+- **_etc_**.
 
 ## **Simulated Annealing**
-Simulates the annealing process:     
+Simulates the annealing process:
 ![](../figures/simulated.svg){width=45%}
 
-. . . 
+. . .
 
 a substance is heated above its melting temperature and then gradually cooled to
 produce the crystalline lattice, which minimizes its energy probability
 distribution.
-
 
 ## **Simulated Annealing**
 So lowering the temperature until the material is in a steady _frozen_ state can
@@ -101,25 +96,24 @@ which the internal particles have the minimum energy.
 ![](../figures/searchtemp.svg){width=40%}
 
 ## **Simulated Annealing (SA) Algorithm**
-    
+
 1. Set temperature **$T$** to maximum
 2. Generate a random solution
 3. Calculate fitness/cost
 4. Generate a neighbouring solution
 5. Calculate the fitness/cost of the new solution
-6. Compare **$f$~(_new_)~** and **$f$~(_old_)~**      
-  **if**  the new solution is better then take it!        
-  **else** use an acceptance rate to choose between the two!       
-7. Reset **$T$**:  **$T$** * **$alpha$**       
+6. Compare **$f$~(_new_)~** and **$f$~(_old_)~**
+  **if**  the new solution is better then take it!
+  **else** use an acceptance rate to choose between the two!
+7. Reset **$T$**:  **$T$** * **$alpha$**
     (normally $0.8<$**$alpha$**$<0.99$)
-8. Repeat 4-7 until:   
-		either the global optimum is found  
+8. Repeat 4-7 until:
+		either the global optimum is found
 		or **$T$** reaches the minimum.
 
 ## **Let's play a guessing game!**
 
 ![](../figures/guessing.svg){width=75%}
-
 
 ## **Guess implementation**
 
@@ -141,7 +135,7 @@ def generate_guess(length, charSet, get_fitness):
     fitness = get_fitness(chars)
     return Guess(chars, fitness)
 ```
-## **How to get a neighbor solution?**     
+## **How to get a neighbor solution?**
 
 A neighbor solution has a minimal difference with the current one!
 ```{python}
@@ -159,26 +153,26 @@ def get_neighbor(parent, charSet, get_fitness):
     fitness = get_fitness(chars)
     return Guess(chars, fitness)
 ```
-    
-## **Fitness function and acceptance rate**    
-      
-Reward a guess for every correct character in the right place!       
-```{python , echo=TRUE}   
+
+## **Fitness function and acceptance rate**
+
+Reward a guess for every correct character in the right place!
+```{python , echo=TRUE}
 def get_fitness(guess, target):
     #increment the fitness score by 1 for every matching character
     return sum(1 for expected, actual in zip(target, guess)
                if expected == actual)
-```        
-. . .      
-   
-As the temprature goes down (search progresses), the probability of
-accepting a worse guess also goes down!   
-```{python , eval=FALSE}
-def acceptance_probability(prev_score, next_score, temperature):     
-    return math.exp(temperature/(1+temperature))
-``` 
+```
+. . .
 
-## **Implementation of the annealing process**  
+As the temprature goes down (search progresses), the probability of
+accepting a worse guess also goes down!
+```{python , eval=FALSE}
+def acceptance_probability(prev_score, next_score, temperature):
+    return math.exp(temperature/(1+temperature))
+```
+
+## **Implementation of the annealing process**
 
 Until the temperature hits the minimum, keep searching for better neighbors,
 and somtimes allow worse ones to enter the loop.
@@ -216,41 +210,41 @@ def anneal(get_fitness, targetLen, optimalFitness, charSet, display, temperature
         display(bestGuess)
     return bestGuess
 ```
-    
 
 ## **Let's now guess a password, using SA!** ##
 
-```{python , eval=FALSE}
+```{python, eval=FALSE}
 class GuessPasswordTest(unittest.TestCase):
     # The set of possible genes to choose randomly from.
     charset = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!.,"
     def test_sa(self):
-        # The target string to search for
-        target = "Hello World!"
-        self.guess_password(target)
-```  
-```{python , eval=FALSE}
-    def guess_password(self, target):
-        startTime = datetime.datetime.now()
-        
-        #wrapper for the fitness function to pass to GA
-        def fnGetFitness(chars):
-            return sa.get_fitness(chars, target)
+      # The target string to search for
+      target = "Hello World!"
+      self.guess_password(target)
+```
+```{python, eval=FALSE}
+def guess_password(self, target):
+  startTime = datetime.datetime.now()
 
-        #optimal fitness score based on the length of the target string
-        optimalFitness = len(target)
-        
-        #let's search for it
-        best = sa.anneal(fnGetFitness, len(target), optimalFitness,
-                                self.charset, fnDisplay, 100000.0, 0.00001, 0.99 )
-        #The search result must be the same as the target string!
-        self.assertEqual(best.Chars, target)
+  #wrapper for the fitness function to pass to GA
+  def fnGetFitness(chars):
+    return sa.get_fitness(chars, target)
+
+  #optimal fitness score based on the length of the target string
+  optimalFitness = len(target)
+
+  #let's search for it
+  best = sa.anneal(fnGetFitness, len(target), optimalFitness,
+                   self.charset, fnDisplay, 100000.0, 0.00001, 0.99 )
+  #The search result must be the same as the target string!
+  self.assertEqual(best.Chars, target)
 ```
 
-## **Hill Climbing:**     
+## **Hill Climbing:**
 **a very similar optimziation algorithm to SA**
 
 The difference is that worse neighbours will never get to be selected!
+:if expand("%") == ""|browse confirm w|else|confirm w|endif
 
 ![](../figures/hillclimbing.svg){width=50%}
 
@@ -258,12 +252,12 @@ The difference is that worse neighbours will never get to be selected!
 
 ![](../figures/localoptimum.svg){width=55%}
 
-. . .       
+. . .
 
 If hill climbing hits the local optimum, one approach is to restart the search!
 
 ## **Particle Swarm Optimization - _PSO_**
-PSO simulates the behavior of bird flocking.    
+PSO simulates the behavior of bird flocking.
 **_Suppose_**: a group of birds are randomly searching food in an area. There is
 only one piece of food in the area being searched. No bird knows where the food
 is. But they know how far the food is in each iteration. An effective way to
@@ -273,52 +267,52 @@ find the food is to **follow the bird which is nearest to the food.**
 
 ## **PSO**
 PSO is a population based algorithm that uses a number of _particles_ which form
-a swarm to search for an optimum.     
+a swarm to search for an optimum.
 
 Each particle adjusts their flying based on their own and other particle's
 experience until the swarm finally **finds the optimum** or the **search budget
-is exhausted**.      
+is exhausted**.
 
 _Search budget_ could be based on time, number of iterations, etc.
 
 ## **PSO Algorithm** ##
-1. Begin with a random population of particles _(solutions)_.     
-2. For each particle, calculate the fitness score.      
-  -- Fitness score shows the distance from the optimum                     
+1. Begin with a random population of particles _(solutions)_.
+2. For each particle, calculate the fitness score.
+  -- Fitness score shows the distance from the optimum
   -- If the fitness score is better than the value the row has ever had, update
-  **pBest**.     
+  **pBest**.
 3. Choose the particle with the best fitness score.
 4. For each particle, calculate the **velocity**, and update the **position** of
-  the particle accordingly.      
+  the particle accordingly.
 5. repeat 2-4 until global optimum is found, or search budget is
-   exhausted.       
+   exhausted.
 
 ## **How to calculate position and velocity?**
-**$x$**^$i$^~$(k+1)$~ $=$ $x$^$i$^~$k$~ $+$ $v$^$i$^~$(k+1)$~             
+**$x$**^$i$^~$(k+1)$~ $=$ $x$^$i$^~$k$~ $+$ $v$^$i$^~$(k+1)$~
 **$v$**^$i$^~$(k+1)$~ $=$ $w$~$k$~**$v$**^$i$^~$k$~ $+$ $c$~$1$~$r$~$1$~
 (**$p$**^$i$^~$k$~ $-$ **$x$**^$i$^~$k$~) $+$ $c$~$2$~$r$~$2$~
-(**$p$**^$g$^~$k$~ $-$ **$x$**^$i$^~$k$~)                
+(**$p$**^$g$^~$k$~ $-$ **$x$**^$i$^~$k$~)
 
 . . .
-     
-**where:**               
-**$p$**^$i$^~$(k)$~ $=$ best position particle $i$ has had                
-**$p$**^$g$^~$(k)$~ $=$ best particle position        
-$w$~$k$~ $=$ constant inertia weight       
+
+**where:**
+**$p$**^$i$^~$(k)$~ $=$ best position particle $i$ has had
+**$p$**^$g$^~$(k)$~ $=$ best particle position
+$w$~$k$~ $=$ constant inertia weight
 $c$~$1$~, $c$~$2$~ $=$  learning factors (usually $c$~$1$~ $=$ $c$~$2$~ $=$
-$2$)          
-$r$~$1$~, $r$~$2$~ $=$  random numbers between $0$ and $1$      
+$2$)
+$r$~$1$~, $r$~$2$~ $=$  random numbers between $0$ and $1$
 
-## **Let's find the minimum for $f(x) = x^2$ !**      
-![](../figures/x2.svg){width=45%}     
+## **Let's find the minimum for $f(x) = x^2$ !**
+![](../figures/x2.svg){width=45%}
 
-We can use the Python library called _PySwarms:_     
+We can use the Python library called _PySwarms:_
 https://github.com/ljvmiranda921/pyswarms
-   
+
 ## **SOP example, using _PySwarms_**
 
-Set up the PSO parameters, then call an optimizer.     
- 
+Set up the PSO parameters, then call an optimizer.
+
 You could plot the search progress and animate it _(optional)_.
 
 ```{python, eval=FALSE}
@@ -329,8 +323,8 @@ from pyswarms.utils.environments import PlotEnvironment
 
 #Set-up optimizer
 options = {'c1':0.5, 'c2':0.3, 'w':0.9}
-optimizer = ps.single.GlobalBestPSO(n_particles=10, 
-                                    dimensions=3, 
+optimizer = ps.single.GlobalBestPSO(n_particles=10,
+                                    dimensions=3,
                                     options=options)
 #Initialize plot environment
 plt_env = PlotEnvironment(optimizer, fx.sphere_func, 350)
@@ -340,19 +334,18 @@ plt.show()
 #animate the search process
 anim = plt_env.plot_particles2D(limits=((-1.2,1.2),(-1.2,1.2)))
 anim.save('animation.gif', writer='imagemagick', fps=15)
-```  
+```
 
-## **What does it look like?** 
-![](../figures/swarmplot.svg)   
-  
-## **What does it look like?**    
-![Swarm optimization](../figures/swarm.gif) 
-   
-## **More on PSO**   
-For more on PSO, check out the following:  
-              
+## **What does it look like?**
+![](../figures/swarmplot.svg)
+
+## **What does it look like?**
+![Swarm optimization](../figures/swarm.gif)
+
+## **More on PSO**
+For more on PSO, check out the following:
+
  - https://ch.mathworks.com/help/gads/particle-swarm-optimization-algorithm.html
-
 
 ## **Genetic Algorithms**
 Inspired by the _Darwinian evolution_ and the concept of **survival of the
@@ -361,15 +354,15 @@ fittest**!
 
 ## **Genetic Algorithm Overview**
 Each point in the search space is an referred to as an _individual_
-or _chromosome_.    
+or _chromosome_.
 
 Individuals collectively form a _population_, which is _iteratively evolved_
 until the optimum is found or the search budget is exhausted.
 
 ![](../figures/GA loop.svg){width=75%}
 
-## **How to select individuals for evolution?** 
-- **Roulette Wheel selection** 
+## **How to select individuals for evolution?**
+- **Roulette Wheel selection**
 
 - **Rank selection**
 
@@ -380,10 +373,10 @@ until the optimum is found or the search budget is exhausted.
 - **etc.**
 
 ## **Roulette Wheel selection**
-Parents are selected according to their fitness share.     
+Parents are selected according to their fitness share.
 
 1. Calculate fitness percentage for each chromosome
-2. Define a range for each chromosome based on the fitness share    
+2. Define a range for each chromosome based on the fitness share
 3. Generate a random number $x$ from $0-100$
 4. Select the individual whose fitness covers the range for $x$
 
@@ -411,23 +404,23 @@ previous selection operators.
 4. The 3rd best chromosome has $1-p^2$ probability to be selected.
 5. etc.
 
-## **Elitism** 
+## **Elitism**
 
 When creating new population by crossover and mutation, we have a big
 chance that we will loose the best chromosome.
 
 Elitism first copies the best chromosome (or a few) to the new
-population. The rest is done in a classical way.       
-       
+population. The rest is done in a classical way.
+
 **_note:_** Elitism can very rapidly increase performance of GA!
-  
+
 ![](../figures/elitism.svg){width=40%}
 
-## **Evolutionary Operators in GA**      
+## **Evolutionary Operators in GA**
 
 Evolutionary operators are used to evolve the next generation of _individuals_!
 
-**Crossover** is used to _re-combine_ the _properties_ from parents.    
+**Crossover** is used to _re-combine_ the _properties_ from parents.
 **Mutation** is applied to explore the _neighborhood_!
 
 ![](../figures/operators.svg){width=75%}
@@ -441,7 +434,7 @@ Evolutionary operators are used to evolve the next generation of _individuals_!
 2. Fitness function
 3. Evolutionary operators (_only mutation for now_)
 4. Search engine
-5. Display function, showing the search progress (optional!) 
+5. Display function, showing the search progress (optional!)
 
 ## **Individual Generator and Fitness Function**
 
@@ -452,7 +445,7 @@ class Chromosome:
         self.Genes = genes
         self.Fitness = fitness
 ```
-. . .     
+. . .
 
 ```{python, eval=FALSE}
 def generate_parent(length, geneSet, get_fitness):
@@ -463,9 +456,9 @@ def generate_parent(length, geneSet, get_fitness):
     fitness = get_fitness(genes)
     return Chromosome(genes, fitness)
 ```
-. . .     
+. . .
 
-```{python, eval=FALSE}  
+```{python, eval=FALSE}
 def get_fitness(guess, target):
     return sum(1 for expected, actual in zip(target, guess)
                if expected == actual)
@@ -477,18 +470,18 @@ Similar to the way neighbors were found in SA!
 
 ```{python, eval=FALSE}
 def mutate(parent, geneSet, get_fitness):
-    index = random.randrange(0, len(parent.Genes))
-    childGenes = list(parent.Genes)
-    newGene, alternate = random.sample(geneSet, 2)
-    childGenes[index] = alternate if newGene == childGenes[index] 
-                                  else newGene
-    genes = ''.join(childGenes)
-    fitness = get_fitness(genes)
-    return Chromosome(genes, fitness)
-```
-. . .  
+  index = random.randrange(0, len(parent.Genes))
+  childGenes = list(parent.Genes)
+  newGene, alternate = random.sample(geneSet, 2)
+  childGenes[index] = alternate if newGene == childGenes[index] else newGene
 
-## **A minimal search engine**   
+  genes = ''.join(childGenes)
+  fitness = get_fitness(genes)
+  return Chromosome(genes, fitness)
+```
+. . .
+
+## **A minimal search engine**
 
 ```{python, eval=FALSE}
 def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
@@ -511,13 +504,13 @@ def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
 
 ## **What was missing in the implementation?** ##
 
-![](../figures/GA loop.svg){width=75%}     
-    
+![](../figures/GA loop.svg){width=75%}
+
 . . .
-    
+
  - making a _population_
-       
-. . .  
+
+. . .
 
 - implementation of _selection_
 
@@ -528,7 +521,6 @@ def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
 . . .
 
 - implementation of _insertion_
-
 
 ## **Let's test it!**
 ```{python, eval=FALSE}
@@ -552,7 +544,7 @@ class GuessPasswordTest(unittest.TestCase):
 
 ## **Let's do the 8 Queens Puzzle**
 It is the problem of placing eight chess queens on an $8*8$ chessboard so that no two queens threaten each other. Thus, a solution requires
-that no two queens share the same row, column, or diagonal.    
+that no two queens share the same row, column, or diagonal.
 ![](../figures/queens.svg){width=30%}
 
 Let's use the _pyeasyga_ library this time!
@@ -653,20 +645,19 @@ are good enough for the problem at hand.
 If the search landscape is perturbated, more advanced algorithms which can
 effectively explore the landscape may be a better start.
 
-
 ## **REFERENCES**
 
-* The GA implementation for the guessing game is borrowed from:          
+* The GA implementation for the guessing game is borrowed from:
 https://github.com/handcraftsman/GeneticAlgorithmsWithPython
 
 * The GA implementation for the 8 queens problem is from:
 https://github.com/remiomosowon/pyeasyga/tree/develop/examples
 
-* Details on _PSO_ is taken from:       
+* Details on _PSO_ is taken from:
 http://www.swarmintelligence.org/tutorials.php
 
-* Optimizing a sphere example is from:        
-https://github.com/ljvmiranda921/pyswarms 
+* Optimizing a sphere example is from:
+https://github.com/ljvmiranda921/pyswarms
 
 ## Copyright
 ![Creative Commons](https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png) This

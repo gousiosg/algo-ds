@@ -1,0 +1,321 @@
+---
+title: "TI3110TU -- Resit exam, Apil 2018"
+author: "Georgios Gousios"
+date: "16/04/2018"
+output:
+  pdf_document:
+    latex_engine: lualatex
+    md_extensions: ['+fancy_lists', '+startnum']
+---
+
+**Name:**
+
+**Student Number:**
+
+# Instructions
+
+* Before you start, write down your name and student number on this page.
+On all the following pages, write your student number at the top of the page.
+* When you are asked to provide implementations, you should do that in
+Python. Your code should be generally correct, minor omissions
+can be tolerated, as long as the algorithm is appropriate.
+* The use of material (book, slides, laptop, etc.) during the exam is not allowed.
+* Use the provided paper for notes etc. Don't write on the exam paper.
+* **Write clearly!** If your writing cannot be deciphered, it will not be
+considered for grading.
+
+The total number of points is **65**. 
+The total number of points you need to collect to pass is **33**.
+
+You have **180** minutes: _Good Luck!_
+
+# Exam questions
+
+1. (**4 points**) What is memoisation?
+Describe an algorithm (no need to show its implementation) that uses memoisation
+and present its evaluation strategy.
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+11. (**4 points**) What is depth-first search in trees? Describe it
+in pseudocode.
+
+```
+
+
+
+
+
+
+
+
+
+
+
+```
+
+12. (**4 points**) What is the main difference between a binary search
+tree and a balanced binary search tree?
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+4. (**20 points**) Write a _class_ that implements a Set,
+using the following prototype (each correct function
+implementation is worth 5 points):
+
+```python
+class Set(object):
+
+    # Constructs an empty set
+    def __init__(self):
+      pass
+
+    # Adds a element to the set
+    def add(self, val):
+      pass
+
+    # Removes elements equal to val
+    def remove(self, val):
+      pass
+
+    # Prints the set like a Python array
+    def __str__(self):
+      pass
+```
+
+Here is an example usage scenario for it:
+
+```python
+> a = Set()
+> print a
+[ ]
+> a.add(5)
+> a.add(10)
+> print a
+[ 5, 10 ]
+> a.add(5)
+> print(a)
+[ 5, 10 ]
+> a.remove(5)
+> print(a)
+[ 10 ]
+```
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+5. (**2 points**) Explain the differences in the working characteristics of
+data structures backed by arrays vs data structures backed by linked lists.
+When is each implementation preferable?
+
+```
+
+
+
+
+
+
+
+
+
+```
+
+
+8. (**6 points**) Write a recursive implementation of `mergesort`.
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+9. (**4 points**) Describe 2 ways in which we can represent graphs in memory.
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+10. (**6 points**) A typical web page looks like the following extract:
+
+```html
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>simple</title>
+</head>
+<body>
+  <h1>A simple web page</h1>
+  <ul>
+      <li>List item one</li>
+      <li>List item two</li>
+  </ul>
+  <h2>
+    <a href="http://www.tudelft.nl">TU Delft</a>
+  <h2>
+</body>
+</html>
+```
+
+We need a data structure to represent the contents of a web page in computer
+memory, in such a way that would allow us to access all nodes (e.g. `<title>`) 
+and their attributes (e.g. `href="http://www.tudelft.nl"`). What would you use 
+and why?
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
+
+
+13. (**15 points**) What is the time complexity ($O$) of the following operations?
+
+  * (**1 point**) Inserting in a AVL (balanced binary) tree:
+  * (**1 point**) Naive substring search (searching a pattern within a text):
+  * (**1 point**) Adding an element to a set backed by an array:
+  * (**1 point**) Sorting an array with mergesort:
+  * (**1 point**) Knutt-Moris-Pratt substring search:
+  * (**1 point**) Deleting elements by value in a list:
+  * (**1 point**) Sorting an array with bubble sort:
+  * (**1 point**) Sorting an array with quicksort:
+  * (**1 point**) Breadth-first search in a graph:
+  * (**1 point**) Adding an element to the head of a linked list:
+  * (**1 point**) Inserting an element in a list by index:
+  * (**1 point**) Breadth-first search in a balanced tree:
+  * (**1 point**) Searching through a sorted array with binary search:
+  * (**1 point**) Deleting elements by value in a AVL tree:
+  * (**1 point**) Recursive version of least common subsequence:
+
