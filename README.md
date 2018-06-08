@@ -1,12 +1,13 @@
-#algo-ds
+# TI3110TU - Algorithms and Data Structures
 
-Source code for the lecture notes for the TU Delft Algorithms and Data Structures (TI3110TU) minor course. The course language is Python. The course was given in the year 2017 -- 2018.
+Source code for the lecture notes for the TU Delft Algorithms and Data Structures (TI3110TU) minor course. The course language is Python. The course was given in the academic year 2017 -- 2018.
 
 ## Dependencies
 
-The notes are prepared using Rmarkdown.
+The course materials are prepared using [RMarkdown](https://rmarkdown.rstudio.com).
 
-On MacOSX, you need to install the following dependencies to get going.
+On MacOSX, with [Homebrew](https://brew.sh) installed, you need to install
+the following dependencies to get going.
 
 ```bash
 # Install R
@@ -22,6 +23,10 @@ brew install pandoc pandoc-citeproc
 
 # Install jupyter
 pip install jupyter
+
+# Install TexLive / MacTex (for PDF exports)
+wget http://tug.org/cgi-bin/mactex-download/MacTeX.pkg
+open MacTeX.pkg
 ```
 
 ## Building the contents
@@ -42,9 +47,10 @@ In addition
 
 ## Repository contents
 
-* `lectures`: contains the source code for all the course lectures
+* `lectures`: contains the source for the course lectures
 * `assignments`: source and solutions (in Python) for the course's assignments
 * `exams`: exam material
+* `livecoding`: Jupyter notebooks I created while teaching in the classroom
 
 ## Contributors
 
